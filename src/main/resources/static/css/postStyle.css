@@ -1,0 +1,38 @@
+
+#pre_page:hover,
+#next_page:hover,
+#heart:hover {
+    cursor: pointer;
+}
+
+#posting {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+    width: 254px;
+    height: 48px;
+}
+
+#keyword {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+#company_image {
+    width: 286px;
+    height: 114.39px;
+}
+
+#company_name {
+    width: 254px;
+    height: 24px;
+}
