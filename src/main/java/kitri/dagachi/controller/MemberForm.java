@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 
-@Getter
-@Setter
+@Getter @Setter
 public class MemberForm {
 
     @NotEmpty(message = "이름은 필수입력 항목 입니다.")
