@@ -10,4 +10,5 @@ public class DagachiApplication {
 		SpringApplication.run(DagachiApplication.class, args);
 	}
 
+
 }

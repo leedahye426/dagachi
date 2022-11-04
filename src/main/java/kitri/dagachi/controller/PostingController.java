@@ -15,9 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 //@RequestMapping
 public class PostingController {
     @GetMapping("/enter/enter_post")
+<<<<<<< HEAD
     public String posting(Model model) {
         model.addAttribute("form",new PostForm());
+=======
+    public String Posting() {
+
+>>>>>>> e65b1f77a2bf8f0cd2187b48db38d225a4a5119f
         return "enterPosting";
+
     }
 }
 
