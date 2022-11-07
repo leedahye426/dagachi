@@ -1,49 +1,93 @@
 package kitri.dagachi.controller;
 
+//import kitri.dagachi.SecurityConfig;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Controller
-@RequestMapping("members/join")
-//@RequiredArgsConstructor
+@RequestMapping("members/")
+@RequiredArgsConstructor
 public class MemberController {
 
-    @GetMapping
+    @Autowired
+    private final MemberService memberService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/login")
+    public String login() {
+        return "members/login";
+    }
+
+    @PostMapping("/login")
+    public String loginMatch(@Valid LoginForm form, BindingResult result) {
+
+        String email = form.getEmail();
+        String encPwd = bCryptPasswordEncoder.encode(form.getPasswd());
+        int code = form.getCodeType();
+
+//        memberService.loginMatch(email, encPwd);
+
+        return "redirect:/";
+    }
+
+
+
+    @GetMapping("/join")
     public String joinMain() {
         return "members/join";
     }
 
-    @GetMapping("/personal")
+    @GetMapping("join/personal")
     public String personalForm() {
         return "members/personal_join";
     }
 
+    @PostMapping("join/personal")
+    public String personalCreate(@Valid MemberForm form, BindingResult result) {
 
-    // 현재 시간 구하기(가입 시간, ... )
-    LocalDateTime now = LocalDateTime.now();
-    String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        // 현재 시간 구하기(가입 시간, ... )
+        LocalDateTime now = LocalDateTime.now();
+        String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 
-    @PostMapping("/personal")
-    public String personalCreate(@NotNull MemberForm form) {
-
+        // 멤버 생성
         Member member = new Member();
-        member.setCode(1);
-        member.setName(form.getName());
-        member.setPasswd(form.getPasswd());
-        member.setEmail(form.getEmail());
-        // 전화번호 칼럼 추가 해야됨
-        //        member.set
-        member.setJoinDate(formatedNow);
+        member.setCode(1); // 개인회원 코드
+        member.setName(form.getName()); // 이름
+        member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
+        System.out.println("test");
 
+        // 패스워드 암호화
+        String encPwd = bCryptPasswordEncoder.encode(form.getPassword());
+        member.setPassword(encPwd);
+//        member.setPasswd(form.getPasswd());
+        // 전화번호 칼럼 추가 해야됨
+        // member.set
+        member.setJoinDate(formatedNow); // 생성일시 DB 저장용
+
+//        System.out.println("form.getName : " + form.getName());
+//        System.out.println("form.getPasswd : " + form.getPasswd());
+//        System.out.println("form.getEmail : " + form.getEmail());
+//
+//        System.out.println("member.getId : " + member.getId());
+//        System.out.println("member.getName : " + member.getName());
+//        System.out.println("member.getPasswd : " + member.getPasswd());
+//        System.out.println("member.getCode : " + member.getCode());
+//        System.out.println("member.getJoinDate : " + member.getJoinDate());
+//        System.out.println("member.getEmail : " + member.getEmail());
+
+        memberService.join(member);
         return "redirect:/";
     }
 }

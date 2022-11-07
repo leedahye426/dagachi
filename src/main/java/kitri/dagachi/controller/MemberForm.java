@@ -19,7 +19,7 @@ public class MemberForm {
     private String authCode;
 
     @NotEmpty(message = "패스워드는 필수입력 항목 입니다.")
-    private String passwd;
+    private String password;
 
     @NotEmpty(message = "전화번호는 필수입력 항목 입니다.")
     private String phoneNum;

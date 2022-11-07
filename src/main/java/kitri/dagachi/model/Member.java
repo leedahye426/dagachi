@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@Table(name = "members")
 public class Member {
 
     @Id
@@ -26,7 +24,7 @@ public class Member {
 
     @JsonIgnore
     @Column(name = "member_password")
-    private String passwd;
+    private String password;
 
     @Column(name = "member_email")
     private String email;
@@ -36,6 +34,8 @@ public class Member {
 
     @Column(name = "business_number")
     private String businessNum;
+    
+    // 최종 로그인 일시
 
 }
 
