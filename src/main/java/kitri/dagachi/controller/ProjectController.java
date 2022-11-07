@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -18,7 +19,13 @@ public class ProjectController {
     }
 
     @GetMapping("/project/project_register")
-    public String projectRegisterForm() {
+    public String projectRegisterForm(ProjectForm projectForm) {
+        
         return "project/projectRegisterForm";
+    }
+
+    @PostMapping("/project/project_register")
+    public String projectRegister() {
+        return "project/pro_per";
     }
 }

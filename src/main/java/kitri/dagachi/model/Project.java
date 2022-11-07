@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Getter @Setter
-@Table(name="project_board")
+//@Table(name="project_board")
 public class Project {
 
     @Id
@@ -28,5 +28,6 @@ public class Project {
         this.upload_date = upload_date;
         this.member_id = member_id;
     }
+
 
 }

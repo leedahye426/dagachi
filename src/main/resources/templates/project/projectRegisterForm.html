@@ -56,8 +56,8 @@
 
   <div class="container row align-items-center  mx-auto mt-5">
 
-    <form class="mx-auto px-4" style="width: 500px;">
-      <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp프로젝트 등록</h4><br>
+    <form action="/project/project_register" method="post" enctype="multipart/form-data" class="mx-auto px-4" style="width: 500px;">
+      <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 프로젝트 등록</h4><br>
       <hr style="width: 270px;">
       <div class="mb-3 ">
         <label for="team_name" class="form-label ">팀명</label><br>
@@ -66,8 +66,8 @@
       </div>
 
       <div class="mb-3">
-        <label for="file" class="form-label">포트폴리오 업로드 </label><br>
-        <input type="file" name="file" id="file" class="col-7">
+        <label for="project_file" class="form-label">포트폴리오 업로드 </label><br>
+        <input type="file" name="project_file" id="project_file" class="col-7">
         <br>
       </div>
 
