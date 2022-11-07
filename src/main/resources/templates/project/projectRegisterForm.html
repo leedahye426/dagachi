@@ -1,92 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Full Width Pics - Start Bootstrap Template</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="/css/styles.css" rel="stylesheet" />
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/header :: header" />
+
+  <body>
 <!-- Responsive navbar-->
-<nav class="py-4 navbar navbar-expand-lg navbar-dark bg-white border boredr-bottom
-                    d-flex justify-content-between">
-  <div class="container">
-    <a class="navbar-brand text-dark" href="/index.html"><img src="images\dagachi_logo2.jpg" width="200" height="50"></a>
-    <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="col-2"></div>
-      <div class="flex-fill">
-        <ul class="navbar-nav cen mb-2 mb-lg-0">
-          <li class="nav-item col-6">
-            <a class="nav-link text-dark fw-bold fs-5" href="/project/personal_project">프로젝트</a>
-          </li>
-          <li class="nav-item col-6">
-            <a class="nav-link text-dark fw-bold fs-5" href="/enter/enter_post">채용공고</a>
-          </li>
-          <li class="nav-item col-6">
-            <a class="nav-link text-dark fw-bold fs-5" href="#!">자유게시판</a>
-          </li>
-          <!-- <li class="nav-item"><a class="nav-link" href="#!"></a></li> -->
-        </ul>
-      </div>
-      <div class="col-3"></div>
-      <div class="login_box ms-auto">
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item border-end">
-            <a class="nav-link text-dark" href="">로그인</a>
-          </li>
-          <li class="nav-item fs-6">
-            <a class="nav-link text-dark" href="/join.html">회원가입</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+    <div th:replace="fragments/nav :: nav"/>
 
-<!-- Content section-->
+    <!-- Content section-->
+      <div class="container row align-items-center  mx-auto mt-5">
 
-  <div class="container row align-items-center  mx-auto mt-5">
+        <form action="/project/project_register" method="post" enctype="multipart/form-data" class="mx-auto px-4" style="width: 500px;">
+          <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 프로젝트 등록</h4><br>
+          <hr style="width: 270px;">
+          <div class="mb-3 ">
+            <label for="team_name" class="form-label ">팀명</label><br>
+            <input type="text" name="team_name" id="team_name" class="col-7">
+            <br>
+          </div>
 
-    <form action="/project/project_register" method="post" enctype="multipart/form-data" class="mx-auto px-4" style="width: 500px;">
-      <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 프로젝트 등록</h4><br>
-      <hr style="width: 270px;">
-      <div class="mb-3 ">
-        <label for="team_name" class="form-label ">팀명</label><br>
-        <input type="text" name="team_name" id="team_name" class="col-7">
-        <br>
+          <div class="mb-3">
+            <label for="project_file" class="form-label">포트폴리오 업로드 </label><br>
+            <input type="file" name="project_file" id="project_file" class="col-7">
+            <br>
+          </div>
+
+
+          <button type="submit" class="btn btn-secondary btn-sm col-7">등록</button>
+        </form>
       </div>
 
-      <div class="mb-3">
-        <label for="project_file" class="form-label">포트폴리오 업로드 </label><br>
-        <input type="file" name="project_file" id="project_file" class="col-7">
-        <br>
-      </div>
-
-
-      <button type="submit" class="btn btn-secondary btn-sm col-7">등록</button>
-    </form>
-  </div>
-
-
-
-
-<!-- Footer-->
-<footer class="bg-white border border-top fixed-bottom d-flex
-        flex-column justify-content -center align-items-center py-4 mb-0 bg-dark">
-  <div class="container"><p class="m-0 text-center text-dark">Copyright &copy; Your Website 2022</p></div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+    <!-- Footer-->
+    <div th:replace="fragments/footer :: footer" />
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
 </body>
 </html>
