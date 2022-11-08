@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -177,6 +178,11 @@
                       </div>
                     </div>
                   </div>
+                                          <h3>이미지 출력</h3>
+                                          <div th:each="imageFile : ${all} ">
+                                              <img  th:src="|/${imageFile.id}|" width="150" height="150">
+                                              <p th:text="${imageFile.name}"></p>
+                                          </div>
                     <button type="button" class="btn-register" onclick="location.href='/enter/register'"><span style="font-weight:bold">공고 등록하기</span></a></button>
                 </div>
             </div>
