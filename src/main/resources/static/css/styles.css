@@ -11292,3 +11292,7 @@ textarea.form-control-lg {
   background-position: center;
   background-size: cover;
 }
+
+btn btn-primary{
+    font-color: white;
+}
