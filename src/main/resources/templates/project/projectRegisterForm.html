@@ -8,26 +8,40 @@
 
     <!-- Content section-->
       <div class="container row align-items-center  mx-auto mt-5">
+        <form action="/project/project_register" method="post" enctype="multipart/form-data">
+          <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
+            <tr>
+              <td height=20 align= center bgcolor=#ccc> 프로젝트 등록</td>
+            </tr>
+            <tr>
+              <td bgcolor=white>
+                <table class = "table2">
+                  <tr>
+                    <td>팀명</td>
+                    <td><input type = "text" name = "team_name" size=20> </td>
+                  </tr>
 
-        <form action="/project/project_register" method="post" enctype="multipart/form-data" class="mx-auto px-4" style="width: 500px;">
-          <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 프로젝트 등록</h4><br>
-          <hr style="width: 270px;">
-          <div class="mb-3 ">
-            <label for="team_name" class="form-label ">팀명</label><br>
-            <input type="text" name="team_name" id="team_name" class="col-7">
-            <br>
-          </div>
+                  <tr>
+                    <td>제목</td>
+                    <td><input type = "text" name = "project_title" size=60></td>
+                  </tr>
 
-          <div class="mb-3">
-            <label for="project_file" class="form-label">포트폴리오 업로드 </label><br>
-            <input type="file" name="project_file" id="project_file" class="col-7">
-            <br>
-          </div>
+                  <tr>
+                    <td>포트폴리오</td>
+                    <td><input type = "file" name = "file" size=10 maxlength=10></td>
+                  </tr>
+                </table>
 
-
-          <button type="submit" class="btn btn-secondary btn-sm col-7">등록</button>
+                <center>
+                  <input type = "submit" value="등록">
+                </center>
+              </td>
+            </tr>
+          </table>
         </form>
       </div>
+
+
 
     <!-- Footer-->
     <div th:replace="fragments/footer :: footer" />

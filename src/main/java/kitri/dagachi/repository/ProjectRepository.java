@@ -31,4 +31,8 @@ public class ProjectRepository {
         return em.createQuery("select p from project_board p", Project.class)
                 .getResultList();
     }
+
+    public Project findOne(Long project_id) {
+        return em.find(Project.class, project_id);
+    }
 }
