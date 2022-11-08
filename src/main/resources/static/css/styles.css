@@ -11292,3 +11292,15 @@ textarea.form-control-lg {
   background-position: center;
   background-size: cover;
 }
+
+<<<<<<< HEAD
+btn btn-primary{
+    font-color: white;
+=======
+/* 
+추가하는 CSS 하단목록
+*/
+.hide {
+  display : none;
+>>>>>>> b77cd898683b19cda3ce880bc90f63978c0072ff
+}

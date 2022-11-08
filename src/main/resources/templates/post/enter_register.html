@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -53,23 +53,38 @@
     </div>
 </nav>
 
-<form name ="enter_register" action= "/enter/enter_post" method="post">
-    <div class="container col-5 my-5">
+
+<div class="container col-5 my-5">
+    <form name ="enter_register" action= "/enter/enter_post" method="post">
+
+
+<!--        <form th:action = "/enter/enter_post" method="post">-->
     <table>
         <thead>
+<!--        <tr>-->
+<!--            <td>번호</td>-->
+<!--            <td><input type="text" name ="" value=""/></td>-->
+<!--        </tr>-->
         <tr>
             <td>회사명</td>
             <td><input type="text" name ="Company_Name" value=""/></td>
         </tr>
         <tr>
             <td>등록날짜</td>
+<!--            <td><input type="date" name ="Upload_Date" value=""/></td>-->
             <td><input type="date" name ="Upload_Date" value=""/></td>
         </tr>
         <tr>
-            <td>공고내용</td>'
-            <td><img id = "preview" class="bd-placeholder-img card-img-top" width="337" height="225" name ="Posting-Content" value="" >
+            <td>공고내용</td>
+<!--             <form action="/upload" method="post" enctype="multipart/form-data">-->
+<!--             <img id = "preview" class="bd-placeholder-img card-img-top" width="220" height="115" name ="Posting_Content" value="" >-->
+
+                 <td> <input type="text" name="Posting_Content">
+
+<!--            <img id = "preview" class="bd-placeholder-img card-img-top" width="220" height="115" name ="Posting_Content" value="" >-->
 <!--                 <input type="text" name ="Posting-Content" value="" />-->
-             <input type="file"  accept="image/*,.txt" name ="Posting-file" onchange="readURL(this);" value="" required/></td>
+<!--             <input type="file" accept="image/*,.txt" name ="Posting-file" onchange="readURL(this);" value="" required/></form></td>-->
+<!--            <input type="file"  accept="image/*,.txt" name ="Posting-file" value="" required/></td>-->
         </tr>
         <tr>
             <td>공고제목</td>
@@ -77,32 +92,35 @@
         </tr>
         <tr>
             <td>담당자</td>
-            <td><input type="text" name ="Member_Id" value=""/></td>
+            <td><input type="text" name ="Member_ID" value=""/></td>
         </tr>
 
         </thead>
-<!--        <tbody>-->
-<!--        <tr th:each="post : ${post}">-->
-<!--            <td th:text ="${Post.id}"></td>-->
-<!--            <td th:text ="${Post.Posting_Content}"></td>-->
-<!--            <td th:text ="${Post.Company_Name}"></td>-->
-<!--            <td th:text ="${Post.Posting_Title}"></td>-->
-<!--            <td th:text ="${Post.Member_Id}"></td>-->
-<!--            <td th:text ="${Post.Upload_Date}"></td>-->
-<!--            <td>-->
+        <tbody>
+        <tr th:each="post : ${post}">
+<!--            <td th:text ="${post.id}"></td>-->
+            <td th:text ="${post.Posting_Content}"></td>
+            <td th:text ="${post.Company_Name}"></td>
+            <td th:text ="${post.Posting_Title}"></td>
+            <td th:text ="${post.Member_ID}"></td>
+            <td th:text ="${post.Upload_Date}"></td>
+            <td>
 
-<!--        </tr>-->
-<!--        </td>-->
-<!--        </tbody>-->
+        </tr>
+        </td>
+        </tbody>
 
 
     </table>
         <button type="submit" class="btn btn-primary" value="">등록</button>
+<!--        </form>-->
+
+    </form>
     </div>
 <!--    <button type="submit" class="btn-submit" onclick="<script>alert(등록되었습니다);history.back();</script>">등록</button>-->
 
 <!--    <a href="/enter/enter_post">-->
-</form>
+
 
 
 
