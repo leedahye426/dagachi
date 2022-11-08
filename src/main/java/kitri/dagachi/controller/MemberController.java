@@ -2,15 +2,14 @@ package kitri.dagachi.controller;
 
 //import kitri.dagachi.SecurityConfig;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -23,6 +22,7 @@ public class MemberController {
 
     @Autowired
     private final MemberService memberService;
+    private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/login")
@@ -41,8 +41,6 @@ public class MemberController {
 
         return "redirect:/";
     }
-
-
 
     @GetMapping("/join")
     public String joinMain() {
@@ -66,7 +64,6 @@ public class MemberController {
         member.setCode(1); // 개인회원 코드
         member.setName(form.getName()); // 이름
         member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
-        System.out.println("test");
 
         // 패스워드 암호화
         String encPwd = bCryptPasswordEncoder.encode(form.getPassword());
@@ -76,18 +73,28 @@ public class MemberController {
         // member.set
         member.setJoinDate(formatedNow); // 생성일시 DB 저장용
 
-//        System.out.println("form.getName : " + form.getName());
-//        System.out.println("form.getPasswd : " + form.getPasswd());
-//        System.out.println("form.getEmail : " + form.getEmail());
-//
-//        System.out.println("member.getId : " + member.getId());
-//        System.out.println("member.getName : " + member.getName());
-//        System.out.println("member.getPasswd : " + member.getPasswd());
-//        System.out.println("member.getCode : " + member.getCode());
-//        System.out.println("member.getJoinDate : " + member.getJoinDate());
-//        System.out.println("member.getEmail : " + member.getEmail());
+        System.out.println("form.getName : " + form.getName());
+        System.out.println("form.getPasswd : " + form.getPassword());
+        System.out.println("form.getEmail : " + form.getEmail());
+
+        System.out.println("member.getId : " + member.getId());
+        System.out.println("member.getName : " + member.getName());
+        System.out.println("member.getPasswd : " + member.getPassword());
+        System.out.println("member.getCode : " + member.getCode());
+        System.out.println("member.getJoinDate : " + member.getJoinDate());
+        System.out.println("member.getEmail : " + member.getEmail());
 
         memberService.join(member);
         return "redirect:/";
     }
+
+    @PostMapping("join/emailConfirm")
+    @ResponseBody
+    public String emailConfirm(@RequestParam("email") String email)  throws Exception {
+        System.out.println("전달 받은 이메일 : " + email);
+        String code = emailService.sendSimpleMessage(email);
+        System.out.println("전송한 code : " + code);
+        return code;
+    }
+
 }

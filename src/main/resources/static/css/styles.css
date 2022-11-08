@@ -11292,3 +11292,10 @@ textarea.form-control-lg {
   background-position: center;
   background-size: cover;
 }
+
+/* 
+추가하는 CSS 하단목록
+*/
+.hide {
+  display : none;
+}
