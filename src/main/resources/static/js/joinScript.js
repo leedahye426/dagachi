@@ -44,7 +44,6 @@ password.onkeyup = function () {
         msgPwd.classList.remove('hide');
         msgPwd.textContent = "8~15자리의 숫자/문자/특수문자를 포함해야 합니다."
     }
-
     if(password.value.length == 0) {
         msgPwd.classList.add('hide');
     }
@@ -60,7 +59,6 @@ pwdChk.onkeyup = function () {
     else if(password.value == pwdChk.value) {
         msgChk.textContent = "비밀번호가 일치합니다.";
     }
-
     if(pwdChk.value.length == 0) {
         msgChk.classList.add('hide');
     }
@@ -101,38 +99,81 @@ $codeBtn.on('click', function () {
         url : "emailConfirm",
         dataType : "text",
         data : {
+
             "email" : $('#email').val()
         },
     })
-    .done(function(data) {
+    // .done(function(data) {
+        .done(function() { 
+        tid = setInterval('cntTimer()', 1000);
         alert("인증번호 발송 완료")
-        console.log("data : " + data)
-        $returnCode = data;
+        // console.log("data : " + data)
+        // $returnCode = data;
         $("#code").removeAttr('disabled'); // 인증코드 박스 활성화
+        $codeBtn.text("인증코드 재발송");
         $codeChk.attr('class', 'btn btn-light border btn-sm'); // 인증 버튼 활성화
-        chkEmailConfirm(data, $codeChk, $msgChk);
+        
+        console.log($('#codeLabel'));
+        $setTime = 180;
+        $('#codeLabel').append(`<span class="mx-3" id="timer"></span>`); // 유효시간 타이머
+        // $('#codeLabel').append(`<span class="mx-3">timeout</span>`); // 유효시간 타이머
+        // chkEmailConfirm(data, $codeChk, $msgChk);
+    // })      
     })
 });
 
-function chkEmailConfirm(data, $codeChk, $msgChk) {
-    $codeChk.on('click', function () {
-        if(data != $code.val()) {
-            console.log('failed')
-            console.log($code.val());
-            $msgChk.text("인증번호가 올바르지 않습니다.")
-        }
-        else{
+function cntTimer() {
+    
+    $showTime = Math.floor($setTime / 60) +"분 " + ($setTime % 60) + "초" // 남은 시간 계산
+    $setTime --;
+    console.log('1초 감소');
+    
+    if($setTime > 0) {
+        $('#timer').text($showTime);
+    }
+    else{
+        clearInterval(tid);
+        $('#timer').text("인증 시간 만료");
+        $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
+        $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
+    }
+}
+
+$codeChk.on('click', function () {
+    $.ajax({
+        type : "POST",
+        url : "codeConfirm",
+        dataType : "text",
+        data : {
+            "email" : $('#email').val(),
+            "authCode" : $code.val()
+        },
+    })
+    .done(function(data) {
+        console.log(data);
+        if(data == $code.val()) {
             console.log('successed');
-            console.log($code.val());
+            console.log("code value : " + $code.val());
+            console.log('data : ' + data);
+            clearInterval(tid);
+            $('#timer').remove();
             $msgChk.text('인증되었습니다.');
             $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
+            $codeBtn.attr('class', 'btn btn-light border btn-sm disabled'); // 코드 발송 버튼 비활성화
             email.disabled = true; // 이메일 입력값 비활성화
             $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
-
-            $codeChk.append(`<input type='hidden' id='hiddenCode' value=${data}>`)
+            
+            $codeChk.append(`<input type='hidden' id='hiddenCode' value=${data}>`);
         }
-    });
-}
+        else{
+            console.log('failed')
+            console.log("code value : " + $code.val());
+            console.log('data : ' + data);
+            $msgChk.text("인증번호가 올바르지 않습니다.")
+        }
+    })
+})
+
 
 function allChk() {
     
