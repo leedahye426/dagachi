@@ -38,17 +38,13 @@ public class ProjectController {
     @PostMapping("/project/project_register")
     public String projectRegister(MultipartHttpServletRequest multiReq) throws IOException {
         String team_name = multiReq.getParameter("team_name");
-//        System.out.println(team_name);
         String project_title = multiReq.getParameter("project_title");
-//        System.out.println(project_title);
         String project_content = multiReq.getParameter("project_content");
-//        System.out.println(project_content);
         MultipartFile file = multiReq.getFile("file");
-        System.out.println(multiReq.getParameter("member_email"));
         String[] members_email = StringUtils.split(multiReq.getParameter("member_email"), "{,}");
         for(String email: members_email) System.out.println(email);
         projectService.register(file, team_name, project_title, project_content, members_email);
-        return "project/project_detail";
+        return "project/detail";
     }
 
     @GetMapping("/project/personal_project")
