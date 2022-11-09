@@ -14,10 +14,10 @@ public class Member {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
-    private int id;
+    private Long id;
 
     @Column(name = "member_code")
-    private int code;
+    private Long code;
 
     @Column(name = "member_name")
     private String name;

@@ -61,7 +61,7 @@ public class MemberController {
 
         // 멤버 생성
         Member member = new Member();
-        member.setCode(1); // 개인회원 코드
+        member.setCode(1L); // 개인회원 코드
         member.setName(form.getName()); // 이름
         member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
 
