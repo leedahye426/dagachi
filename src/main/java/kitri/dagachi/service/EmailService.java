@@ -18,7 +18,7 @@ public class EmailService {
     @Autowired
     JavaMailSender emailSender;
 
-    public static final String ePw = createKey();
+    public String ePw;
 
     private MimeMessage createMessage(String to) throws Exception{
         System.out.println("보내는 대상 : " + to);
@@ -83,7 +83,9 @@ public class EmailService {
 //    그리고 bean으로 등록해둔 javaMail 객체를 사용해서 이메일 send!
 //    @Override
     public String sendSimpleMessage(String to) throws Exception {
-        
+
+        ePw = createKey();
+
         MimeMessage message = createMessage(to); // 메일 발송
         try { // 예외처리
             emailSender.send(message);
