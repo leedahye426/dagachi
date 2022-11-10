@@ -106,7 +106,7 @@ $codeBtn.on('click', function () {
     // .done(function(data) {
         .done(function() { 
         tid = setInterval('cntTimer()', 1000);
-        alert("인증번호 발송 완료")
+        // alert("인증번호 발송 완료")
         // console.log("data : " + data)
         // $returnCode = data;
         $("#code").removeAttr('disabled'); // 인증코드 박스 활성화

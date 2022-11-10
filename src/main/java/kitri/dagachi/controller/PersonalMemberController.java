@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("members/")
 @RequiredArgsConstructor
-public class MemberController {
+public class PersonalMemberController {
 
     @Autowired
     private final MemberService memberService;
