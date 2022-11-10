@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.*;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,7 +22,12 @@ public class MemberService {
 
         memberRepository.save(member);
         System.out.println("member : " + member);
+
         return member.getId();
+    }
+
+    public List<Member> findmembers(Long project_id) {
+        return memberRepository.findByProjectId(project_id);
     }
 
     // 비밀번호 패턴 검증

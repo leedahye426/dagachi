@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Setter @Getter
 @Entity(name = "project_members")
-@RequiredArgsConstructor
 public class ProjectMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

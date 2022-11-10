@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.sql.DataSource;
 import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
@@ -17,18 +20,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProjectRepository {
 
-//    private final DataSource dataSource;
-//
-//    public ProjectRepository(DataSource dataSource) {
-//        this.dataSource = dataSource;
-//    }
+//    EntityManagerFactory emf = Persistence.createEntityManagerFactory("emf");
+//    private final EntityManager em = emf.createEntityManager();
+
     private final EntityManager em;
+//    EntityTransaction transaction = em.getTransaction();
 
     public void save(Project project) {
+        System.out.println(project);
         em.persist(project);
     }
 
     public void saveProjectMember(ProjectMember projectMember) {
+//        transaction.commit();
         em.persist(projectMember);
     }
     public List<Project> findAll() {

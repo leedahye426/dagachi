@@ -5,27 +5,33 @@
 <!-- Responsive navbar-->
 <div th:replace="fragments/nav :: nav"/>
 <!--content-->
-<div class="">
-    <h4> <strong >프로젝트명 </strong>
-        <span th:text="' ' + ${project.project_title}"></span>
-    </h4>
-    <br>
-    <div th:text="'      ' + ${project?.project_content}"></div>
-    <br>
-    <h4> <strong >팀명 </strong>
-        <span th:text="${project.team_name}"></span>
-    </h4>
-<!--    <div class="members">-->
-<!--        <dl th:each="member : ${members}">-->
-<!--            <dd>-->
-<!--                <span th:text="${member.name}"> </span>-->
-<!--            </dd>-->
-<!--        </dl>-->
-<!--    </div>-->
-    <div class="portfolio">
-        <iframe class="mx-auto" th:src="${project.saved_path}" width="80%" height="700" align="center" title="포트폴리오">
+<div class="container row-cols-10">
+    <span class="card col p-1 mx-3 my-5 border">
+        <h4 class="m-3"> <strong >프로젝트명 </strong>
+            <span th:text="${' '} + ${project.project_title}"></span>
+        </h4>
+        <br>
+        <span class="m-3" th:text="${'      '} + ${project.project_content}"></span>
+        <br>
+        <h4 class="m-3"> <strong >팀명 </strong>
+            <span th:text="${project.team_name}"></span>
+        </h4>
+
+        <div class="project_members row row-cols-3"  >
+            <dl th:each="project_member : ${project_members}" class="card m-3 col p-1 mx-3 my-5 border">
+                <dd>
+                    <p th:text="'이름 : ' + ${project_member.name}"> </p>
+                    <p th:text="'이메일 : ' + ${project_member.email}"></p>
+                </dd>
+            </dl>
+        </div>
+    </span>
+
+    <div class="portfolio col p-1 mx-3 my-5 border">
+        <iframe class="mx-auto " th:href="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오">
         </iframe>
     </div>
+</div>
 
 
 </div>

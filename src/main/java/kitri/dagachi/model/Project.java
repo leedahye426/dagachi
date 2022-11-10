@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity(name="project_board")
 @Getter @Setter
-@EntityListeners(AuditingEntityListener.class)
-@RequiredArgsConstructor
-//@Table(name="project_board")
+//@EntityListeners(AuditingEntityListener.class)
 public class Project {
 
     @Id
@@ -32,16 +30,16 @@ public class Project {
     private String project_content;
 
 
-//    public Project() {};
+    public Project() {};
 //
 //    @Builder
-//    public Project(Long project_id, String team_name, String saved_path, Long member_id, String project_title, String org_name, String saved_name) {
-//        this.project_id = project_id;
-//        this.team_name = team_name;
-//        this.saved_path = saved_path;
-//        this.member_id = member_id;
-//        this.project_title = project_title;
-//        this.org_name = org_name;
-//        this.saved_name = saved_name;
-//    }
+    public Project(Long project_id, String team_name, String saved_path, Long member_id, String project_title, String org_name, String saved_name) {
+        this.project_id = project_id;
+        this.team_name = team_name;
+        this.saved_path = saved_path;
+        this.member_id = member_id;
+        this.project_title = project_title;
+        this.org_name = org_name;
+        this.saved_name = saved_name;
+    }
 }

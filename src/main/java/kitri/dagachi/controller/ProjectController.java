@@ -5,6 +5,7 @@ import kitri.dagachi.model.Project;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -19,15 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ProjectController {
 
     private final ProjectService projectService;
     private final MemberService memberService;
-    public ProjectController(ProjectService projectService, MemberService memberService) {
-        this.projectService = projectService;
-        this.memberService = memberService;
-    }
-
 
     @GetMapping("/project/project_register")
     public String projectRegisterForm(Model model) {
@@ -41,10 +38,14 @@ public class ProjectController {
         String project_title = multiReq.getParameter("project_title");
         String project_content = multiReq.getParameter("project_content");
         MultipartFile file = multiReq.getFile("file");
-        String[] members_email = StringUtils.split(multiReq.getParameter("member_email"), "{,}");
+        String[] members_email = multiReq.getParameterValues("member_email");
         for(String email: members_email) System.out.println(email);
+
         projectService.register(file, team_name, project_title, project_content, members_email);
-        return "project/detail";
+
+        return "redirect:/project/personal_project";
+
+
     }
 
     @GetMapping("/project/personal_project")
@@ -57,8 +58,9 @@ public class ProjectController {
     @GetMapping("/project/{project_id}/detail")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model){
         Project project = projectService.findProject(project_id);
-        //members
+        List<Member> project_members = memberService.findmembers(project_id);
         model.addAttribute("project", project);
+        model.addAttribute("project_members", project_members);
         return "project/project_detail";
     }
 }

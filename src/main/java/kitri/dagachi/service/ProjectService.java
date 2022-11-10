@@ -14,6 +14,7 @@ import kitri.dagachi.model.ProjectMember;
 import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.ProjectRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,28 +22,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-    public ProjectService(ProjectRepository projectRepository, MemberRepository memberRepository) {
-        this.projectRepository = projectRepository;
-        this.memberRepository = memberRepository;
-    }
 
 
     private String fileDir="D:/test/";
 
-    @Transactional
+
     public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email) throws IOException {
         if (file.isEmpty()) {
             return null;
         }
         LocalDateTime upload_date = LocalDateTime.now();
         String org_name = file.getOriginalFilename();
-        String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd_HHmmss_")).toString();
+        String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
         String saved_name = uuid + org_name;
         String saved_path = fileDir + saved_name;
+//        String extension = org_name.substring(org_name.lastIndexOf(".")); 확장자 추출
 
         // project 엔티티 생성
         Project project = new Project();
@@ -57,19 +56,34 @@ public class ProjectService {
         // 실제로 로컬에 파일명으로 저장
         file.transferTo(new File(saved_path));
 
-        List<Member> team_members = new ArrayList<>();
-        for(String member_email : members_email) {
-            team_members.add(memberRepository.findEmail(member_email));
-        }
+        List<Member> team_members = new ArrayList<Member>();
+
+//        System.out.println(memberRepository.findEmail("test@test.com"));
+
+
+//        System.out.println(project.getProject_id());
+//        System.out.println(project.getProject_title());
+//        System.out.println(project.getProject_content());
+//        System.out.println(project.getOrg_name());
+//        System.out.println(project.getMember_id());
+//        System.out.println(project.getSaved_name());
+//        System.out.println(project.getTeam_name());
+//        System.out.println(project.getSaved_path());
+//        System.out.println(project.getUpload_date());
 
         // 데이터베이스에 정보 저장
         projectRepository.save(project);
 
+        for(String member_email : members_email) {
+            team_members.add(memberRepository.findByEmail(member_email));
+        }
+        System.out.println("------------------------------------");
         for(Member team_member : team_members) {
             ProjectMember projectMember = new ProjectMember();
             projectMember.setProject_id(project.getProject_id());
+//            System.out.println("p id : "+project.getProject_id());
             projectMember.setMember_id(team_member.getId());
-
+//            System.out.println("m id : "+team_member.getId());
             projectRepository.saveProjectMember(projectMember);
         }
 
