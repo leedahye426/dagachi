@@ -1,22 +1,18 @@
 package kitri.dagachi.controller;
 
-import kitri.dagachi.model.Post;
 //import kitri.dagachi.service.FileService;
+import ch.qos.logback.core.util.SystemInfo;
+import kitri.dagachi.model.Post;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
+//import org.springframework.ui.Model;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,29 +24,191 @@ public class PostingController {
     private final PostRepository postRepository;
 
 
-//    public String posting(Model model) {
-//        model.addAttribute("form", new PostForm());
 
+    //메인페이지에서 채용공고 메뉴 클릭 시
     @GetMapping("/enter/enter_post")
     public String posting(){
+
         return "/post/enterPosting";
     }
 
-//    @PostMapping("/enter/enter_post")
-//    public String posting(Model model){
-//        model.addAttribute("form", new PostForm());
+    //공고등록하기 버튼 클릭시
+    @GetMapping("/enter/register")
+    public String postingRegisterForm(){
+        return "/post/postingRegisterForm";
+    }
+
+    //공고보기 클릭 시 상세페이지 이동
+        @GetMapping("/enter/detail")
+    public String postingDetail(Model model, Integer id){
+
+//        model.addAttribute("post",postservice.detail(id));
+        return "/post/postDetail";
+    }
+
+
+    //select
+    @GetMapping("/enter/enter_list")
+    public String enterPosting(Model model)
+    {
+
+        List<Post> post = postservice.posting();
+
+        model.addAttribute("post",post);
+        System.out.println(post);
+
+//        if(post != null)
+//        {
+//                model.addAttribute("post",post);
+//        }
+//       else {
+//            model.addAttribute("post", new Post());
+//        }
+        return "/post/enterPosting";
+    }
+
+//    @GetMapping("/enter/enter_post#")
+//    public String enterPosting(Model model)
+//    {
+//        List<Post> post = postservice.posting();
+//        model.addAttribute("post", post );
 //        return "/post/enterPosting";
 //    }
 
-    @GetMapping("/enter/register")
-    public String enter_register() {
+    //insert
 
-        return "/post/enter_register";
+//    public String postingRegister(@RequestParam("company_name") String companyName,
+//                                  @RequestParam("posting_title") String postingTitle,
+//                                  @RequestParam("posting_content") String postingContent,
+//                                  PostForm postForm){
 
+//            Post post = new Post();
+//      post.setPostingId(1L);
+//        post.setCompanyName(companyName);
+//        post.setPostingTitle(postingTitle);
+//        post.setPostingContent(postingContent);
+//
+//        postservice.register(post);
+//        return "/post/enterPosting";
+//}
+
+
+@PostMapping("/enter/enter_post")
+    public String postingRegister(Post post) {
+
+        System.out.println();
+
+        postservice.register(post);
+        return "/post/enterPosting";
     }
 
-    @PostMapping("/enter/enter_post")
-    public String enter_resister(PostForm postForm) {
+//        a , b, c
+
+
+
+
+//    @GetMapping("/enter/enter_post#!")
+//    public String list(Model model){
+//
+//        model.addAttribute("post",new PostForm());
+//
+//
+//    return "/post/enterPosting";
+//
+//    }
+
+
+//    @GetMapping("/enter")
+//    public String list2(Model model){
+//
+//    List<PostForm> post = postservice.findPostings();
+//
+//    model.addAttribute("post", post);
+//
+//
+//
+//        return "/post/enterPosting";
+//
+//    }
+
+//
+//    @GetMapping("/enter/register")
+//    public String enter_register() {
+//
+//        return "/post/enter_register";
+//
+//    }
+//
+//    @PostMapping("/enter/enter_post#!")
+//    public String enter_registers(PostForm postForm) {
+//
+//        postservice.savePost(postForm);
+//        return "/enter/enterPosting";
+//    }
+
+//
+//    @PostMapping("/enter/enter_post")
+//    public String enter_register(PostForm postForm) {
+//
+//        postservice.savePost(postForm);
+//        return "post/enterPosting";
+//    }
+
+//    @GetMapping("/post/post_detail")
+//    public String post_detail()
+//    {
+//        return "";
+//    }
+
+
+
+//    @PostMapping("/enter/post_detail")
+//    public String enter_resister(MultipartHttpServletRequest mrq) {
+//            String Comapany_Name = mrq.getParameter(Company_Name);
+//        return "post/post_detail";
+//
+//    }
+
+
+
+
+
+
+
+
+
+//    @PostMapping("/enter/enter_post")
+//    public String enter_resister(String Company_Name, String Posting_Title,String Posting_Content) {
+//
+//
+//        postservice.savePost(postForm);
+//        return "/post/enterPosting";
+//
+//        //        postservice.findPostings();
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        post.setPosting_Content(post.getPosting_Content());
 //        post.setPosting_Title(post.getPosting_Title());
@@ -61,10 +219,7 @@ public class PostingController {
 
 
 //        postRepository.findAll();
-        postservice.savePost(postForm);
-        postservice.findPostings();
-        return "/post/enterPosting";
-    }
+
 
 
 //        @PostMapping("enter/register")
@@ -76,14 +231,22 @@ public class PostingController {
 //    }
 
 
-    @PostMapping("enter/register")
-    public String updateItem(Model model) {
-        model.addAttribute("form", new PostForm());
+//    @GetMapping("/enter/upload")
+//    public String updateItem(Model model) {
+//       List<PostForm> postFormList = Post.selectList("post.selectPostList");
+//
+//       for(PostForm pf : postFormList){
+//           System.out.println(pf);
 
 
-        postservice.upload();
 
-        return "/post/enterPosting";
+
+
+
+//    postRepository.findAll();
+//        postservice.upload();
+
+
     }
 
 
@@ -105,7 +268,7 @@ public class PostingController {
 
 //        postservice.savePost(postForm);
 
-}
+
 
 
 

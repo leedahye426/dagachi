@@ -1,9 +1,10 @@
 package kitri.dagachi.service;
 
-import kitri.dagachi.controller.PostForm;
+import kitri.dagachi.model.Post;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,16 +14,71 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class postService {
+
+        @Autowired
         private final PostRepository postRepository;
 
-        @Transactional
-        public void savePost(PostForm postForm) {
-                postRepository.save(postForm);
+        //글 작성 처리
+        public void register(Post post){
+
+
+                postRepository.save(post);
+                System.out.println("service 동작완료");
+        }
+        //리스트처리
+        public List<Post> posting(){
+
+
+                return postRepository.findAll();
+
         }
 
-        public List<PostForm> findPostings() {
-                return postRepository.findAll();
-        }
+        //특정게시물 불러오기
+//        public PostForm detail(Integer id){
+//                return postRepository.findID(id).get();
+//        }
+
+
+
+
+//        @Transactional
+//        public void savePost(PostForm postForm) {
+//                postRepository.save(postForm);
+//
+//        }
+//
+//        public List<PostForm> findPostings() {
+//                return postRepository.findAll();
+//        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        public void upload(Long Posting_ID, String Company_Name,String Posting_Title,String Posting_Content,String Upload_Date, String Member_ID) {
 //                PostForm postForm = postRepository.findAll();
@@ -30,9 +86,9 @@ public class postService {
 //        }
 
 
-        public List<PostForm> upload() {
-                return postRepository.findAll();
-        }
+//        public List<PostForm> upload() {
+//                return postRepository.findAll();
+//        }
 
 
 
