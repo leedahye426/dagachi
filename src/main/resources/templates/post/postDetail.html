@@ -8,58 +8,35 @@
 
 
 
-<!--        <form name="enter_register" action = "/enter/post_detail" method="post">-->
+
     <table>
         <thead>
-<!--        <tr>-->
-<!--            <td>번호</td>-->
-<!--            <td><input type="text" name ="" value=""/></td>-->
-<!--        </tr>-->
+
         <tr>
             <td>회사명</td>
-            <td><input type="text" name ="Company_Name" value=""/></td>
+            <td><input th:text="${post.companyName}" name ="companyName" ></td>
         </tr>
 
         <tr>
             <td>공고제목</td>
-            <td><input type="text" name ="Posting_Title" value=""/></td>
+            <td><p th:text="${post.posting_title}" name ="postingTitle" ></p></td>
         </tr>
 
         <tr>
             <td>공고내용</td>
-             <form action="/upload" method="post" enctype="multipart/form-data">
-                 <td> <img id = "preview" class="bd-placeholder-img card-img-top" width="220" height="115" name ="Posting_Content" value="" >
 
-            <td> <input type="text" name="Posting_Content"></td>
+            <td> <p th:text="${post.posting_content}" name="postingContent"></p></td>
 
-<!--            <img id = "preview" class="bd-placeholder-img card-img-top" width="220" height="115" name ="Posting_Content" value="" >-->
-<!--                 <input type="text" name ="Posting-Content" value="" />-->
-<!--             <input type="file" accept="image/*,.txt" name ="Posting-file" onchange="readURL(this);" value="" required/></form></td>-->
-            <input type="file"  accept="image/*,.txt" name ="Posting-file" value="" required/></td>
-             </form>
+
         </tr>
 
         </thead>
-<!--        <tbody>-->
-<!--        <tr th:each="post : ${post}">-->
-<!--&lt;!&ndash;            <td th:text ="${post.id}"></td>&ndash;&gt;-->
-<!--            <td th:text ="${post.Posting_Content}"></td>-->
-<!--            <td th:text ="${post.Company_Name}"></td>-->
-<!--            <td th:text ="${post.Posting_Title}"></td>-->
-<!--            <td th:text ="${post.Member_ID}"></td>-->
-<!--&lt;!&ndash;            <td th:text ="${post.Upload_Date}"></td>&ndash;&gt;-->
-<!--            <td>-->
-
-<!--        </tr>-->
-<!--        </td>-->
-<!--        </tbody>-->
 
 
     </table>
-        <button type="submit" class="btn btn-primary" value="">등록</button>
 
-    </form>
-    </div>
+
+
 
 <!-- Image element - set the background image for the header in the line below-->
 

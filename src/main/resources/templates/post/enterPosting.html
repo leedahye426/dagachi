@@ -4,6 +4,69 @@
 <html lang="en">
 <div th:replace="fragments/nav :: nav" />
 
+<!--        <form>-->
+
+<!--            <div class="layout" style="width : 500px; margin:auto; ,margin-top :40px;" >-->
+<!--                   <div class = "container mt-5 row clo-lg-8"  >-->
+<!--                 <table>-->
+<!--                     <thead>-->
+<!--                     <tr>-->
+<!--                            <th th:text = "공고내용 : " + ${post?.postingContent}>공고내용</th>-->
+<!--                         <br>-->
+<!--                            <th th:text = "회사명 : " + ${post?.companyName}>회사명</th>-->
+<!--                         <br>-->
+<!--                            <th th:text="공고제목 : " + ${post?.postingTitle} >공고제목</th>-->
+<!--                         <br>-->
+
+<!--          </tr>-->
+<!--                   </thead>-->
+<!--&lt;!&ndash;                       <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                       <tr th:each="post : ${post}">&ndash;&gt;-->
+<!--&lt;!&ndash;                           <td th:text="${post?.postingContent}">11</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                           <td th:text="${post?.companyName}">22</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                           <td th:text="${post?.postingTitle}">44</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </tbody>&ndash;&gt;-->
+<!--                 </table>-->
+<!--             </div>-->
+<!--     </div>-->
+<!-- </form>-->
+
+
+<div class="container d-flex justify-content-around pb-2">
+    <div class="card" style="width: 18rem; height: 21rem;">
+        <img src="images\hyundai.gif" class="card-img-top" id="company_image" alt="img">
+
+        <tr>
+            <th th:text = "${post?.companyName}">회사명</th>
+            <br>
+            <th th:text=" ${post?.postingTitle} ">공고제목</th>
+            <br>
+
+        </tr>
+
+<!--        <div class="card-body b">-->
+<!--            <h5 class="card-title fw-bold" id="company_name"></h5>-->
+<!--            <p class="card-text" id="posting"></p>-->
+            <div class="border-top pt-2" id="keyword" style="font-size: 0.8em;"></div>
+            <a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a>
+            <div class="d-flex flex-row mt-1">
+<!--                <button type="button" class="btn btn-sm" onclick="favorite()">-->
+<!--                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+<!--                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+<!--                    </svg>-->
+
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
 <!--        <div class="container d-flex justify-content-between" >-->
 
           <!-- <nav class="d-flex align-items-center" >
@@ -12,27 +75,27 @@
             </svg>
           </nav> -->
 
-        <main class="py-5" style="width: 100%;">
-            <div class="text-center">
+<!--        <main class="py-5" style="width: 100%;">-->
+<!--            <div class="text-center">-->
                 <!-- 채용공고 row1 -->
-                <div class="container d-flex justify-content-around pb-2">
-                  <div class="card" style="width: 18rem; height: 21rem;">
-                    <img src="images\hyundai.gif" class="card-img-top" id="company_image" alt="img">
-                    <div class="card-body b">
-                      <h5 class="card-title fw-bold" id="company_name"></h5>
-                      <p class="card-text" id="posting"></p>
-                      <div class="border-top pt-2" id="keyword" style="font-size: 0.8em;"></div>
-                      <a href="/post/post_detail" class="btn btn-primary mt-2">공고 바로가기</a>
-                      <div class="d-flex flex-row mt-1">
-                      <button type="button" class="btn btn-sm" onclick="favorite()">
-                        <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                      </svg>
-                      <span id="like"></span>
-                    </button>
-                      </div>
-                    </div>
-                  </div>
+<!--                <div class="container d-flex justify-content-around pb-2">-->
+<!--                  <div class="card" style="width: 18rem; height: 21rem;">-->
+<!--                    <img src="images\hyundai.gif" class="card-img-top" id="company_image" alt="img">-->
+<!--                    <div class="card-body b">-->
+<!--                      <h5 class="card-title fw-bold" id="company_name"></h5>-->
+<!--                      <p class="card-text" id="posting"></p>-->
+<!--                      <div class="border-top pt-2" id="keyword" style="font-size: 0.8em;"></div>-->
+<!--                      <a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a>-->
+<!--                      <div class="d-flex flex-row mt-1">-->
+<!--                      <button type="button" class="btn btn-sm" onclick="favorite()">-->
+<!--                        <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+<!--                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+<!--                      </svg>-->
+<!--                      <span id="like"></span>-->
+<!--                    </button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
 <!--                  <div class="card" style="width: 18rem; height: 21rem;">-->
 <!--                    <img src="images\sba.png" class="card-img-top" id="company_image" alt="img">-->
@@ -131,33 +194,6 @@
 
 
 
-        <form>
-            <div class="layout" style="width : 500px; margin:auto; ,argin-top :40px;">
-                   <div class = "container mt-5 row clo-lg-8" >
-
-                    <table>
-                        <thead>
-                       <tr>
-                            <th>공고내용</th>
-                            <th>회사명</th>
-                            <th>공고제목</th>
-                            <th>담당자</th>
-                            <th>등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="post : ${post}">
-                            <td th:text = "${post.Posting_Content}"></td>
-                            <td th:text = "${post.Company_Name}"></td>
-                            <td th:text = "${post.Posting_Title}"></td>
-                            <td th:text = "${post.Member_ID}"></td>
-                            <td th:text = "${post.Upload_Date}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </div>
-        </div>
-     </form>
                     <button type="button" class="btn-register" style="width:20 high:150" onclick="location.href='/enter/register'"><span style="font-weight:bold">공고 등록하기</span></button>
                 </div>
             </div>
