@@ -18,7 +18,7 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public int join(Member member) {
+    public Long join(Member member) {
 
         memberRepository.save(member);
         System.out.println("member : " + member);

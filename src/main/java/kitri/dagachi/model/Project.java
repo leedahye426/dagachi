@@ -9,24 +9,27 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity(name="project_board")
 @Getter @Setter
 @EntityListeners(AuditingEntityListener.class)
 @RequiredArgsConstructor
 //@Table(name="project_board")
-public class Project extends BaseTimeEntity{
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long project_id;
     private String team_name;
     private String saved_path;
-
+    private LocalDateTime upload_date;
     private Long member_id;
     private String project_title;
     private String org_name;
     private String saved_name;
+    private String project_content;
 
 
 //    public Project() {};

@@ -3,6 +3,7 @@ package kitri.dagachi.repository;
 import java.util.ArrayList;
 import java.util.List;
 import kitri.dagachi.model.Project;
+import kitri.dagachi.model.ProjectMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,10 +28,14 @@ public class ProjectRepository {
         em.persist(project);
     }
 
+    public void saveProjectMember(ProjectMember projectMember) {
+        em.persist(projectMember);
+    }
     public List<Project> findAll() {
         return em.createQuery("select p from project_board p", Project.class)
                 .getResultList();
     }
+
 
     public Project findOne(Long project_id) {
         return em.find(Project.class, project_id);

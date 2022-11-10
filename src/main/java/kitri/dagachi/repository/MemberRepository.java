@@ -20,7 +20,6 @@ public class MemberRepository {
     public Member findEmail(String email) {
         return em.find(Member.class, email);
     }
-
     public Member findPasswd(String passwd) {
         return em.find(Member.class, passwd);
     }
