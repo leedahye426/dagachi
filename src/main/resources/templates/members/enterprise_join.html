@@ -11,13 +11,15 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
         <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-white border boredr-bottom
                     d-flex justify-content-between">
             <div class="container">
-                <a class="navbar-brand text-dark" href="/index.html"><img src="images\dagachi_logo2.jpg" width="200" height="50"></a>
+                <a class="navbar-brand text-dark" href="/index.html"><img src="/images/dagachi_logo.jpg" width="200" height="50"></a>
                 <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -60,36 +62,53 @@
             <form class="mx-auto px-4" style="width: 500px;">
                 <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기업회원 가입</h4><br>
                 <hr style="width: 270px;">
-                <div class="mb-3 ">
+                
+            <!-- 
+                <div class="mb-3 form-label">
+                    <label for="name" class="form-label ">대표자명</label><br>
+                    <input type="text" name="name" id="name" class="col-4">
+                </div> 
+            -->
+                <div class="mb-3 form-label">
                     <label for="name" class="form-label ">기업명</label><br>
-                    <input type="text" name="name" id="name" class="col-7">
-                    <br>
+                    <input type="text" name="name" id="enterName" class="col-7">
                 </div>
 
-                <div class="mb-3" class="form-label">
+                <div class="mb-3 form-label">
                     <label for="business_number">사업자 번호</label><br>
-                    <input type="number" name="business_number" id="business_number" class="col-7">
-                    <br>
+                    <input type="text" name="business_number" id="business_number" class="col-7" maxlength='12'>
+                    <div class="message-name"></div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 form-label">
+                    <label for="name" class="form-label ">기업주소</label><br>
+                    <input type="text" name="name" id="enterAddr" class="col-7">
+                    <button type="button" class="btn btn-light border btn-sm" id="addrSearch">주소명 검색</button>
+                </div>
+
+                <div class="mb-3 form-label">
                     <label for="email" class="form-label">이메일 </label><br>
                     <input type="email" name="email" id="email" class="col-7">
                     <button type="button" class="btn btn-light border btn-sm">인증코드 받기</button>
-                    <br>
+                    <div class="message-name"></div>
                 </div>
 
-                <div class="mb-3" class="form-label">
+                <div class="mb-3 form-label">
                     <label for="code">인증코드 </label><br>
                     <input type="text" name="code" id="code" disabled class="col-7">
                     <button type="buton" class="btn btn-light border btn-sm disabled" >인증</button>
-                    <br>
+                    <div class="message-name"></div>                
                 </div>
 
-                <div class="mb-3" class="form-label">
+                <div class="mb-3 form-label">
                     <label for="password">비밀번호 </label><br>
                     <input type="password" name="password" id="password" class="col-7">
-                    <br>
+                    <div class="message-name"></div>
+                </div>
+                <div class="mb-3 form-label">
+                    <label for="pwdChk">비밀번호 </label><br>
+                    <input type="password" name="pwdChk" id="pwdChk" class="col-7">
+                    <div class="message-name"></div>
                 </div>
                 <br>
                 <!-- <div class="mb-3" class="form-label">
@@ -110,6 +129,7 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
+        <script src="/js/enterJoinJs.js"></script>
     </body>
 </html>
