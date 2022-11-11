@@ -5,6 +5,7 @@ import java.util.List;
 import kitri.dagachi.model.Project;
 import kitri.dagachi.model.ProjectMember;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -40,8 +41,17 @@ public class ProjectRepository {
                 .getResultList();
     }
 
-
+    public List<Project> findByTitle(String keyword) {
+        return em.createQuery("select p from project_board p where p.project_title LIKE '%'||:keyword||'%'")
+                .setParameter("keyword", keyword)
+                .getResultList();
+    }
     public Project findOne(Long project_id) {
         return em.find(Project.class, project_id);
+    }
+
+    public void deleteById(Long project_id) {
+        Project project = findOne(project_id);
+        em.remove(project);
     }
 }
