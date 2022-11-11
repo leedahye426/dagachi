@@ -56,23 +56,11 @@ public class ProjectService {
         // 실제로 로컬에 파일명으로 저장
         file.transferTo(new File(saved_path));
 
-        List<Member> team_members = new ArrayList<Member>();
-
-//        System.out.println(memberRepository.findEmail("test@test.com"));
-
-
-//        System.out.println(project.getProject_id());
-//        System.out.println(project.getProject_title());
-//        System.out.println(project.getProject_content());
-//        System.out.println(project.getOrg_name());
-//        System.out.println(project.getMember_id());
-//        System.out.println(project.getSaved_name());
-//        System.out.println(project.getTeam_name());
-//        System.out.println(project.getSaved_path());
-//        System.out.println(project.getUpload_date());
 
         // 데이터베이스에 정보 저장
         projectRepository.save(project);
+
+        List<Member> team_members = new ArrayList<Member>();
 
         for(String member_email : members_email) {
             team_members.add(memberRepository.findByEmail(member_email));
@@ -95,5 +83,14 @@ public class ProjectService {
 
     public Project findProject(Long project_id) {
         return projectRepository.findOne(project_id);
+    }
+    public List<Project> findProjects(String keyword) {
+        List<Project> projects = projectRepository.findByTitle(keyword);
+        for(Project p : projects) System.out.println(p);
+        return projects;
+    }
+
+    public void deleteProject(Long project_id) {
+        projectRepository.deleteById(project_id);
     }
 }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head th:replace="fragments/header :: header" />
+  <link href="/css/project.css" rel="stylesheet" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <body>
 <!-- Responsive navbar-->
-    <div th:replace="fragments/nav :: nav"/>
+    <div th:replace="fragments/personal_nav :: personal_nav"/>
 
     <!-- Content section-->
       <div class=" container row align-items-center  mx-auto mt-5">
@@ -26,7 +27,7 @@
                     <td id="box">
                       <br>
                       <p>
-                        <input type = "email" id = "member_email" name = "member_email" placeholder="dagachi@example.com" size=20 required>
+                        <input type = "email" id = "member_email" name = "member_email" placeholder="dagachi@example.com" size=20 required >
                         <input type="button" id="plus" value="+" size="3"><br>
                       </p>
                     </td>

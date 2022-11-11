@@ -4,31 +4,33 @@ import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Project;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class ProjectController {
+public class PersonalProjectController {
 
     private final ProjectService projectService;
     private final MemberService memberService;
-
+    @GetMapping("/project/personal_project_list")
+    public String list(Model model) {
+        List<Project> projects = projectService.findAllProjects();
+        model.addAttribute("projects", projects);
+        return "project/personal_project_list";
+    }
     @GetMapping("/project/project_register")
-    public String projectRegisterForm(Model model) {
-        model.addAttribute("projectForm", new ProjectForm());
+    public String projectRegisterForm() {
         return "project/projectRegisterForm";
     }
 
@@ -43,19 +45,12 @@ public class ProjectController {
 
         projectService.register(file, team_name, project_title, project_content, members_email);
 
-        return "redirect:/project/personal_project";
+        return "redirect:/project/personal_project_list";
 
 
     }
 
-    @GetMapping("/project/personal_project")
-    public String list(Model model) {
-        List<Project> projects = projectService.findAllProjects();
-        model.addAttribute("projects", projects);
-        return "project/pro_per";
-    }
-
-    @GetMapping("/project/{project_id}/detail")
+    @GetMapping("/project/personal/{project_id}/detail")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model){
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
@@ -63,4 +58,19 @@ public class ProjectController {
         model.addAttribute("project_members", project_members);
         return "project/project_detail";
     }
+
+    @GetMapping("/project/search")
+    public String search(@RequestParam String keyword, Model model) {
+        List<Project> projects = projectService.findProjects(keyword);
+        model.addAttribute("projects", projects);
+
+        return "project/personal_project_list";
+    }
+
+    @GetMapping("/project/personal/{project_id}/delete")
+    public String delete(@PathVariable Long project_id) {
+        projectService.deleteProject(project_id);
+        return "redirect:/project/personal_project_list";
+    }
+
 }

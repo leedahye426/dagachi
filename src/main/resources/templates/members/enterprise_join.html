@@ -19,7 +19,7 @@
         <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-white border boredr-bottom
                     d-flex justify-content-between">
             <div class="container">
-                <a class="navbar-brand text-dark" href="/index.html"><img src="/images/dagachi_logo.jpg" width="200" height="50"></a>
+                <a class="navbar-brand text-dark" href="/"><img src="/images/dagachi_logo.jpg" width="200" height="50"></a>
                 <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,8 @@
 
         <div class="container row align-items-center mx-auto mt-5">
             
-            <form class="mx-auto px-4" style="width: 500px;">
+            <form class="mx-auto px-4" style="width: 500px;" role="form"
+            action="enterprise" method="post" id="joinForm" autocomplete="off">
                 <h4 class="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기업회원 가입</h4><br>
                 <hr style="width: 270px;">
                 
@@ -69,46 +70,50 @@
                     <input type="text" name="name" id="name" class="col-4">
                 </div> 
             -->
-                <div class="mb-3 form-label">
-                    <label for="name" class="form-label ">기업명</label><br>
+                <div class="mb-3">
+                    <label for="name">기업명</label><br>
                     <input type="text" name="name" id="enterName" class="col-7">
+                    <div class="msgName"></div>
                 </div>
 
-                <div class="mb-3 form-label">
-                    <label for="business_number">사업자 번호</label><br>
-                    <input type="text" name="business_number" id="business_number" class="col-7" maxlength='12'>
-                    <div class="message-name"></div>
+                <div class="mb-3">
+                    <label for="business_number">사업자 번호 ('-'없이 입력)</label><br>
+                    <input type="text" name="bsNum" id="business_number" class="col-7" maxlength='10'>
+                    <button type="button" class="btn btn-light border btn-sm" id="bnChk">진위 확인</button>
+                    <input type='hidden' id='hiddenBn' value="">
+                    <div class="msgBn"></div>
                 </div>
 
-                <div class="mb-3 form-label">
-                    <label for="name" class="form-label ">기업주소</label><br>
-                    <input type="text" name="name" id="enterAddr" class="col-7">
+                <div class="mb-3">
+                    <label for="name">기업주소</label><br>
+                    <input type="text" name="addr" id="enterAddr" class="col-7" readonly="readOnly">
                     <button type="button" class="btn btn-light border btn-sm" id="addrSearch">주소명 검색</button>
+                    <div class="msgAddr"></div>
                 </div>
 
-                <div class="mb-3 form-label">
-                    <label for="email" class="form-label">이메일 </label><br>
+                <div class="mb-3">
+                    <label for="email">이메일 </label><br>
                     <input type="email" name="email" id="email" class="col-7">
-                    <button type="button" class="btn btn-light border btn-sm">인증코드 받기</button>
-                    <div class="message-name"></div>
+                    <button type="button" class="btn btn-light border btn-sm disabled" id="codeBtn">인증코드 받기</button>
+                    <div class="msgEmail"></div>
                 </div>
 
-                <div class="mb-3 form-label">
-                    <label for="code">인증코드 </label><br>
+                <div class="mb-3">
+                    <label for="code form-label" id="codeLabel">인증코드 </label><br>
                     <input type="text" name="code" id="code" disabled class="col-7">
-                    <button type="buton" class="btn btn-light border btn-sm disabled" >인증</button>
-                    <div class="message-name"></div>                
+                    <button type="button" class="btn btn-light border btn-sm disabled" id="codeChk" >인증</button>
+                    <div class="msgCodeChk"></div>                
                 </div>
 
-                <div class="mb-3 form-label">
-                    <label for="password">비밀번호 </label><br>
+                <div class="mb-3">
+                    <label for="password">비밀번호</label><br>
                     <input type="password" name="password" id="password" class="col-7">
-                    <div class="message-name"></div>
+                    <div class="msgPwd"></div>
                 </div>
-                <div class="mb-3 form-label">
-                    <label for="pwdChk">비밀번호 </label><br>
+                <div class="mb-3">
+                    <label for="pwdChk">비밀번호 확인</label><br>
                     <input type="password" name="pwdChk" id="pwdChk" class="col-7">
-                    <div class="message-name"></div>
+                    <div class="msgPwdChk"></div>
                 </div>
                 <br>
                 <!-- <div class="mb-3" class="form-label">
@@ -116,8 +121,8 @@
                     <input type="number" name="phone" id="phone" class="col-7">
                     <br><br>
                 </div> -->
-
-                <button type="submit" class="btn btn-secondary btn-sm col-7">회원 가입</button>
+               
+                <input type="button" class="btn btn-secondary btn-sm col-7" value="회원 가입" onclick="allChk()"></button>
             </form>
         </div>
 

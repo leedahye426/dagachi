@@ -4,6 +4,7 @@ package kitri.dagachi.service;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,8 @@ public class MemberService {
     public List<Member> findmembers(Long project_id) {
         return memberRepository.findByProjectId(project_id);
     }
+
+
 
     // 비밀번호 패턴 검증
 
