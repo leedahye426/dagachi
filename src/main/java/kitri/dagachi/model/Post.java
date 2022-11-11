@@ -31,6 +31,8 @@ public class Post {
     @Column(name = "member_id")
     private Long member_id;
 
+    @Column(name = "posting_tag")
+    private String tag;
 
 //    public PostForm get() {
 //        return "";

@@ -33,7 +33,7 @@
         <div th:replace="fragments/nav :: nav" />
 
 
- <div class ="container col-5 my-5">
+ <div class ="container col-5 my-5 width : 100%">
      <form action="/enter/enter_post#" method="post">
          <table>
              <thead>
@@ -51,13 +51,37 @@
              </tr>
              <tr>
                  <th>공고내용
-                 <td><textarea name="postingContent" style="min-height :300px;" value=""></textarea></td></th>
+                 <td><textarea name="postingContent" style="min-height :300px;  width: 300px" value=""></textarea></td></th>
              </tr>
+
+             <tr>
+                 <th>tag</th>
+                 <td>
+                 <div class="checkbox1">
+                 <input class="checkbox1" type="checkbox" name="tag" value="IT">
+                 <label class="checkbox1" >IT</label>
+             </div>
+                 <div class="checkbox2">
+                 <input class="checkbox2" type="checkbox" name="tag" value="예술">
+                 <label class="checkbox2" >예술</label>
+                 </div>
+                 <div class="checkbox3">
+                 <input class="checkbox3" type="checkbox" name="tag" value="토목">
+                 <label class="checkbox3" >토목</label>
+                 </div>
+                 <div class="checkbox3">
+                     <input class="checkbox3" type="checkbox" name="tag" value="전기">
+                     <label class="checkbox3" >전기</label>
+                 </div>
+             </td>
+
+       </tr>
 <!--             <tr>-->
 <!--                 <th>담당자-->
 <!--                 <td><input type="text" name="member_id" value=""></td></th>-->
 <!--             </tr>-->
-                 <button type="submit">등록</button>
+
+                 <button type="submit" class="">등록</button>
              </thead>
          </table>
      </form>
