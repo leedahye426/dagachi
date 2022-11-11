@@ -2,29 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: head" />
 
-<style>
-<!--    .layout{-->
-<!--            width :50px-->
-<!--            margin: 0 auto;-->
-<!--            magin-top : 40px;-->
 
-<!--    }-->
-
-<!--    .layout  input, text-->
-<!--    {-->
-<!--        width: 100%-->
-<!--        box-sizing : border-box-->
-<!--        margin-top :10px;-->
-<!--    }-->
-
-<!--    .layout textarea{-->
-<!--        width:100%-->
-<!--        margin-top :10px;-->
-<!--        min-height : 300px;-->
-<!--        }-->
-
-
-</style>
 
 
 
@@ -34,7 +12,7 @@
 
 
  <div class ="container col-5 my-5 width : 100%">
-     <form action="/enter/enter_post#" method="post">
+     <form action="/enter/enter_post" method="post">
          <table>
              <thead>
              <tr>
@@ -57,20 +35,20 @@
              <tr>
                  <th>tag</th>
                  <td>
-                 <div class="checkbox1">
-                 <input class="checkbox1" type="checkbox" name="tag" value="IT">
+                 <div class="checkbox" >
+                 <input onclick="CountChecked(this)" class="checkbox1" type="checkbox" name="tag" value="IT">
                  <label class="checkbox1" >IT</label>
-             </div>
-                 <div class="checkbox2">
-                 <input class="checkbox2" type="checkbox" name="tag" value="예술">
+
+
+                 <input onclick="CountChecked(this)" class="checkbox2" type="checkbox" name="tag" value="예술">
                  <label class="checkbox2" >예술</label>
-                 </div>
-                 <div class="checkbox3">
-                 <input class="checkbox3" type="checkbox" name="tag" value="토목">
+
+
+                 <input onclick="CountChecked(this)" class="checkbox3" type="checkbox" name="tag" value="토목">
                  <label class="checkbox3" >토목</label>
-                 </div>
-                 <div class="checkbox3">
-                     <input class="checkbox3" type="checkbox" name="tag" value="전기">
+
+
+                     <input onclick="CountChecked(this)" class="checkbox3" type="checkbox" name="tag" value="전기">
                      <label class="checkbox3" >전기</label>
                  </div>
              </td>
@@ -116,8 +94,34 @@
         <div th:replace="fragments/footer :: footer" />
 
 
+
 </body>
 </html>
+
+<script type = "text/javascript">
+    var maxCount = 3;
+    var count=0;
+
+    function CountChecked(field){
+        if(field.checked)
+        {
+        count += 1;
+        }
+        else
+        {
+        count -= 1;
+        }
+        if(count>maxCount)
+        {
+        alert("최대 3개까지만 선택가능합니다.");
+        field.checked=false;
+        count -=1;
+        }
+
+    }
+
+</script>
+
 
 
 <!--<script>-->

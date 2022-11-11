@@ -1,6 +1,7 @@
 package kitri.dagachi.repository;
 
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostTags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,19 +18,20 @@ public class PostRepository {
 
 
 
-    public void save(Post post) {
+    public void save(Post post, PostTags postTags) {
         LocalDateTime upload_date = LocalDateTime.now();
         String formatedNow = upload_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        post.setUpload_date(formatedNow);
+        post.setUploadDate(formatedNow);
 
 
         System.out.println("post.getPostingId() : " + post.getPostingId());
         System.out.println("post.getCompanyName() : " + post.getCompanyName());
         System.out.println("post.getPostingTitle() : " + post.getPostingTitle());
         System.out.println("post.getPostingContent() : " + post.getPostingContent());
-        System.out.println("post.getUpload_date() : " + post.getUpload_date());
+        System.out.println("post.getUpload_date() : " + post.getUploadDate());
 
         em.persist(post);
+        em.persist(postTags);
         em.flush();
         System.out.println("insert 동작");
     }
@@ -56,6 +58,8 @@ public class PostRepository {
         return em.find(Post.class, Member_ID);
     }
 
+    public Post find0ne(Long id){return em.find(Post.class, id);}
+
 //            LocalDateTime localdate=LocalDateTime.now();
 //            DateTimeFormatter  Date = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
 
@@ -69,6 +73,11 @@ public class PostRepository {
 
     public List<Post> findAll() {
         return em.createQuery("select p from posting_board p", Post.class)
+                .getResultList();
+    }
+
+    public List<PostTags> findAllt() {
+        return em.createQuery("select p from posting_board p", PostTags.class)
                 .getResultList();
     }
 

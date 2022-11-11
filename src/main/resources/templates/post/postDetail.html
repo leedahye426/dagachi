@@ -6,34 +6,64 @@
 <!-- Responsive navbar-->
   <div th:replace="fragments/nav :: nav" />
 
+<div class="container">
+<span class="card-body b">
 
 
-    <div  th:each="post : ${post}">
-    <table>
-        <thead>
 
-        <tr>
-            <td>회사명</td>
-            <td><input th:text="${post.companyName}" name ="companyName" ></td>
-        </tr>
-
-        <tr>
-            <td>공고제목</td>
-            <td><p th:text="${post.posting_title}" name ="postingTitle" ></p></td>
-        </tr>
-
-        <tr>
-            <td>공고내용</td>
-
-            <td> <p th:text="${post.posting_content}" name="postingContent"></p></td>
+            <h5 class="card-title fw-bold" id="positngTitle"></h5>
+            <p class="card-text" id="positngTitle"></p>
+       <dl>
+        <dt>회사명</dt>
+           <dd>
+               <div class="card-body b">
+                   <labe th:text="${post?.postingTitle}"></labe>
+               </div>
+           </dd>
+       </dl>
 
 
-        </tr>
-
-        </thead>
 
 
-    </table>
+
+
+
+<!--<div>-->
+<!--    <table>-->
+<!--        <thead>-->
+
+<!--        <tr>-->
+<!--            <h1>회사명</h1>-->
+<!--            <input th:text="'회사명 : ' + ${post.companyName}" name ="companyName" >-->
+<!--        </tr>-->
+
+<!--        <tr>-->
+<!--            <h2>공고제목</h2>-->
+<!--            <span th:text=" '공고제목 : ' + ${post.postingTitle}" name ="postingTitle" ></span>-->
+<!--        </tr>-->
+
+<!--        <tr>-->
+<!--            <h3>공고내용</h3>-->
+
+<!--             <p th:text="'공고내용 : ' + ${post.postingContent}" name="postingContent"></p></td>-->
+
+
+<!--        </tr>-->
+
+<!--        </thead>-->
+
+
+<!--        </table>-->
+<!--        <div>-->
+
+
+
+
+
+
+
+
+
 
 
 
