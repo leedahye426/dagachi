@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: head" />
+
 <html lang="en">
 <div th:replace="fragments/nav :: nav" />
 
@@ -33,33 +34,32 @@
 <!-- </form>-->
 
 
-<div class="container d-flex justify-content-around pb-2">
-    <div class="card" style="width: 18rem; height: 21rem;">
-        <img src="images\hyundai.gif" class="card-img-top" id="company_image" alt="img">
+<div class="container justify-content:space-around; ">
+    <div class="row row-cols-3 col-mb-4">
+    <div class="card" style="width: 18rem; height: 21rem; col-mb-4; float: left; margin:20px; padding:20px;" >
 
-        <tr>
-            <th th:text = "${post?.companyName}">회사명</th>
-            <br>
-            <th th:text=" ${post?.postingTitle} ">공고제목</th>
-            <br>
+<!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
 
-        </tr>
+        <div class="card-body b" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">
 
-<!--        <div class="card-body b">-->
-<!--            <h5 class="card-title fw-bold" id="company_name"></h5>-->
-<!--            <p class="card-text" id="posting"></p>-->
-            <div class="border-top pt-2" id="keyword" style="font-size: 0.8em;"></div>
-            <a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a>
+            <h5 class="card-title fw-bold" id="company_name" th:text=" ${post?.companyName}"></h5>
+            <p class="card-text" id="posting"></p>
+            <div class="border-top pt-2" th:text=" ${post?.postingTitle}" id="positngTitle" style="font-size: 0.8em; font-width:bold;">
+<!--            <div class="border-top pt-2" th:text=" ${post?.postingTag}" id="companyName" style="font-size: 0.8em; "></div>-->
+
             <div class="d-flex flex-row mt-1">
-<!--                <button type="button" class="btn btn-sm" onclick="favorite()">-->
-<!--                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
-<!--                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
-<!--                    </svg>-->
-
+                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg> <button type="button" class="btn btn-sm" onclick="favorite()">
+                            <button type="button" class="pro"><a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a></button>
                 </button>
+            </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
+
 
 
 
@@ -193,14 +193,15 @@
 
 
 
+<!--                        </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-                    <button type="button" class="btn-register" style="width:20 high:150" onclick="location.href='/enter/register'"><span style="font-weight:bold">공고 등록하기</span></button>
-                </div>
-            </div>
 
+<!--          </main>-->
+    <button type="button" class="btn-register" style="position: absolute; right:300px; top:200px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/enter/register'">공고 등록하기</button>
 
-          </main>
-</div>
+<!--</div>-->
 
           <!-- <nav class="d-flex align-items-center">
             <svg id="next_page" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
@@ -269,3 +270,4 @@
 <!--&lt;!&ndash;        </script>&ndash;&gt;-->
       </body>
 </html>
+

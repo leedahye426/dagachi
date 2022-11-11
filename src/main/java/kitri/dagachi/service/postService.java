@@ -2,6 +2,7 @@ package kitri.dagachi.service;
 
 import kitri.dagachi.model.Post;
 //import kitri.dagachi.repository.FileRepository;
+import kitri.dagachi.model.PostTags;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,11 @@ public class postService {
         private final PostRepository postRepository;
 
         //글 작성 처리
-        public void register(Post post){
+        public void register(Post post, PostTags postTags){
 
 
-                postRepository.save(post);
+                postRepository.save(post, postTags);
+
                 System.out.println("service 동작완료");
         }
         //리스트처리
@@ -32,11 +34,19 @@ public class postService {
                 return postRepository.findAll();
 
         }
+    public List<PostTags> tags(){
 
-        //특정게시물 불러오기
-//        public PostForm detail(Integer id){
-//                return postRepository.findID(id).get();
-//        }
+
+        return postRepository.findAllt();
+
+    }
+
+
+
+       // 특정게시물 불러오기
+        public Post detail(Long row){
+                return postRepository.find0ne(row);
+        }
 
 
 

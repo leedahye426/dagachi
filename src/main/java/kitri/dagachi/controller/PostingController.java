@@ -3,14 +3,17 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.service.FileService;
 import ch.qos.logback.core.util.SystemInfo;
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostTags;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.stereotype.Controller;
 
 //import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,11 +29,11 @@ public class PostingController {
 
 
     //메인페이지에서 채용공고 메뉴 클릭 시
-    @GetMapping("/enter/enter_post")
-    public String posting(){
-
-        return "/post/enterPosting";
-    }
+//    @GetMapping("/enter/enter_post")
+//    public String posting(){
+//
+//        return "/post/enterPosting";
+//    }
 
     //공고등록하기 버튼 클릭시
     @GetMapping("/enter/register")
@@ -38,42 +41,62 @@ public class PostingController {
         return "/post/postingRegisterForm";
     }
 
+
+
+
     //공고보기 클릭 시 상세페이지 이동
         @GetMapping("/enter/detail")
-    public String postingDetail(Model model, Integer id){
+    public String postingDetail(){
 
-//        model.addAttribute("post",postservice.detail(id));
         return "/post/postDetail";
     }
 
 
+
+
+
     //select
-    @GetMapping("/enter/enter_list")
+    @GetMapping("/enter/enter_post")
     public String enterPosting(Model model)
     {
 
         List<Post> post = postservice.posting();
+//        List<PostTags> tags = postservice.tags();
 
         model.addAttribute("post",post);
+//        model.addAttribute("tag",tags);
+
         System.out.println(post);
 
-//        if(post != null)
-//        {
-//                model.addAttribute("post",post);
-//        }
-//       else {
-//            model.addAttribute("post", new Post());
-//        }
         return "/post/enterPosting";
     }
 
-//    @GetMapping("/enter/enter_post#")
-//    public String enterPosting(Model model)
-//    {
-//        List<Post> post = postservice.posting();
-//        model.addAttribute("post", post );
-//        return "/post/enterPosting";
-//    }
+
+
+
+
+//insert
+@PostMapping("/enter/enter_post")
+    public String postingRegister(Post post, PostTags postTags) {
+
+        System.out.println("===================="+postTags);
+
+
+        System.out.println(postTags.getPostingId());
+        System.out.println(postTags.getTag());
+        System.out.println(postTags.getRow_num());
+
+        postservice.register(post, postTags);
+
+
+
+        return "/post/enterPosting";
+    }
+
+//    //체크박스
+//    @RequestMapping(Value = {Constant.})
+
+//        a , b, c
 
     //insert
 
@@ -91,20 +114,6 @@ public class PostingController {
 //        postservice.register(post);
 //        return "/post/enterPosting";
 //}
-
-
-@PostMapping("/enter/enter_post")
-    public String postingRegister(Post post) {
-
-        System.out.println();
-
-        postservice.register(post);
-        return "/post/enterPosting";
-    }
-
-//        a , b, c
-
-
 
 
 //    @GetMapping("/enter/enter_post#!")
@@ -163,11 +172,11 @@ public class PostingController {
 
 
 //    @PostMapping("/enter/post_detail")
-//    public String enter_resister(MultipartHttpServletRequest mrq) {
-//            String Comapany_Name = mrq.getParameter(Company_Name);
+//    public String enter_resister(MultipartHttpServletRequest mrq) throws IO{
+//            String companyName = mrq.getParameter(companyName);
 //        return "post/post_detail";
-//
-//    }
+
+    }
 
 
 
@@ -177,15 +186,7 @@ public class PostingController {
 
 
 
-//    @PostMapping("/enter/enter_post")
-//    public String enter_resister(String Company_Name, String Posting_Title,String Posting_Content) {
-//
-//
-//        postservice.savePost(postForm);
-//        return "/post/enterPosting";
-//
-//        //        postservice.findPostings();
-//    }
+
 
 
 
@@ -246,8 +247,8 @@ public class PostingController {
 //    postRepository.findAll();
 //        postservice.upload();
 
-
-    }
+//
+//    }
 
 
 //    @PostMapping("enter/register")

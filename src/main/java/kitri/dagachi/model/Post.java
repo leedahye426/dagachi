@@ -25,12 +25,14 @@ public class Post {
     private String postingContent;
 
     @Column(name = "upload_date")
-    private String upload_date;
+    private String uploadDate;
 //    public LocalDateTime Upload_Date;
 
     @Column(name = "member_id")
-    private Long member_id;
+    private Long memberId;
 
+//    @Column(name = "posting_tag")
+//    private String tag;
 
 //    public PostForm get() {
 //        return "";
