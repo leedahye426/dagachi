@@ -1,3 +1,11 @@
+const email = document.querySelector('#email');
+const msgEmail = document.querySelector('.msgEmail');
+const codeBtn = document.querySelector('#codeBtn');
+const password = document.querySelector('#password');
+const pwdChk = document.querySelector('#pwdChk');
+const msgPwd = document.querySelector('.msgPwd');
+const msgPwdChk = document.querySelector('.msgPwdChk');
+
 $("#addrSearch").on('click', function() {
     console.log('click');
     
@@ -36,24 +44,255 @@ $("#addrSearch").on('click', function() {
 
 });
 
+// $("#business_number").on('keyup', function() {
 
-$("#business_number").on('keyup', function() {
-    $businessNum = $("#business_number").val();
-    $("#business_number").val($businessNum.trim());
-
-    console.log('입력중')
-    console.log($businessNum);
+//     $businessNum = $("#business_number").val();
+//     $("#business_number").val($businessNum.trim());
     
-    let length = $("#business_number").val().length;
-    console.log(length)
+//     let length = $("#business_number").val().length;
+//     if(length == 10) {
+//         // $("#business_number").attr("maxlength", 12);
+//         $("#bnChk").attr("class", "btn btn-light border btn-sm");
+//         console.log('replace');
+//         $("#business_number").val(
+//             $businessNum.substr(0,3) + "-" + 
+//             $businessNum.substr(3,2) + "-" +
+//             $businessNum.substr(5)
+//         )
+//     }
+//     else {
+//         $("#bnChk").attr("class", "btn btn-light border btn-sm disabled");
+//     }
 
-    if(length == 3 || length == 6) {
-        console.log("true")
-        $("#business_number").val($businessNum.concat('-'));
-    }
+//     console.log('입력중')
+//     console.log($businessNum);
+    
+//     console.log(length)
+
+// });
+
+
+const KEY = "DDM1M0oGjpl94oiXL%2FNHmtj26ELA91e0M607dz%2Fvdy7MVnrTgp6xZBsx89oKchH1iqCq7qFiEGITLEC0ECsAjA%3D%3D";
+$("#bnChk").on('click', function() {
+    console.log('bnChk click');
+    
+    var data = {
+        // "b_no": [$("#business_number").val().replaceAll(/\-/g, '')] // 사업자번호 "xxxxxxx" 로 조회 시,
+        "b_no": [$("#business_number").val()] // 사업자번호 "xxxxxxx" 로 조회 시,
+       }; 
+       
+    $.ajax({
+      url: `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${KEY}`,  // serviceKey 값을 xxxxxx에 입력
+      type: "POST",
+      data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+      dataType: "JSON",
+      contentType: "application/json",
+      accept: "application/json",
+      success: function(result) {
+        console.log(result);
+        console.log(result.request_cnt);
+        console.log(result.data[0].tax_type);
+
+        $typeChk = result.data[0].tax_type; 
+        $cdChk = result.data[0].b_stt_cd
+        $("#hiddenBn").attr("value", result.data[0].b_stt_cd);
+
+        if($typeChk == "국세청에 등록되지 않은 사업자등록번호입니다."
+        || $cdChk == 03) {
+            $(".msgBn").text("등록되지 않은 사업자입니다.");
+        }
+        else {
+            $("#business_number").attr('readOnly', true);
+            $(".msgBn").text("등록 된 사업자입니다.");
+            $("#bnChk").attr("class", "btn btn-light border btn-sm disabled");
+        }
+
+      },
+      error: function(result) {
+          console.log(result.responseText); //responseText의 에러메세지 확인
+      }
+    });
+    
 });
 
+let emailPattern =  /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+email.onkeyup = function () {
+    console.log('eamilkeyup');
+
+    if(emailPattern.test(email.value)) {
+        console.log('true');
+        msgEmail.textContent = "사용가능한 이메일입니다.";
+        codeBtn.classList.remove('disabled');
+    }
+    else {
+        msgEmail.classList.remove('hide');
+        msgEmail.textContent = "이메일 형식이 올바르지 않습니다.";
+        codeBtn.classList.add('disabled');
+    }
+    
+    if(email.value.length == 0) {
+        msgEmail.classList.add('hide');
+    }
+
+}
+
+let pwdPattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/);
+password.onkeyup = function () {
+    console.log('pwdkeyup');
+    console.log(password.value);
+    if(pwdPattern.test(password.value)){
+        // msgPwd.classList.remove('hide');
+        console.log('true')
+        msgPwd.textContent = "사용가능한 비밀번호입니다.";
+    }
+    else{
+        console.log('false')
+        msgPwd.classList.remove('hide');
+        msgPwd.textContent = "8~15자리의 숫자/문자/특수문자를 포함해야 합니다."
+    }
+    if(password.value.length == 0) {
+        msgPwd.classList.add('hide');
+    }
+}
+
+pwdChk.onkeyup = function () {
+    console.log('pwdChk');
+    console.log(password.value , " : " , pwdChk.value);
+    if(password.value != pwdChk.value) {
+        msgPwdChk.classList.remove('hide');
+        msgPwdChk.textContent = "비밀번호가 일치하지 않습니다.";
+    }
+    else if(password.value == pwdChk.value) {
+        msgPwdChk.textContent = "비밀번호가 일치합니다.";
+    }
+    if(pwdChk.value.length == 0) {
+        msgPwdChk.classList.add('hide');
+    }
+}
 
 
+$codeBtn = $('#codeBtn');
+$code = $('#code');
+$codeChk = $('#codeChk');
+$msgChk = $('.msgCodeChk');
 
+$codeBtn.on('click', function () {
+    $.ajax({
+        type : "POST",
+        url : "emailConfirm",
+        dataType : "text",
+        data : {
 
+            "email" : $('#email').val()
+        },
+    })
+    .done(function() { 
+        tid = setInterval('cntTimer()', 1000);
+        $("#code").removeAttr('disabled'); // 인증코드 박스 활성화
+        $codeBtn.text("인증코드 재발송");
+        $codeChk.attr('class', 'btn btn-light border btn-sm'); // 인증 버튼 활성화
+        
+        console.log($('#codeLabel'));
+        $setTime = 180;
+        $('#codeLabel').append(`<span class="mx-3" id="timer"></span>`); // 유효시간 타이머
+    })
+});
+
+function cntTimer() {
+    
+    $showTime = Math.floor($setTime / 60) +"분 " + ($setTime % 60) + "초" // 남은 시간 계산
+    $setTime --;
+    // console.log('1초 감소');
+    
+    if($setTime > 0) {
+        $('#timer').text($showTime);
+    }
+    else{
+        clearInterval(tid);
+        $('#timer').text("인증 시간 만료");
+        $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
+        $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
+    }
+}
+
+$codeChk.on('click', function () {
+    $.ajax({
+        type : "POST",
+        url : "codeConfirm",
+        dataType : "text",
+        data : {
+            "email" : $('#email').val(),
+            "authCode" : $code.val()
+        },
+    })
+    .done(function(data) {
+        console.log(data);
+        if(data == $code.val()) {
+            console.log('successed');
+            console.log("code value : " + $code.val());
+            console.log('data : ' + data);
+            clearInterval(tid);
+            $('#timer').remove();
+            $msgChk.text('인증되었습니다.');
+            $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
+            $codeBtn.attr('class', 'btn btn-light border btn-sm disabled'); // 코드 발송 버튼 비활성화
+            email.readOnly = true; // 이메일 입력값 비활성화
+            $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
+            
+            $codeChk.append(`<input type='hidden' id='hiddenCode' value=${data}>`);
+        }
+        else{
+            console.log('failed')
+            console.log("code value : " + $code.val());
+            console.log('data : ' + data);
+            $msgChk.text("인증번호가 올바르지 않습니다.")
+        }
+    })
+})
+
+function allChk() {
+    
+    console.log('click');
+
+    // if(memName.value.length <= 1) {
+    //     memName.focus();
+    //     return false;
+    // }
+    if($("#enterName").val() == "") {
+        $("#enterName").focus();
+        $("#msgName").text("기업명은 필수입력사항입니다.");
+        return false;
+    }
+    else if($("#hiddenBn").val() == "" 
+        || $("#hiddenBn").val() == 03) {
+        $("#business_number").focus();
+        return false;
+    }
+    else if($("#enterAddr").val() == "") {
+        $("#enterAddr").focus();
+        $(".msgAddr").text("기업주소는 필수입력사항입니다.");
+        return false;
+    }
+    else if(!emailPattern.test(email.value)) {
+        $("#email").focus();
+        // $("msgEmail").text("이메일은 필수입력사항입니다.");
+        return false;
+    }
+    else if(!pwdPattern.test(password.value)) {
+        $("#password").focus();
+        // $("#msgPwd").text("패스워드는 필수입력사항입니다.");
+        return false;
+    }
+    else if(password.value != pwdChk.value) {
+        $("#pwdChk").focus();
+        // $("#msgPwdChk").text("비밀번호 확인은 필수입력사항입니다.");
+        return false;
+    }
+    else if($('#hiddenCode').val() != $code.val()) {
+        $code.focus();
+        return false;
+    }
+
+    $('#joinForm').submit();
+
+}
