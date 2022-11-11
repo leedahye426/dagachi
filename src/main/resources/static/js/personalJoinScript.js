@@ -126,7 +126,7 @@ function cntTimer() {
     
     $showTime = Math.floor($setTime / 60) +"분 " + ($setTime % 60) + "초" // 남은 시간 계산
     $setTime --;
-    console.log('1초 감소');
+    // console.log('1초 감소');
     
     if($setTime > 0) {
         $('#timer').text($showTime);
@@ -160,7 +160,7 @@ $codeChk.on('click', function () {
             $msgChk.text('인증되었습니다.');
             $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
             $codeBtn.attr('class', 'btn btn-light border btn-sm disabled'); // 코드 발송 버튼 비활성화
-            email.disabled = true; // 이메일 입력값 비활성화
+            email.readOnly = true; // 이메일 입력값 비활성화
             $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
             
             $codeChk.append(`<input type='hidden' id='hiddenCode' value=${data}>`);

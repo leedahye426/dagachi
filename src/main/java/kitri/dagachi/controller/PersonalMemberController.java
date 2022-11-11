@@ -5,6 +5,7 @@ import kitri.dagachi.model.Member;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -55,9 +56,9 @@ public class PersonalMemberController {
     @PostMapping("join/personal")
     public String personalCreate(@Valid MemberForm form, BindingResult result) {
 
-        // 현재 시간 구하기(가입 시간, ... )
-        LocalDateTime now = LocalDateTime.now();
-        String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        // 현재 시간 구하기(가입 시간, ... ) -> DEFAULT SYSDATE 변경
+        LocalDateTime joinDate = LocalDateTime.now();
+//        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
         // 멤버 생성
         Member member = new Member();
@@ -71,7 +72,7 @@ public class PersonalMemberController {
 //        member.setPasswd(form.getPasswd());
         // 전화번호 칼럼 추가 해야됨
         // member.set
-        member.setJoinDate(formatedNow); // 생성일시 DB 저장용
+        member.setJoinDate(joinDate); // 생성일시 DB 저장용
 
 //        System.out.println("form.getName : " + form.getName());
 //        System.out.println("form.getPasswd : " + form.getPassword());
@@ -85,9 +86,7 @@ public class PersonalMemberController {
 //        System.out.println("member.getEmail : " + member.getEmail());
 
         memberService.join(member);
-        return "redirect:/";
+        return "members/login";
     }
-
-
 
 }

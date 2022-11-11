@@ -21,7 +21,13 @@ public class MemberForm {
     @NotEmpty(message = "패스워드는 필수입력 항목 입니다.")
     private String password;
 
-    @NotEmpty(message = "전화번호는 필수입력 항목 입니다.")
-    private String phoneNum;
+//    @NotEmpty(message = "전화번호는 필수입력 항목 입니다.")
+//    private String phoneNum;
+
+    @NotEmpty
+    private String bsNum;
+
+    @NotEmpty
+    private String addr;
 
 }
