@@ -18,6 +18,7 @@
             <tr>
               <td bgcolor=white>
                 <table class = "table2">
+
                   <tr>
                     <td>팀명 </td>
                     <td><input type = "text" name = "team_name" size=20 required> </td>
@@ -33,14 +34,37 @@
                     </td>
                   </tr>
                   <tr>
+                    <th>tag</th>
+                    <td>
+                      <div class="checkbox" >
+                        <input onclick="CountChecked(this)" class="checkbox1" type="checkbox" name="tag" value="IT">
+                        <label class="checkbox1" >IT</label>
+
+
+                        <input onclick="CountChecked(this)" class="checkbox2" type="checkbox" name="tag" value="예술">
+                        <label class="checkbox2" >예술</label>
+
+
+                        <input onclick="CountChecked(this)" class="checkbox3" type="checkbox" name="tag" value="토목">
+                        <label class="checkbox3" >토목</label>
+
+
+                        <input onclick="CountChecked(this)" class="checkbox3" type="checkbox" name="tag" value="전기">
+                        <label class="checkbox3" >전기</label>
+                      </div>
+                    </td>
+
+                  </tr>
+                  <tr>
                     <td><br>프로젝트명 </td>
                     <td><input type = "text" name = "project_title" size=60 required> </td>
                   </tr>
+
                   <tr>
                     <td><br>프로젝트 설명 </td>
                     <td><textarea name = "project_content" cols=60 rows=10 ></textarea></td>
                   </tr>
-                  
+
                   <tr>
                     <td>포트폴리오 </td>
                     <td><input type = "file" name = "file" size=10 maxlength=10 required></td>
