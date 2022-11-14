@@ -8,18 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name="project_tags")
+@Entity(name="project_tag")
 @Getter
 @Setter
-
-
 public class ProjectTag {
 
     @Id
     @GeneratedValue
     private Long row_num;
 
-    private Long posting_id;
+    private Long project_id;
 
-    private String posting_tag;
+    private String project_tag;
 }

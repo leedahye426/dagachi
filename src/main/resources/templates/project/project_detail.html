@@ -30,7 +30,11 @@
                 </dd>
             </dl>
         </div>
-    </span>
+        <div class="tags">
+            <span class="tags" th:each="tag : ${project_tags}">
+                <span th:text="'#' + ${tag.project_tag}"></span>
+            </span>
+        </div>
 
     <div class="portfolio col p-1 mx-3 my-5 border">
         <iframe class="mx-auto " th:href="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오">
