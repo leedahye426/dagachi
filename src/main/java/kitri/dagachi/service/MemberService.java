@@ -31,6 +31,9 @@ public class MemberService {
         return memberRepository.findByProjectId(project_id);
     }
 
+    public Member findOneByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 
 
     // 비밀번호 패턴 검증
