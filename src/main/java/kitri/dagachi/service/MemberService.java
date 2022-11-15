@@ -67,8 +67,7 @@ public class MemberService {
         return memberRepository.findByProjectId(project_id);
     }
 
-<<<<<<< HEAD
-=======
+
     public Member findOneByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
@@ -90,5 +89,4 @@ public class MemberService {
 //        }
 //    }
 
->>>>>>> 30de6f5dd73cd0d5c2ce76f4a80dfd24347a4fec
 }
