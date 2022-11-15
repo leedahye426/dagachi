@@ -74,7 +74,6 @@ public class MemberService {
 
     // 비밀번호 패턴 검증
 
-
     // 로그인 매칭
 //    public boolean loginMatch(String email, String encPwd) {
 //
