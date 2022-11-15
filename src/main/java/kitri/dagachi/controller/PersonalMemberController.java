@@ -1,6 +1,7 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.SecurityConfig;
+import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
@@ -26,30 +27,37 @@ public class PersonalMemberController {
     private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/login")
-    public String login() {
-        return "members/login";
-    }
 
-    @PostMapping("/login")
-    public String loginMatch(@Valid LoginForm form, BindingResult result) {
 
-        String email = form.getEmail();
-        String encPwd = bCryptPasswordEncoder.encode(form.getPasswd());
-        int code = form.getCodeType();
-
-//        memberService.loginMatch(email, encPwd);
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String loginMatch(@Valid LoginForm form, BindingResult result) {
+//
+//        String email = form.getEmail();
+//        String encPwd = bCryptPasswordEncoder.encode(form.getPasswd());
+//        Long code = form.getCodeType();
+//
+////        memberService.loginMatch(email, encPwd);
+//
+//        return "redirect:/";
+//    }
 
     @GetMapping("/join")
-    public String joinMain() {
+    public String joinMain(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+
+        if(loginMember != null) {
+            return "redirect:/";
+        }
+
         return "members/join";
     }
 
     @GetMapping("join/personal")
-    public String personalForm() {
+    public String personalForm(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+
+        if(loginMember != null) {
+            return "redirect:/";
+        }
+
         return "members/personal_join";
     }
 
@@ -86,7 +94,7 @@ public class PersonalMemberController {
 //        System.out.println("member.getEmail : " + member.getEmail());
 
         memberService.join(member);
-        return "members/login";
+        return "redirect:/";
     }
 
 }

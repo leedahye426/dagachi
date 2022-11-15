@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @Table(name = "members")
+@NamedQuery(name="Member.findOne",
+            query = "SELECT m.email, m.password, m.code from Member m WHERE m.email= :email")
 public class Member {
 
     @Id
