@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -20,13 +21,36 @@ public class postService {
         private final PostRepository postRepository;
 
         //글 작성 처리
-        public void register(Post post, PostTags postTags){
+        public void register(Post post,String[] tag) {
 
 
-                postRepository.save(post, postTags);
+            postRepository.save(post);
 
-                System.out.println("service 동작완료");
+
+            Long postingId = post.getPostingId();
+            for (int i = 0; i < tag.length; i++) {
+                PostTags postTags = new PostTags();
+                postTags.setTag(tag[i]);
+                postTags.setPostingId(postingId);
+                postRepository.savaposttag(postTags);
+
+            }
         }
+
+
+
+//        public void detail(String companyName,String postingTitle, String postingContent)
+//            {
+//                Post post = new Post();
+//                post.setCompanyName(companyName);
+//                post.setPostingTitle(postingTitle);
+//                post.setPostingContent(postingContent);
+//                postRepository.detail(companyName,postingContent,postingTitle);
+//            }
+
+
+
+
         //리스트처리
         public List<Post> posting(){
 
@@ -34,7 +58,13 @@ public class postService {
                 return postRepository.findAll();
 
         }
-    public List<PostTags> tags(){
+
+    public Post findOne(Long postingId) {
+        return postRepository.findOne(postingId);
+    }
+
+
+    public List<PostTags> tag(){
 
 
         return postRepository.findAllt();
@@ -43,10 +73,13 @@ public class postService {
 
 
 
+
        // 특정게시물 불러오기
-        public Post detail(Long row){
-                return postRepository.find0ne(row);
-        }
+//        public Post detail(){
+//
+//
+//            return "
+//        }
 
 
 

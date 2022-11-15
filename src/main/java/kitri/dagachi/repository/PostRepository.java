@@ -18,9 +18,9 @@ public class PostRepository {
 
 
 
-    public void save(Post post, PostTags postTags) {
-        LocalDateTime upload_date = LocalDateTime.now();
-        String formatedNow = upload_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    public void save(Post post) {
+        LocalDateTime uploadDate = LocalDateTime.now();
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         post.setUploadDate(formatedNow);
 
 
@@ -31,10 +31,25 @@ public class PostRepository {
         System.out.println("post.getUpload_date() : " + post.getUploadDate());
 
         em.persist(post);
-        em.persist(postTags);
         em.flush();
         System.out.println("insert 동작");
     }
+
+    public void savaposttag(PostTags postTags)
+    {
+        em.persist(postTags);
+        em.flush();
+    }
+
+    public Post findOne(Long postingId) {
+        return em.find(Post.class, postingId);
+    }
+
+//    public void detail(String companyName, String postingTitle, String postingContent)
+//    {
+//        em.persist(companyName);
+//    }
+
 
 //    public post save
 

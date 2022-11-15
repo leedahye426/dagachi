@@ -3,7 +3,7 @@
 <head th:replace="fragments/header :: head" />
 
 <html lang="en">
-<div th:replace="fragments/nav :: nav" />
+<div th:replace="fragments/enterprise_nav :: enterprise_nav" />
 
 <!--        <form>-->
 
@@ -33,25 +33,43 @@
 <!--     </div>-->
 <!-- </form>-->
 
+<div class="container position-relative px-4 px-lg-5 my-4">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+<!--        <div class="col-md-10 col-lg-8 col-xl-7">-->
+            <div class="site-heading" style=" margin:20px; padding:20px; background-color : gray; color:white; justify-content-center">
+                <h1>채용공고</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="container justify-content:space-around; ">
-    <div class="row row-cols-3 col-mb-4">
-    <div class="card" style="width: 18rem; height: 21rem; col-mb-4; float: left; margin:20px; padding:20px;" >
+<!--    <div class="card row row-cols-3" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:20px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">-->
+<!--        -->
 
-<!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
+    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">
 
-        <div class="card-body b" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">
+        <!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
 
-            <h5 class="card-title fw-bold" id="company_name" th:text=" ${post?.companyName}"></h5>
+
+        <div class="card-body b" style="width: 14rem; height: 10rem;" >
+            <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
             <p class="card-text" id="posting"></p>
-            <div class="border-top pt-2" th:text=" ${post?.postingTitle}" id="positngTitle" style="font-size: 0.8em; font-width:bold;">
-<!--            <div class="border-top pt-2" th:text=" ${post?.postingTag}" id="companyName" style="font-size: 0.8em; "></div>-->
+            <form>
+                <h6  class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" id="companyName"></h6>
+                <h7  th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7></form>
+<!--             <div class="border-top pt-2" th:text=" '태그 : ' + ${tag?.tag}" id="postingContent" style="font-size: 0.8em; font-width:bold;">-->
 
-            <div class="d-flex flex-row mt-1">
-                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                    </svg> <button type="button" class="btn btn-sm" onclick="favorite()">
-                            <button type="button" class="pro"><a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a></button>
+
+<!--                <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+<!--&lt;!&ndash;                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>&ndash;&gt;-->
+<!--                </svg> <button type="button" class="btn btn-sm" onclick="favorite()">-->
+<!--                <button type="button" class="pro"><a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a></button>-->
+<!--            <div class="d-flex flex-row mt-1">-->
+
+
                 </button>
             </div>
             </div>
@@ -199,7 +217,7 @@
 
 
 <!--          </main>-->
-    <button type="button" class="btn-register" style="position: absolute; right:300px; top:200px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/enter/register'">공고 등록하기</button>
+    <button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/enter/register'">공고 등록하기</button>
 
 <!--</div>-->
 
