@@ -3,7 +3,23 @@
     <head th:replace="fragments/header :: header" />
     <body>
 <!-- Responsive navbar-->
-        <div th:replace="fragments/personal_nav :: personal_nav"/>
+<<<<<<< HEAD
+        <th:block th:switch="${session.loginMember?.code}">
+            <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
+            <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
+            <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
+        </th:block>
+=======
+
+
+
+     <!--   <th:block th:switch="${session.loginMember.code}">
+            <span th:case="${not #strings.isEmpty(user.id)"><div th:replace="fragments/nav :: nav"></span>
+            <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"></span>
+            <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"></span>
+        </th:block> -->
+            
+>>>>>>> cf69029eabe562ec5143dfe0f06bea5586055a97
         <!--content-->
         <header class="py-3 bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg')">
             <div class="text-center my-5">
@@ -11,11 +27,27 @@
             </div>
         </header>
 
-        <div class="row row-cols-4 justify-content-center text-center m-t-3">
-            <form action="/project/search" method="get">
-                <div class="input-group my-3">
-                    <input type="text" class="form-control" name="keyword" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+        <div class="row row-cols-4 justify-content-center text-center mt-3">
+            <form action="/project/personal/search" method="get" class="">
+                <div class="checkbox" style="float:left;">
+                    <input  class="form-check-input" type="checkbox" name="tag" id="itTag" value="IT">
+                    <label class="form-check-label" for="itTag">IT</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="artTag" value="예술">
+                    <label class="form-check-label" for="artTag">예술</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="civilTag" value="토목">
+                    <label class="form-check-label" for="civilTag">토목</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="elecTag" value="전기">
+                    <label class="form-check-label" for="elecTag">전기</label>
+                </div>
+                <div class="input-group my-3" style="float:left;">
+                    <input type="text" class="form-control" name="keyword" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2" >
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" >검색</button>
                 </div>
             </form>
         </div>

@@ -8,7 +8,8 @@ import kitri.dagachi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.codec.Hex;
+
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,11 +68,12 @@ public class PersonalProjectController {
         return "project/project_detail";
     }
 
-    @GetMapping("/project/search")
-    public String search(@RequestParam String keyword, Model model) {
-        List<Project> projects = projectService.findProjects(keyword);
+    @GetMapping("/project/personal/search")
+    public String search(@RequestParam(required = false)  String keyword, @RequestParam(required = false)  String[] tag, Model model) {
+        System.out.println("**************");
+        List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
+        System.out.println("**************");
         model.addAttribute("projects", projects);
-
         return "project/personal_project_list";
     }
 
@@ -81,13 +83,26 @@ public class PersonalProjectController {
         return "redirect:/project/personal_project_list";
     }
 
+    @GetMapping("/project/personal/{project_id}/update")
+    public String update(@PathVariable Long project_id,Model model) {
+        Project project = projectService.findProject(project_id);
+        List<Member> members = memberService.findmembers(project_id);
+        //for(Member m:members) System.out.println(m.getEmail());
+        model.addAttribute(project);
+        model.addAttribute(members);
+        return "project/projectUpdate";
+    }
+
+    @PostMapping("project/personal/{project_id}/update")
+    public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
+        Project project = projectService.findProject(project_id);
+        return "redirect:/project/personal_project_list";
+    }
+
+
     @PostMapping("/project/email_check")
     @ResponseBody
     public ResponseEntity<?> emailCheck(String email) {
-        System.out.println("--------------------------");
-        System.out.println(email);
-
-
         String checkedEmail = memberService.findOneByEmail(email).getEmail();
         if(checkedEmail.equals(email)) return new ResponseEntity<>(checkedEmail, HttpStatus.OK);
         else return new ResponseEntity<>("등록된 이메일이 아닙니다.", HttpStatus.SERVICE_UNAVAILABLE);

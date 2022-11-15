@@ -86,6 +86,7 @@ public class ProjectService {
         return project.getProject_id();
     }
 
+
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
@@ -105,5 +106,11 @@ public class ProjectService {
 
     public void deleteProject(Long project_id) {
         projectRepository.deleteById(project_id);
+    }
+
+    public List<Project> findProjectsByKeywordTag(String keyword, String[] tags) {
+        System.out.println("--------------------------------");
+        List<Project> projects = projectRepository.findByTitleTag(keyword, tags);
+        return projects;
     }
 }

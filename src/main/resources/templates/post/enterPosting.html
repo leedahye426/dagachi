@@ -3,7 +3,14 @@
 <head th:replace="fragments/header :: head" />
 
 <html lang="en">
-<div th:replace="fragments/enterprise_nav :: enterprise_nav" />
+
+  <th:block th:switch="${session.loginMember?.code}">
+    <span th:case="null"><div th:replace="fragments/nav :: nav"></span>
+    <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"></span>
+    <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"></span>
+  </th:block>
+
+<!-- <div th:replace="fragments/enterprise_nav :: enterprise_nav" /> -->
 
 
 <th:block th:switch="${session.loginMember?.code}">

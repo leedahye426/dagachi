@@ -3779,7 +3779,7 @@ textarea.form-control-lg {
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #0d6efd;
+  /* background-color: #0d6efd; */
 }
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #adb5bd;
@@ -11293,14 +11293,17 @@ textarea.form-control-lg {
   background-size: cover;
 }
 
-<<<<<<< HEAD
 btn btn-primary{
     font-color: white;
-=======
+}
 /* 
 추가하는 CSS 하단목록
 */
 .hide {
   display : none;
->>>>>>> b77cd898683b19cda3ce880bc90f63978c0072ff
+}
+
+a {
+  text-decoration: none;
+  /* text-align: center; */
 }

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -40,5 +41,13 @@ public class EnterpriseProjectController {
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
         return "project/project_detail";
+    }
+
+    @GetMapping("/project/enterprise/search")
+    public String search(@RequestParam String keyword, String[] tag, Model model) {
+        List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
+        //for(String t:tag) System.out.println(t);
+        model.addAttribute("projects", projects);
+        return "project/personal_project_list";
     }
 }

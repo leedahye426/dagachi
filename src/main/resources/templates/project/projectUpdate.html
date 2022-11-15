@@ -41,7 +41,7 @@
       </div>
 
       <div class=" container row align-items-center  mx-auto mt-5">
-        <form action="/project/project_register" method="post" enctype="multipart/form-data">
+        <form th:action="@{|/project/personal/${project.project_id}/update|}" method="post" enctype="multipart/form-data">
 
           <table  class="border" style="padding-top:50px" align = center width=700  cellpadding=4 >
             <tr>
@@ -53,12 +53,16 @@
 
                   <tr>
                     <th>팀명 </th>
-                    <td><input type = "text" name = "team_name" size=20 required> </td>
+                    <td><input type = "text" name = "team_name" size=20 required th:value="${project.team_name}"> </td>
                   </tr>
                   <tr >
                     <th>팀원 </th>
                     <td id="box">
                         <button type="button" id="openModalBtn"  class="btn border btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">email 검색</button><br>
+                        <td th:each="member : ${members}">
+                          <input id = member_email name = member_email size=20 style=border:none th:value="${member.member_email}" readonly>'
+                          </span> <button type='button' class='btn btn-sm border' onclick='remove(this);'>취소</button>";
+                        </td>
                     </td>
                   </tr>
 
@@ -86,12 +90,12 @@
                   </tr>
                   <tr>
                     <th><br>프로젝트명 </th>
-                    <td><input type = "text" name = "project_title" size=60 required> </td>
+                    <td><input type = "text" name = "project_title" size=60 required th:value="${project.project_title}"> </td>
                   </tr>
 
                   <tr>
                     <th><br>프로젝트 설명 </th>
-                    <td><textarea name = "project_content" cols=60 rows=10 ></textarea></td>
+                    <td><textarea name = "project_content" cols=60 rows=10 th:text="${project.project_content}"></textarea></td>
                   </tr>
 
                   <tr>
@@ -101,7 +105,7 @@
                 </table>
 
                 <center>
-                  <input type = "submit" value="등록">
+                  <input type = "submit" value="수정">
                 </center>
               </td>
             </tr>

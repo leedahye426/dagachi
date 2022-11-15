@@ -1,7 +1,7 @@
 package kitri.dagachi.repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import kitri.dagachi.model.Project;
 import kitri.dagachi.model.ProjectMember;
 import kitri.dagachi.model.ProjectTag;
@@ -15,8 +15,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
 import javax.swing.text.html.parser.Entity;
-import java.util.HashMap;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,8 +37,27 @@ public class ProjectRepository {
     }
 
     public List<Project> findByTitle(String keyword) {
-        return em.createQuery("select p from project_board p where p.project_title LIKE '%'||:keyword||'%'")
+        return em.createQuery("select p from project_board p where p.project_title LIKE lower('%'||:keyword||'%')")
                 .setParameter("keyword", keyword)
+                .getResultList();
+    }
+
+    public List<Project> findByTitleTag(String keyword, String[] tags) {
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        if(tags != null) {
+            return em.createQuery("select p from project_board p where p.project_title Like lower('%'||:keyword||'%') and p.project_id in (select pt.project_id from project_tag pt where pt.project_tag in :tags)")
+                    .setParameter("tags", Arrays.asList(tags))
+                    .setParameter("keyword", keyword)
+                    .getResultList();
+        }
+        else return em.createQuery("select p from project_board p where p.project_title LIKE lower('%'||:keyword||'%')")
+                .setParameter("keyword",keyword)
+                .getResultList();
+    }
+
+    public List<Project> findByTag(String[] tags) {
+        return em.createQuery("select p from project_tag p where p.project_tag in :tags")
+                .setParameter("tags", tags)
                 .getResultList();
     }
     public Project findOne(Long project_id) {
@@ -62,4 +79,5 @@ public class ProjectRepository {
         em.persist(projectTag);
         em.flush();
     }
+
 }
