@@ -67,10 +67,6 @@ public class MemberService {
         return memberRepository.findByProjectId(project_id);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cf69029eabe562ec5143dfe0f06bea5586055a97
     public Member findOneByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
