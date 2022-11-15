@@ -4,8 +4,6 @@
 
 <body>
 <!-- Responsive navbar-->
-  <div th:replace="fragments/personal_nav :: personal_nav" />
-
 
 <th:block th:switch="${session.loginMember?.code}">
     <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
