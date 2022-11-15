@@ -64,12 +64,35 @@ public class postService {
     }
 
 
-    public List<PostTags> tag(){
 
 
-        return postRepository.findAllt();
+    public void delete(Long postingId){
 
+            postRepository.delete(postingId);
+        System.out.println("==============" + postingId);
     }
+
+
+    //글삭제
+
+
+//
+//    public void delete(Long postingId){
+//        postRepository.deleteById(postingId);
+//
+//    }
+
+//    public int delete(Long postingId){
+//         return  postRepository.delete(postingId);
+//
+//    }
+
+//    public List<PostTags> tag(){
+//
+//
+//        return postRepository.findAllt();
+//
+//    }
 
 
 

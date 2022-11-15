@@ -91,17 +91,27 @@ public class PostRepository {
                 .getResultList();
     }
 
-    public List<PostTags> findAllt() {
-        return em.createQuery("select p from posting_board p", PostTags.class)
-                .getResultList();
+//    public List<PostTags> findAllt() {
+//        return em.createQuery("select p from posting_board p", PostTags.class)
+//                .getResultList();
+//    }
+
+    public void delete(Long postingId) {
+
+        Post post = findOne(postingId);
+        System.out.println("================" + post);
+        em.remove(post);
+        em.flush();
+
     }
 
 
 
-//    public List<PostForm> findByName(String Company_name) {
-//        return em.createQuery("select Company_Name from POSTING_BOARD p where p.name = :name", PostForm.class)
-//                .setParameter("Company_name", Company_name)
-//                .getResultList();
+
+//    public int delete(Long postingId) {
+//       int result= em.createQuery("delete from posting_board p where p.postingId = :postingId")
+//                .setParameter("postingId",postingId).executeUpdate();
+//         return result;
 //    }
 
 
