@@ -3,7 +3,7 @@
 <head th:replace="fragments/header :: head" />
 
 <html lang="en">
-<div th:replace="fragments/enterprise_nav :: enterprise_nav" />
+<div th:replace="fragments/personal_nav :: personal_nav" />
 
 
 <th:block th:switch="${session.loginMember?.code}">
@@ -11,33 +11,6 @@
     <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
     <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
 </th:block>
-<!--        <form>-->
-
-<!--            <div class="layout" style="width : 500px; margin:auto; ,margin-top :40px;" >-->
-<!--                   <div class = "container mt-5 row clo-lg-8"  >-->
-<!--                 <table>-->
-<!--                     <thead>-->
-<!--                     <tr>-->
-<!--                            <th th:text = "공고내용 : " + ${post?.postingContent}>공고내용</th>-->
-<!--                         <br>-->
-<!--                            <th th:text = "회사명 : " + ${post?.companyName}>회사명</th>-->
-<!--                         <br>-->
-<!--                            <th th:text="공고제목 : " + ${post?.postingTitle} >공고제목</th>-->
-<!--                         <br>-->
-
-<!--          </tr>-->
-<!--                   </thead>-->
-<!--&lt;!&ndash;                       <tbody>&ndash;&gt;-->
-<!--&lt;!&ndash;                       <tr th:each="post : ${post}">&ndash;&gt;-->
-<!--&lt;!&ndash;                           <td th:text="${post?.postingContent}">11</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                           <td th:text="${post?.companyName}">22</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                           <td th:text="${post?.postingTitle}">44</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                       </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                       </tbody>&ndash;&gt;-->
-<!--                 </table>-->
-<!--             </div>-->
-<!--     </div>-->
-<!-- </form>-->
 
 <div class="container position-relative px-4 px-lg-5 my-4">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -50,16 +23,9 @@
 </div>
 
 
-
 <div class="container justify-content:space-around; ">
-<!--    <div class="card row row-cols-3" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:20px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">-->
-<!--        -->
-
-    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/post/enter/${post.postingId}/detail|}'|">
-
-        <!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
-
-
+<!--    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/post/person/${post.postingId}/detail|}'|">-->
+    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}">
         <div class="card-body b" style="width: 14rem; height: 10rem;" >
             <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
             <p class="card-text" id="posting"></p>
@@ -67,6 +33,17 @@
                 <h6  class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" id="companyName"></h6>
                 <h7  th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7></form>
 <!--             <div class="border-top pt-2" th:text=" '태그 : ' + ${tag?.tag}" id="postingContent" style="font-size: 0.8em; font-width:bold;">-->
+            <button type="button" class="btn btn-sm py-2" onclick="favorite()">
+                <span id="like" > <svg id="heart"  stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg></span>
+            </button>
+            <a th:onclick="|location.href='@{|/post/person/${post.postingId}/detail|}'|" class="btn btn-primary mt-2">공고 바로가기</a>
+
+
+<!--                <button type="button" class="pro"><a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a></button>-->
+<!--            <div class="d-flex flex-row mt-1">-->
+
 
                 </button>
             </div>
@@ -76,8 +53,6 @@
     </div>
     </div>
 
-
-<button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/post/enter/register'">공고 등록하기</button>
 
 
 
@@ -240,6 +215,12 @@
         <div th:replace="fragments/footer :: footer" />
 
 
+
+
+
+
+
+
 <!--&lt;!&ndash;        <script>&ndash;&gt;-->
 
 <!--          var requestURL = './posting.json'-->
@@ -289,3 +270,8 @@
       </body>
 </html>
 
+<script type="text/javascript">
+    function change_background_color() {
+	$("#heart").css("color","red");
+}
+</script>
