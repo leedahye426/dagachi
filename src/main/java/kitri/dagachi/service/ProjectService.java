@@ -11,6 +11,7 @@ import java.util.UUID;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Project;
 import kitri.dagachi.model.ProjectMember;
+import kitri.dagachi.model.ProjectTag;
 import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.ProjectRepository;
 
@@ -32,7 +33,7 @@ public class ProjectService {
     private String fileDir="D:/test/";
 
 
-    public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email) throws IOException {
+    public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email, String[] tags) throws IOException {
         if (file.isEmpty()) {
             return null;
         }
@@ -65,18 +66,26 @@ public class ProjectService {
         for(String member_email : members_email) {
             team_members.add(memberRepository.findByEmail(member_email));
         }
-        System.out.println("------------------------------------");
+
         for(Member team_member : team_members) {
             ProjectMember projectMember = new ProjectMember();
             projectMember.setProject_id(project.getProject_id());
-//            System.out.println("p id : "+project.getProject_id());
             projectMember.setMember_id(team_member.getId());
-//            System.out.println("m id : "+team_member.getId());
             projectRepository.saveProjectMember(projectMember);
         }
 
+        System.out.println("------------------------------------------");
+        for(String tag: tags) {
+            ProjectTag projectTag = new ProjectTag();
+            projectTag.setProject_id(project.getProject_id());
+            projectTag.setProject_tag(tag);
+            projectRepository.saveProjectTag(projectTag);
+        }
+
+
         return project.getProject_id();
     }
+
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
@@ -90,7 +99,16 @@ public class ProjectService {
         return projects;
     }
 
+    public List<ProjectTag> findTags(Long project_id) {
+        return projectRepository.findTagById(project_id);
+    }
+
     public void deleteProject(Long project_id) {
         projectRepository.deleteById(project_id);
+    }
+
+    public List<Project> findProjectsByKeywordTag(String keyword, String[] tags) {
+        List<Project> projects = projectRepository.findByTitleTag(keyword, tags);
+        return projects;
     }
 }

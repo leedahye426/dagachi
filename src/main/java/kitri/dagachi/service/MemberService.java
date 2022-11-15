@@ -67,4 +67,28 @@ public class MemberService {
         return memberRepository.findByProjectId(project_id);
     }
 
+<<<<<<< HEAD
+=======
+    public Member findOneByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+
+    // 비밀번호 패턴 검증
+
+
+    // 로그인 매칭
+//    public boolean loginMatch(String email, String encPwd) {
+//
+//
+//
+//        if(!email.equals(memberRepository.findEmail(email))) {
+//            return false;
+//        }
+//        else if(!encPwd.equals(memberRepository.findPasswd(encPwd))) {
+//            return false;
+//        }
+//    }
+
+>>>>>>> 30de6f5dd73cd0d5c2ce76f4a80dfd24347a4fec
 }

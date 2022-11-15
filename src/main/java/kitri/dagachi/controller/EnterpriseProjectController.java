@@ -2,6 +2,7 @@ package kitri.dagachi.controller;
 
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Project;
+import kitri.dagachi.model.ProjectTag;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,10 @@ public class EnterpriseProjectController {
     public String detailPage(@PathVariable("project_id") Long project_id, Model model){
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
+        List<ProjectTag> project_tags = projectService.findTags(project_id);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
+        model.addAttribute("project_tags", project_tags);
         return "project/project_detail";
     }
 }

@@ -8,6 +8,8 @@ import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 
 //import org.springframework.ui.Model;
@@ -15,25 +17,64 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping
 public class PostingController {
 
+    @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
 
 
 
-    //메인페이지에서 채용공고 메뉴 클릭 시
+//    메인페이지에서 채용공고 메뉴 클릭 시
 //    @GetMapping("/enter/enter_post")
 //    public String posting(){
 //
 //        return "/post/enterPosting";
 //    }
+//select
+    @GetMapping("/enter/enter_post")
+    public String enterPosting(Model model)
+    {
+
+        List<Post> post = postservice.posting();
+//        List<PostTags> tag = postservice.tag();
+
+
+        model.addAttribute("post",post);
+//        model.addAttribute("tag",tag);
+
+        System.out.println(post);
+
+        return "/post/enterPosting";
+    }
+
+    //insert
+
+    @PostMapping("/enter/enter_post")
+    public String postingRegister(Post post, String[] tag) {
+
+        //        System.out.println("===================="+postTags);
+
+        System.out.println(tag[0]);
+        System.out.println(tag[1]);
+
+
+        postservice.register(post, tag);
+
+        return "/post/enterPosting";
+    }
+
+
+
 
     //공고등록하기 버튼 클릭시
     @GetMapping("/enter/register")
@@ -45,53 +86,82 @@ public class PostingController {
 
 
     //공고보기 클릭 시 상세페이지 이동
-        @GetMapping("/enter/detail")
-    public String postingDetail(){
-
-        return "/post/postDetail";
-    }
-
-
-
-
-
-    //select
-    @GetMapping("/enter/enter_post")
-    public String enterPosting(Model model)
+    @GetMapping("/enter/{postingId}/detail")
+    public String postingDetail(@ModelAttribute("postingId") Long postingId,  Model model)
     {
+            Post post = postservice.findOne(postingId);
+            String companyName = post.getCompanyName();
+             String postingTitle = post.getPostingTitle();
+             String postingContent = post.getPostingContent();
 
-        List<Post> post = postservice.posting();
-//        List<PostTags> tags = postservice.tags();
+            model.addAttribute("post",post);
 
-        model.addAttribute("post",post);
-//        model.addAttribute("tag",tags);
-
-        System.out.println(post);
-
-        return "/post/enterPosting";
+            return "post/postDetail";
     }
+
+//    @GetMapping("/enter/${post.postingId}/detail")
+//    public String postingDetail(String companyName, String postingTitle, String postingContent)
+//    {
+//            Post post = new Post();
+//            post.setCompanyName(companyName);
+//            post.setPostingTitle(postingTitle);
+//            post.setPostingContent(postingContent);
+//
+//        return "post/postDetail";
+//    }
+
+//    @GetMapping("/enter/{postingId}/detail")
+//    public String Detail(@PathVariable("positingId") Long postingId, Model model) {
+////        Post item = postservice.findOne(postingId);
+////
+////        Post post = new Post();
+////        post.setCompanyName(item.getCompanyName());
+////        post.setPostingTitle(item.getPostingTitle());
+////        post.setPostingContent(item.getPostingContent());
+//        Post item = (Post)postservice.findOne(postingId);
+//
+//        PostForm post = new PostForm();
+//        post.setCompanyName(item.getCompanyName());
+//        post.setPostingTitle(item.getPostingTitle());
+//        post.setPostingContent(item.getPostingContent());
+//        post.setUpload_date(item.getUploadDate());
+//
+//
+//        model.addAttribute("post", post);
+//
+//        return "/post/postDetail";
+//    }
+
+
+//    @GetMapping("/enter/{postingId}/detail")
+//    public String Detail(@PathVariable("positingId") Long postingId, Model model) {
+//       Post post = postservice.findOne(postingId);
+//
+////        Post item = (Post)postservice.findOne(postingId);
+//
+////        PostForm post = new PostForm();
+////        post.setCompanyName(item.getCompanyName());
+////        post.setPostingTitle(item.getPostingTitle());
+////        post.setPostingContent(item.getPostingContent());
+////        post.setUpload_date(item.getUploadDate());
+//
+//
+//        model.addAttribute("post", post);
+//
+//        return "/post/postDetail";
+//    }
+
+
+
 
 
 
 
 
 //insert
-@PostMapping("/enter/enter_post")
-    public String postingRegister(Post post, PostTags postTags) {
-
-        System.out.println("===================="+postTags);
-
-
-        System.out.println(postTags.getPostingId());
-        System.out.println(postTags.getTag());
-        System.out.println(postTags.getRow_num());
-
-        postservice.register(post, postTags);
 
 
 
-        return "/post/enterPosting";
-    }
 
 //    //체크박스
 //    @RequestMapping(Value = {Constant.})

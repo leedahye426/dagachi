@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import kitri.dagachi.model.Project;
 import kitri.dagachi.model.ProjectMember;
+import kitri.dagachi.model.ProjectTag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProjectRepository {
 
-//    EntityManagerFactory emf = Persistence.createEntityManagerFactory("emf");
-//    private final EntityManager em = emf.createEntityManager();
-
     private final EntityManager em;
-//    EntityTransaction transaction = em.getTransaction();
 
     public void save(Project project) {
         System.out.println(project);
@@ -46,6 +43,16 @@ public class ProjectRepository {
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<Project> findByTitleTag(String keyword, String[] tags) {
+
+        return em.createQuery("select p from project_board p where p.project_title Like  '%'||:keyword||'%' and p.project_id in (select pt.project_id from project_tag pt where pt.project_tag in :tags)")
+                .setParameter("tags", tags)
+                .setParameter("keyword", keyword)
+                .getResultList();
+
+
+    }
     public Project findOne(Long project_id) {
         return em.find(Project.class, project_id);
     }
@@ -53,5 +60,16 @@ public class ProjectRepository {
     public void deleteById(Long project_id) {
         Project project = findOne(project_id);
         em.remove(project);
+    }
+
+    public List<ProjectTag> findTagById(Long project_id) {
+        return em.createQuery("select pt from project_tag pt where pt.project_id = :project_id")
+                .setParameter("project_id", project_id)
+                .getResultList();
+    }
+
+    public void saveProjectTag(ProjectTag projectTag) {
+        em.persist(projectTag);
+        em.flush();
     }
 }
