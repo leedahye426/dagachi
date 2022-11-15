@@ -68,10 +68,10 @@ public class PersonalProjectController {
     }
 
     @GetMapping("/project/search")
-    public String search(@RequestParam String keyword, Model model) {
-        List<Project> projects = projectService.findProjects(keyword);
+    public String search(@RequestParam String keyword, String[] tag, Model model) {
+        List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
+        //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-
         return "project/personal_project_list";
     }
 

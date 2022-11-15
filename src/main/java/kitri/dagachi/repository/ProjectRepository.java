@@ -43,6 +43,16 @@ public class ProjectRepository {
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<Project> findByTitleTag(String keyword, String[] tags) {
+
+        return em.createQuery("select p from project_board p where p.project_title Like  '%'||:keyword||'%' and p.project_id in (select pt.project_id from project_tag pt where pt.project_tag in :tags)")
+                .setParameter("tags", tags)
+                .setParameter("keyword", keyword)
+                .getResultList();
+
+
+    }
     public Project findOne(Long project_id) {
         return em.find(Project.class, project_id);
     }

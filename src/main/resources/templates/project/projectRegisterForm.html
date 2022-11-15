@@ -18,9 +18,15 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <input type="text" placeholder="example@example.com" id="email_input">
-              <button type="button" class="btn border btn-sm" onclick="emailCheck();">검색</button>
-              <div id="checkedEmail"></div>
+              <form>
+                <input type="text" placeholder="example@example.com" id="email_input">
+                <button type="button" class="btn border btn-sm" onclick="emailCheck();">검색</button>
+                <hr>
+                <div id="checkedEmail">
+                  <input type="hidden" id="hiddenInput" name="hiddenInput"/>
+                </div>
+              </form>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -48,7 +54,6 @@
                   <tr >
                     <th>팀원 </th>
                     <td id="box">
-                      <br>
                         <button type="button" id="openModalBtn"  class="btn border btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">email 검색</button><br>
                     </td>
                   </tr>

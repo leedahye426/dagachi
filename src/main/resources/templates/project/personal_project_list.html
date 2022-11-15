@@ -11,9 +11,25 @@
             </div>
         </header>
 
-        <div class="row row-cols-4 justify-content-center text-center m-t-3">
-            <form action="/project/search" method="get">
-                <div class="input-group my-3">
+        <div class="row row-cols-4 justify-content-center text-center mt-3">
+            <form action="/project/search" method="get" class="">
+                <div class="checkbox" style="float:left;">
+                    <input  class="form-check-input" type="checkbox" name="tag" id="itTag" value="IT">
+                    <label class="form-check-label" for="itTag">IT</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="artTag" value="예술">
+                    <label class="form-check-label" for="artTag">예술</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="civilTag" value="건설">
+                    <label class="form-check-label" for="civilTag">토목</label>
+
+
+                    <input  class="form-check-input" type="checkbox" name="tag" id="elecTag" value="전기">
+                    <label class="form-check-label" for="elecTag">전기</label>
+                </div>
+                <div class="input-group my-3" style="float:left;">
                     <input type="text" class="form-control" name="keyword" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
                 </div>

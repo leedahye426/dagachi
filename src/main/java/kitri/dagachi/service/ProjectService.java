@@ -106,4 +106,9 @@ public class ProjectService {
     public void deleteProject(Long project_id) {
         projectRepository.deleteById(project_id);
     }
+
+    public List<Project> findProjectsByKeywordTag(String keyword, String[] tags) {
+        List<Project> projects = projectRepository.findByTitleTag(keyword, tags);
+        return projects;
+    }
 }
