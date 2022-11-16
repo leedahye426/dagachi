@@ -6,6 +6,7 @@ import kitri.dagachi.model.Member;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +18,9 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//@Log4j2
 @Controller
-@RequestMapping("members/")
+@RequestMapping("/members/")
 @RequiredArgsConstructor
 public class PersonalMemberController {
 
@@ -47,7 +49,6 @@ public class PersonalMemberController {
         if(loginMember != null) {
             return "redirect:/";
         }
-
         return "members/join";
     }
 
