@@ -20,12 +20,12 @@ public class LoginController {
 
     private final MemberService memberService;
 
-    @GetMapping("members/login")
-    public String login(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+    @GetMapping("/members/login")
+    public String login() {
 
-        if(loginMember != null) {
-            return "redirect:/";
-        }
+//        if(loginMember != null) {
+//            return "redirect:/";
+//        }
 
         return "members/login";
     }
@@ -72,7 +72,7 @@ public class LoginController {
         return "redirect:/";
     };
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
 
         // true일 경우 세션이 없으면 신규 세션 반환, false일 경우 세션이 없으면 그냥 null을 반환. 기본값 true
