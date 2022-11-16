@@ -3,14 +3,22 @@
 <head th:replace="fragments/header :: head" />
 
 <html lang="en">
-<div th:replace="fragments/personal_nav :: personal_nav" />
+<<<<<<< HEAD
+=======
 
+>>>>>>> 235adcdbd82f501115aba357f8b2dcdd6e075f07
 
 <th:block th:switch="${session.loginMember?.code}">
     <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
     <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
     <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
 </th:block>
+
+
+
+
+
+
 
 <div class="container position-relative px-4 px-lg-5 my-4">
     <div class="row gx-4 gx-lg-5 justify-content-center">

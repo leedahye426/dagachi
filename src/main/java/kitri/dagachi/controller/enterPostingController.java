@@ -83,7 +83,6 @@ public class enterPostingController {
 
 
 
-
     //공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/enter/{postingId}/detail")
     public String postingDetail(@ModelAttribute("postingId") Long postingId,  Model model)

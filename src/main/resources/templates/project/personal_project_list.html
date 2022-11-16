@@ -3,7 +3,12 @@
     <head th:replace="fragments/header :: header" />
     <body>
 <!-- Responsive navbar-->
+<<<<<<< HEAD
+
+<th:block th:switch="${session.loginMember?.code}">
+=======
         <th:block th:switch="${session.loginMember?.code}">
+>>>>>>> 350a5708b66a058377bffcf51241c6dcd90d9741
             <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
             <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
             <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>

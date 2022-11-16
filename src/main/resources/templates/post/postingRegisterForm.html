@@ -2,20 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: head" />
 
-
-
-
-
 <body>
 <!-- Responsive navbar-->
-        <div th:replace="fragments/enterprise_nav :: enterprise_nav" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 235adcdbd82f501115aba357f8b2dcdd6e075f07
 
 <th:block th:switch="${session.loginMember?.code}">
     <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
     <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
     <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
 </th:block>
+
+
+
+
+
 
  <div class ="container col-5 my-5 width : 100%">
      <form action="/post/enter/enter_post" method="post">

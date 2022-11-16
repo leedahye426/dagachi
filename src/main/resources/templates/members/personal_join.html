@@ -14,44 +14,12 @@
     </head>
     <body>
         <!-- Responsive navbar-->
-        <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-white border boredr-bottom
-                    d-flex justify-content-between">
-            <div class="container">
-                <a class="navbar-brand text-dark" href="/"><img src="/images/dagachi_logo.jpg" width="200" height="50"></a>
-                <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="col-2"></div>
-                    <div class="flex-fill">
-                        <ul class="navbar-nav cen mb-2 mb-lg-0">
-                            <li class="nav-item col-6">
-                                <a class="nav-link text-dark fw-bold fs-5" href="#!">프로젝트</a>
-                            </li>
-                            <li class="nav-item col-6">
-                                <a class="nav-link text-dark fw-bold fs-5" href="#!">채용공고</a>
-                            </li>
-                            <li class="nav-item col-6">
-                                <a class="nav-link text-dark fw-bold fs-5" href="#!">자유게시판</a>
-                            </li>
-                            <!-- <li class="nav-item"><a class="nav-link" href="#!"></a></li> -->
-                        </ul>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="login_box ms-auto">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item border-end">
-                                <a class="nav-link text-dark" href="#!">로그인</a>
-                            </li>
-                            <li class="nav-item fs-6">
-                                <a class="nav-link text-dark" href="/join.html">회원가입</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+       
+        <th:block th:switch="${session.loginMember?.code}">
+            <span th:case="null"><div th:replace="fragments/nav :: nav"></span>
+            <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"></span>
+            <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"></span>
+        </th:block>
        
         <!-- Content section-->
 
