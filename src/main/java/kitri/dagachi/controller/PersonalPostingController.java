@@ -8,13 +8,19 @@ import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,6 +47,8 @@ public class PersonalPostingController {
         List<Post> post = postservice.posting();
 //        List<PostTags> tag = postservice.tag();
 
+//        PageRequest pageRequest = PageRequest.of(page, 3,Sort.by(Sort.Direction.DESC, "postingId"));
+//        Page<Post> post = postRepository.findAll(pageRequest);
 
         model.addAttribute("post", post);
 //        model.addAttribute("tag",tag);
@@ -51,9 +59,7 @@ public class PersonalPostingController {
     }
 
 
-
-
-    //공고보기 클릭 시 상세페이지 이동
+    //    공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/person/{postingId}/detail")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model) {
         Post post = postservice.findOne(postingId);
@@ -65,8 +71,48 @@ public class PersonalPostingController {
 
         return "post/personalDetail";
     }
-
 }
+
+
+//    @GetMapping("/post/person/person_post")
+//public
+
+
+//    @PostMapping("/post/person/person_post")
+//    public Map<String, Object> clickLike(@RequestParam Map<String,Object> commandMap) {
+//
+//        int resultCode = 1;
+//        int likeCheck = 1;
+//        Map<String, Object> map = new HashMap<>();
+//        Map<String, Object> likeCntMap = new HashMap<>();
+//        Map<String, Object> resultMap = new HashMap<>();
+
+//        try{
+//
+//            map = postservice.likecheck(commandMap);
+//
+//            if(map ==null)
+//            {
+//                postservice.insertLikeBtn(commandMap);
+//                postservice.updateLikeCheck(commandMap);
+//
+//            }
+//        }
+
+
+        ;
+//    }
+//
+//}
+
+
+
+//    @RequestMapping("/post/person/person_post")
+//    @ResponseBody
+//    public Map<String, Object> clickLike(@RequestParam Map<String,Object> commadMap)
+//    {
+//
+//    }
 
 //    @GetMapping(/post/person/person_post)
 //    public String listCriteria(Model model, Criteria criteria) throws Exception

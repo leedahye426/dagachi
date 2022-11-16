@@ -3,6 +3,7 @@ package kitri.dagachi.repository;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -90,6 +91,11 @@ public class PostRepository {
         return em.createQuery("select p from posting_board p", Post.class)
                 .getResultList();
     }
+
+//    public Page<Post> findAll(int pageRequest){
+//
+//        return em.createQuery(select )
+//    }
 
 //    public List<PostTags> findAllt() {
 //        return em.createQuery("select p from posting_board p", PostTags.class)

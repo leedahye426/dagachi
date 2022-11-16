@@ -39,9 +39,10 @@
 
 <!--                        <input type="button" th:onclick="|location.href='@{/post/enter/delete(id=${post.postingId})}'|" ></input>-->
                         <button type="button" value="삭제" id= "delete_btn"  class="btn btn-outline-danger" th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enter/delete/${post.postingId}|}'|" ></button>
-<!--                            <a th:href="@{/post/enter/delete(id=${post.postingId})}"></a></form>-->
-<!--                        <a href="list" class="btn btn-outline-secondary">list</a> <a-->
-<!--                            href="modify?bno=${board.bno}" class="btn btn-outline-warning">modify</a>-->
+<!--                        <button type="button" value="수정" id= "modify_btn"  class="btn-outline-warning" th:onclick="|if(confirm('정말 수정하시겠습니까?')) location.href='@{|/post/enter/modify/${post.postingId}|}'|"></button>-->
+
+
+                   </form>
 <!--                        <a href="/enter/{post.postingId}/delete" class="btn btn-outline-danger" onclick="return confirm('삭제하시겠습니까?')">remove</a>-->
 
                     </form>

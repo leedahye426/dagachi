@@ -3,10 +3,7 @@
 <head th:replace="fragments/header :: head" />
 
 <html lang="en">
-<<<<<<< HEAD
-=======
 
->>>>>>> 235adcdbd82f501115aba357f8b2dcdd6e075f07
 
 <th:block th:switch="${session.loginMember?.code}">
     <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
@@ -34,20 +31,35 @@
 <div class="container justify-content:space-around; ">
 <!--    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/post/person/${post.postingId}/detail|}'|">-->
     <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each = "post : ${post}">
+<!--        <input type="hidden" id="postingId" th:text="${post.postingId}">-->
         <div class="card-body b" style="width: 14rem; height: 10rem;" >
+            <input type="hidden" id="postingId"  th:value="${post?.postingId}">
+<!--            <input type="hidden" id="memberId"  th:value="${post?.memberId}">-->
             <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
             <p class="card-text" id="posting"></p>
             <form>
                 <h6  class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" id="companyName"></h6>
                 <h7  th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7></form>
 <!--             <div class="border-top pt-2" th:text=" '태그 : ' + ${tag?.tag}" id="postingContent" style="font-size: 0.8em; font-width:bold;">-->
-            <button type="button" class="btn btn-sm py-2" onclick="favorite()">
-                <span id="like" > <svg id="heart"  stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
+
+
+            <button type="button" id= "btn_like" class="btn btn-sm" onclick="">
+                <span id="like"  > <svg id="heart"  stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="feed-icon like-default" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg></span>
             </button>
+
+
+<!--            <button type="button" id= "btn_like" class="btn btn-sm py-2" onclick="changHeart()">-->
+<!--                <span id="like"  > <svg id="heart"  stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+<!--                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+<!--                    </svg></span>-->
+<!--            </button>-->
             <a th:onclick="|location.href='@{|/post/person/${post.postingId}/detail|}'|" class="btn btn-primary mt-2">공고 바로가기</a>
 
+<!--            <div class="pagination-wrapper clearfix">-->
+<!--                <ul class="pagination float&#45;&#45;right" id="pages"></ul>-->
+<!--            </div>-->
 
 <!--                <button type="button" class="pro"><a href="/enter/detail" class="btn btn-primary mt-2">공고 바로가기</a></button>-->
 <!--            <div class="d-flex flex-row mt-1">-->
@@ -275,11 +287,54 @@
 <!--          }-->
 <!--&lt;!&ndash;          &ndash;&gt;-->
 <!--&lt;!&ndash;        </script>&ndash;&gt;-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/heart.js"> </script>
+
       </body>
 </html>
 
-<script type="text/javascript">
-    function change_background_color() {
-	$("#heart").css("color","red");
-}
+
+
+
+
+<script>
+
+<!--function changHeart(){-->
+<!--console.log("1231564564");-->
+<!--$.ajax({-->
+<!--        type : "post",-->
+<!--        url : "/post/person/person_post",-->
+<!--        dataType: "json",-->
+<!--        data : "postingId=" + postingId + "&memberId" + memberId,-->
+<!--        error : function(){-->
+<!--            Rnd.alert("좋아요 오류","error","확인",function(){});-->
+<!--        },-->
+
+<!--        success : function(jdata){-->
+<!--            if(jdata.resultCode == -1){-->
+<!--                Rnd.alert("좋아요 오류", "error", "확인", function(){});-->
+<!--            }-->
+<!--            else{-->
+<!--                if(jdata.likeCheck == 1)-->
+<!--                {-->
+<!--                    $("#btn_like").attr("src","../static/images/heart.jpg");-->
+<!--                    $("#likecnt").empty();-->
+<!--                    $("#likecnt").append(jdata.likeCnt);-->
+<!--                }-->
+<!--                else if(jdata.likeCheck == 0){-->
+<!--                $("#btn_like").attr("src","../static/images/empty_heart.svg");-->
+<!--                $("#likecnt").empty();-->
+<!--                $("#likecnt").append(jdata.likeCnt);-->
+
+
+<!--                }-->
+<!--            }-->
+
+<!--        }-->
+<!--});-->
+<!--}-->
 </script>
+
+
+
