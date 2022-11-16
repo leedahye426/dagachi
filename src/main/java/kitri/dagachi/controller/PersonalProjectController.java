@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -65,7 +66,7 @@ public class PersonalProjectController {
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/project_detail";
+        return "project/personal_project_detail";
     }
 
     @GetMapping("/project/personal/search")
@@ -87,15 +88,24 @@ public class PersonalProjectController {
     public String update(@PathVariable Long project_id,Model model) {
         Project project = projectService.findProject(project_id);
         List<Member> members = memberService.findmembers(project_id);
-        //for(Member m:members) System.out.println(m.getEmail());
-        model.addAttribute(project);
-        model.addAttribute(members);
+        List<ProjectTag> tags = projectService.findTags(project_id);
+
+        List<String> projectTags = new ArrayList<>();
+        for(ProjectTag tag: tags) projectTags.add(tag.getProject_tag());
+
+        for(Member m: members) System.out.println(m.getEmail());
+
+        model.addAttribute("project", project);
+        model.addAttribute("members", members);
+        model.addAttribute("projectTags", projectTags);
+
         return "project/projectUpdate";
     }
 
     @PostMapping("project/personal/{project_id}/update")
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
         Project project = projectService.findProject(project_id);
+
         return "redirect:/project/personal_project_list";
     }
 

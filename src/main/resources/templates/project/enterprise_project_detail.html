@@ -10,12 +10,7 @@
         </th:block>
         <!--content-->
         <div class="container row-cols-10">
-            <p class="btn_set m-3">
-                <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
-                        th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/${project.project_id}/delete|}'|"> 삭제</button>
-                <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"
-                        th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정</button>
-            </p>
+
             <span class="card col p-1 mx-3 my-5 border">
                 <h4 class="m-3"> <strong >프로젝트명 </strong>
                     <span th:text="${' '} + ${project.project_title}"></span>

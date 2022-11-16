@@ -40,7 +40,7 @@ public class EnterpriseProjectController {
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/project_detail";
+        return "project/enterprise_project_detail";
     }
 
     @GetMapping("/project/enterprise/search")
