@@ -33,13 +33,16 @@ $('#checkedEmail').on("click", function() {
     console.log(email);
     const newP = document.createElement('p');
     newP.innerHTML = '<input type=text id = member_email name = member_email size=20 style=border:none value='+email+' readonly>'
-        +"<button type='button' class='btn btn-sm border' onclick='remove(this);'>취소</button>";
+        +"<button type='button' class='btn btn-sm border' onclick='removeEmail(this);'>취소</button>";
     box.append(newP);
     console.log(newP);
 });
 
-const remove = (obj) => {
-            document.getElementById('box').removeChild(obj.parentNode);
+const removeEmail = (obj) => {
+      document.getElementById('box').removeChild(obj.parentNode);
+}
+const removeFile = (obj) => {
+      document.getElementById('fileBox').removeChild(obj.parentNode);
 }
 
 $('#exampleModal').on('hidden.bs.modal', function (e) {

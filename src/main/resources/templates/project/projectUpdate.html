@@ -57,16 +57,15 @@
                     </td>
                   </tr>
                   <tr >
-                    <th>팀원 </th>
+                    <th style="vertical-align:top;">팀원 </th>
                     <td id="box">
                         <button type="button" id="openModalBtn"  class="btn border btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">email 검색</button><br>
                         <p th:each="member : ${members}">
                           <input type='text' id = 'member_email' name = 'member_email' size='20' style='border:none' th:value="${member.email}" readonly>
-                          <button type='button' class='btn btn-sm border' onclick='remove(this);'>취소</button>
+                          <button type='button' class='btn btn-sm border' onclick='removeEmail(this);'>취소</button>
                         </p>
                     </td>
                   </tr>
-
                   <tr>
                     <th>분류</th>
                     <td>
@@ -99,12 +98,14 @@
                     <td><textarea name = "project_content" cols=60 rows=10 th:text="${project.project_content}"></textarea></td>
                   </tr>
 
-                  <tr>
+                  <tr >
                     <th>포트폴리오 </th>
-                    <td>
+                    <td  id="fileBox">
                       <input type = "file" name = "file" size=10 maxlength=10 required><br>
-                      <span th:text="${project.org_name}"></span>
-                      <button type='button' class='btn btn-sm border' onclick='remove(this);'>-</button>
+                      <p>
+                        <span th:text="${project.org_name}"></span>
+                        <button type='button' class='btn btn-sm border' onclick='removeFile(this);'>-</button>
+                      </p>
                     </td>
                   </tr>
                 </table>
