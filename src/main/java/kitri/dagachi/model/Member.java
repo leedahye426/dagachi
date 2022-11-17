@@ -19,7 +19,6 @@ import java.util.Collection;
 @Entity
 @Getter @Setter
 @Table(name = "members")
-@Builder
 //@AllArgsConstructor
 public class Member implements UserDetails {
                                 // UserDetails : 사용자의 정보를 담는 인터페이스

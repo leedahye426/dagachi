@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("/members/")
 @RequiredArgsConstructor
-@Builder
 public class PersonalMemberController {
 
     @Autowired
@@ -71,14 +70,10 @@ public class PersonalMemberController {
         LocalDateTime joinDate = LocalDateTime.now();
 //        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
-        // 멤버 생성
-//        Member member = new Member();
+//         멤버 생성
+        Member member = new Member();
 
-        Member member = Member.builder()
-                        .name(form.getName())
-                        .email(form.getEmail())
-                        .password(form.getPassword())
-                        .ROLE(form.get)
+
 
         member.setROLE("ROLE_PER"); // 개인회원 코드
         member.setName(form.getName()); // 이름
