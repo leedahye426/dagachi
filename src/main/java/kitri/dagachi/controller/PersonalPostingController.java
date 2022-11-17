@@ -2,7 +2,10 @@ package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
 
+import kitri.dagachi.SessionConstants;
+import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
@@ -71,285 +74,36 @@ public class PersonalPostingController {
 
         return "post/personalDetail";
     }
+
+    @PostMapping("/post/person/like")
+    @ResponseBody
+    public String like(@RequestParam Long postingId, HttpSession session) {
+
+
+
+        PostingLike postinglike = new PostingLike();
+        // respoisotiry.insert
+        postinglike.setPostingId(postingId);
+
+        //session 값 가져오기
+        Long memberId = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+        postinglike.setMemberId(memberId);
+
+        postservice.save(postinglike);
+
+
+
+
+        System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
+        System.out.println("postinglike.getMemberId() : " + postinglike.getMemberId());
+        System.out.println("postinglike.getRowNum() : " + postinglike.getRowNum());
+
+
+
+
+        return "";
+    }
+
+
 }
 
-
-//    @GetMapping("/post/person/person_post")
-//public
-
-
-//    @PostMapping("/post/person/person_post")
-//    public Map<String, Object> clickLike(@RequestParam Map<String,Object> commandMap) {
-//
-//        int resultCode = 1;
-//        int likeCheck = 1;
-//        Map<String, Object> map = new HashMap<>();
-//        Map<String, Object> likeCntMap = new HashMap<>();
-//        Map<String, Object> resultMap = new HashMap<>();
-
-//        try{
-//
-//            map = postservice.likecheck(commandMap);
-//
-//            if(map ==null)
-//            {
-//                postservice.insertLikeBtn(commandMap);
-//                postservice.updateLikeCheck(commandMap);
-//
-//            }
-//        }
-
-
-        ;
-//    }
-//
-//}
-
-
-
-//    @RequestMapping("/post/person/person_post")
-//    @ResponseBody
-//    public Map<String, Object> clickLike(@RequestParam Map<String,Object> commadMap)
-//    {
-//
-//    }
-
-//    @GetMapping(/post/person/person_post)
-//    public String listCriteria(Model model, Criteria criteria) throws Exception
-//    {
-//        logger.info("listCriteria....");
-//        model.addAttribute("post", postservice.listCriteria(criteria));
-//        return "/post/person/person_post";
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        post.setPosting_Content(post.getPosting_Content());
-//        post.setPosting_Title(post.getPosting_Title());
-//      post.setUpload_Date(post.getUpload_Date());
-//        post.setCompany_Name(post.getCompany_Name());
-//        post.setMember_Id(post.getMember_Id());
-//     System.out.println(postForm.getCompany_Name());
-
-
-//        postRepository.findAll();
-
-
-
-//        @PostMapping("enter/register")
-//    public String updateItem(@ModelAttribute("form") PostForm form) {
-//
-//        postservice.upload();
-//
-//        return "/post/enterPosting";
-//    }
-
-
-//    @GetMapping("/enter/upload")
-//    public String updateItem(Model model) {
-//       List<PostForm> postFormList = Post.selectList("post.selectPostList");
-//
-//       for(PostForm pf : postFormList){
-//           System.out.println(pf);
-
-
-
-
-
-
-//    postRepository.findAll();
-//        postservice.upload();
-
-//
-//    }
-
-
-//    @PostMapping("enter/register")
-//    public String updateItem(@PathVariable Long Posting_ID, @ModelAttribute("form") PostForm form) {
-//
-//        postservice.findPostings(Posting_ID, form.getCompany_Name(), form.Posting_Content(), form.getPosting_Title(),form.getUpload_Date(),form.getMember_ID());
-//
-//        return "/post/enterPosting";
-//    }
-
-//
-//        postForm.setPosting_ID(postForm.getPosting_ID());
-//        postForm.setPosting_Content(postForm.getPosting_Content());
-//        postForm.setPosting_Title(postForm.getPosting_Title());
-//        postForm.setUpload_Date(postForm.getUpload_Date());
-//        postForm.setCompany_Name(postForm.getCompany_Name());
-//        postForm.setMember_ID(postForm.getMember_ID());
-
-//        postservice.savePost(postForm);
-
-
-
-
-
- /*   @GetMapping("/enter/post")
-    public String createForm(Model model) {
-        model.addAttribute("PostForm", new PostForm());
-        return "/enter/";
-    }*/
-
-
-
-//    @GetMapping("/enter/enter_post")
-//    public String list(Model model) {
-//        List<PostForm> postForms = postservice.findPostings();
-//        model.addAttribute("postForm", postForms);
-//        return "post/enterPosting";
-//    }
-//}
-
-//    @PostMapping("/enter/")
-//            public String create(PostForm postForm)
-//    {
-//        postForm.setPosting_ID(postForm.getPosting_ID());
-//        postForm.setPosting_Content(postForm.getPosting_Content());
-//        postForm.setPosting_Title(postForm.getPosting_Title());
-//        postForm.setUpload_Date(postForm.getUpload_Date());
-//        postForm.setCompany_Name(postForm.getCompany_Name());
-//        postForm.setMember_ID(postForm.getMember_ID());
-//     System.out.println(postForm.getCompany_Name());
-//} postForm.setPosting_ID(postForm.getPosting_ID());
-
-
-
-
-
-
-
-//    @RequestMapping("/enter/register")
-//    @PostMapping("/enter/enter_post")
-
-//            public String submit(HttpServletRequest httpServletRequest, Model model)
-//    {
-//        String Company_Name = httpServletRequest.getParameter("Company_Name");
-//        String Upload_Date = httpServletRequest.getParameter("Upload_Date");
-//        String Posting_Content = httpServletRequest.getParameter("Posting_Content");
-//        String Posting_Title = httpServletRequest.getParameter("Posting_Title");
-//        String Member_Id =httpServletRequest.getParameter("Member_Id");
-//
-//        model.addAttribute("Company_Name",Company_Name);
-//        model.addAttribute("Upload_Date",Upload_Date);
-//        model.addAttribute("Posting_Content",Posting_Content);
-//        model.addAttribute("Posting_Title",Posting_Title);
-//        model.addAttribute("Member_Id",Member_Id);
-//
-//        //insert
-//
-//
-//
-//        return "/post/enterPosting";
-//    }
-//}
-
-
-//        Post post = new Post();
-//        post.setCompany_Name(form.getCompany_Name());
-//        post.setPosting_Content(form.getPosting_Content());
-////        post.setPosting_Title(form.getPosting_Title());
-////        post.setMember_Id(form.getMember_ID());
-//          post.setUpload_Date(form.getUpload_Date());
-//
-//
-//
-//        postForm.setPosting_ID(postForm.getPosting_ID());
-//        postForm.setPosting_Content(postForm.getPosting_Content());
-//        postForm.setPosting_Title(postForm.getPosting_Title());
-//        postForm.setUpload_Date(postForm.getUpload_Date());
-//        postForm.setCompany_Name(postForm.getCompany_Name());
-//        postForm.setMember_ID(postForm.getMember_ID());
-//        System.out.println(postForm.getCompany_Name());
-//
-
-
-
-//    @GetMapping("/enter/post")
-//    public String list(Model model) {
-//        List<Post> post = postService.findPost();
-//        model.addAttribute("post",post);
-//    return "post/enterPosting";
-//    }
-//}
-
-
-//    @GetMapping("/enter/enter_post")
-//    public String register() {
-//
-//
-//        return "/post/enter_register";
-//
-//    }
-
-
-//    @PostMapping("/enter/enter_post")
-//            public String addImage(@RequestParam PostForm form, HttpServletRequest request)
-//    {
-//        Post post = new Post();
-//        post.setCompany_Name(form.getCompany_Name());
-//        post.setUpload_Date(form.getUpload_Date());
-//        post.setPosting_Content(form.getPosting_Content());
-//        post.setPosting_Title(form.getPosting_Title());
-//        post.setMember_Id(form.getMember_ID());
-//
-//        return "업로드 완료";
-//    }
-//}
-
-
-//    {
-//
-//        return "enterPosting";
-//
-//=======
-//import org.springframework.web.bind.annotation.GetMapping;
-//
-//@Controller
-//public class PostingController {
-//
-//    @GetMapping("/enter/enter_post")
-//    public String project() {
-//        return "enterPosting";
-//    }
-//>>>>>>> 2c7590eed672a2d85bf1b042e1fa46725ca25c4b
-//}
