@@ -1,11 +1,11 @@
 $('#personal').on('click', function() {
     console.log('click');
-    $('#codeType').attr('value', '1');
+    $('#codeType').attr('value', 'ROLE_PER');
 }) ;
 
 $('#enterprise').on('click', function() {
     console.log('click');
-    $('#codeType').attr('value', '2');
+    $('#codeType').attr('value', 'ROLE_ENT');
 }) ;
 
 
