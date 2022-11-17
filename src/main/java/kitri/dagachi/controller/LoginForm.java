@@ -16,5 +16,5 @@ public class LoginForm {
     private String passwd;
 
     @NotNull(message = "회원구분은 필수입력 항목 입니다.")
-    private Long codeType;
+    private String ROLE;
 }

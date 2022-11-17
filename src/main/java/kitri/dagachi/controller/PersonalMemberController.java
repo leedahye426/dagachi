@@ -5,6 +5,7 @@ import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.asm.Advice;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("/members/")
 @RequiredArgsConstructor
+@Builder
 public class PersonalMemberController {
 
     @Autowired
@@ -70,8 +72,15 @@ public class PersonalMemberController {
 //        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
         // 멤버 생성
-        Member member = new Member();
-        member.setCode(1L); // 개인회원 코드
+//        Member member = new Member();
+
+        Member member = Member.builder()
+                        .name(form.getName())
+                        .email(form.getEmail())
+                        .password(form.getPassword())
+                        .ROLE(form.get)
+
+        member.setROLE("ROLE_PER"); // 개인회원 코드
         member.setName(form.getName()); // 이름
         member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
 

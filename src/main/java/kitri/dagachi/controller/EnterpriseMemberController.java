@@ -52,7 +52,7 @@ public class EnterpriseMemberController {
 
         // 멤버 생성
         Member member = new Member();
-        member.setCode(2L); // 개인회원 코드
+        member.setROLE("ROLE_ENT"); // 개인회원 코드
         member.setName(form.getName()); // 이름
         member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
         member.setBusinessNum(form.getBsNum());
@@ -75,7 +75,7 @@ public class EnterpriseMemberController {
         System.out.println("member.getId : " + member.getId());
         System.out.println("member.getName : " + member.getName());
         System.out.println("member.getPasswd : " + member.getPassword());
-        System.out.println("member.getCode : " + member.getCode());
+        System.out.println("member.getROLE : " + member.getROLE());
         System.out.println("member.getJoinDate : " + member.getJoinDate());
         System.out.println("member.getEmail : " + member.getEmail());
 

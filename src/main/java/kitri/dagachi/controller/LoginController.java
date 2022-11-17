@@ -44,7 +44,7 @@ public class LoginController {
             return "members/login";
         }
 
-        Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getCodeType());
+        Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getROLE());
 
 //        System.out.println(loginMember);
 //        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());

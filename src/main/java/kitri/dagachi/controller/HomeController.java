@@ -20,11 +20,11 @@ public class HomeController {
         }
 
         // 세션이 유지되면 로그인 홈으로 이동
-        if(loginMember.getCode().equals(1L)) {
+        if(loginMember.getROLE().equals("ROLE_PER")) {
 //            model.addAttribute("member", loginMember);
             return "personal_home";
         }
-        else if(loginMember.getCode().equals(2L)) {
+        else if(loginMember.getROLE().equals("ROLE_ENT")) {
 //            model.addAttribute("member", loginMember);
             return "enterprise_home";
         }

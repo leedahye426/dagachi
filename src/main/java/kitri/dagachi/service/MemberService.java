@@ -55,10 +55,10 @@ public class MemberService {
 //    }
 
     // 로그인 매칭 V2
-    public Member loginService(String email, String passwd, Long code) {
+    public Member loginService(String email, String passwd, String ROLE) {
         return memberRepository.findByLoginInfo(email)
                 .filter(m -> bCryptPasswordEncoder.matches(passwd, m.getPassword()))
-                .filter(m -> m.getCode().equals(code))
+                .filter(m -> m.getROLE().equals(ROLE))
                 .orElse(null);
     }
 
