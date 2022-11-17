@@ -44,7 +44,15 @@ public class LoginController {
             return "members/login";
         }
 
+        System.out.println("loginMember.getEmail() : " + loginForm.getEmail());
+        System.out.println("loginMember.getPassword() : " + loginForm.getPasswd());
+        System.out.println("loginMember.getROLE() : " + loginForm.getROLE());
+
         Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getROLE());
+        System.out.println(loginMember);
+        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());
+        System.out.println("loginMember.getPassword() : " + loginMember.getPassword());
+        System.out.println("loginMember.getROLE() : " + loginMember.getROLE());
 
 //        System.out.println(loginMember);
 //        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());

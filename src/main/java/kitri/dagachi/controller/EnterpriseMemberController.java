@@ -47,37 +47,47 @@ public class EnterpriseMemberController {
     public String enterCreate(@Valid MemberForm form, BindingResult result) {
 
         // 현재 시간 구하기(가입 시간, ... ) -> DEFAULT SYSDATE 변경
-        LocalDateTime joinDate = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
 //        String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 
         // 멤버 생성
-        Member member = new Member();
-        member.setROLE("ROLE_ENT"); // 개인회원 코드
-        member.setName(form.getName()); // 이름
-        member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
-        member.setBusinessNum(form.getBsNum());
-        member.setAddr(form.getAddr());
+//        Member member = new Member();
+//        member.setROLE("ROLE_ENT"); // 개인회원 코드
+//        member.setName(form.getName()); // 이름
+//        member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
+//        member.setBusinessNum(form.getBsNum());
+//        member.setAddr(form.getAddr());
 
         // 패스워드 암호화
         String encPwd = bCryptPasswordEncoder.encode(form.getPassword());
-        member.setPassword(encPwd);
+//        member.setPassword(encPwd);
 //        member.setPasswd(form.getPasswd());
         // 전화번호 칼럼 추가 해야됨
         // member.set
-        member.setJoinDate(joinDate); // 생성일시 DB 저장용
+//        member.setJoinDate(joinDate); // 생성일시 DB 저장용
 
-        System.out.println("form.getName : " + form.getName());
-        System.out.println("form.getPasswd : " + form.getPassword());
-        System.out.println("form.getEmail : " + form.getEmail());
-        System.out.println("form.getBsNum : " + form.getBsNum());
-        System.out.println("form.getAddr : " + form.getAddr());
+        Member member = Member.builder() // Builder 이용 ENT 멤버 생성 V2
+                .name(form.getName())
+                .businessNum(form.getBsNum())
+                .addr(form.getAddr())
+                .email(form.getEmail())
+                .password(encPwd)
+                .ROLE("ROLE_ENT")
+                .joinDate(now)
+                .build();
 
-        System.out.println("member.getId : " + member.getId());
-        System.out.println("member.getName : " + member.getName());
-        System.out.println("member.getPasswd : " + member.getPassword());
-        System.out.println("member.getROLE : " + member.getROLE());
-        System.out.println("member.getJoinDate : " + member.getJoinDate());
-        System.out.println("member.getEmail : " + member.getEmail());
+//        System.out.println("form.getName : " + form.getName());
+//        System.out.println("form.getPasswd : " + form.getPassword());
+//        System.out.println("form.getEmail : " + form.getEmail());
+//        System.out.println("form.getBsNum : " + form.getBsNum());
+//        System.out.println("form.getAddr : " + form.getAddr());
+//
+//        System.out.println("member.getId : " + member.getId());
+//        System.out.println("member.getName : " + member.getName());
+//        System.out.println("member.getPasswd : " + member.getPassword());
+//        System.out.println("member.getROLE : " + member.getROLE());
+//        System.out.println("member.getJoinDate : " + member.getJoinDate());
+//        System.out.println("member.getEmail : " + member.getEmail());
 
         memberService.join(member);
         return "redirect:/";

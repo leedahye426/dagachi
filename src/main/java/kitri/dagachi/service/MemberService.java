@@ -56,6 +56,8 @@ public class MemberService {
 
     // 로그인 매칭 V2
     public Member loginService(String email, String passwd, String ROLE) {
+        System.out.println("로그인 매칭 확인");
+        System.out.println("ROLE : " + ROLE);
         return memberRepository.findByLoginInfo(email)
                 .filter(m -> bCryptPasswordEncoder.matches(passwd, m.getPassword()))
                 .filter(m -> m.getROLE().equals(ROLE))

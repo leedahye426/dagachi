@@ -1,10 +1,7 @@
 package kitri.dagachi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +16,8 @@ import java.util.Collection;
 @Entity
 @Getter @Setter
 @Table(name = "members")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 //@AllArgsConstructor
 public class Member implements UserDetails {
