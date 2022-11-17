@@ -35,9 +35,9 @@ public class SecurityConfig{
         http.headers().frameOptions().sameOrigin(); // 동일 도메인 내 X-Frame-Options 활성화(PDF viewer)
 
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
-                .antMatchers("/project/enterprise/**",
-                                        "/post/enterDetail/**",
-                                        "/post/personalDetail/**").authenticated()
+//                .antMatchers("/project/enterprise/**",
+//                                        "/post/enterDetail/**",
+//                                        "/post/personalDetail/**").authenticated()
                 .antMatchers("/members/**").anonymous()
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정

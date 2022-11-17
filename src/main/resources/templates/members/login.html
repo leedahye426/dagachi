@@ -14,10 +14,10 @@
     </head>
 <body>
         <!-- Responsive navbar-->
-        <th:block th:switch="${session.loginMember?.code}">
+        <th:block th:switch="${session.loginMember?.ROLE}">
             <span th:case="null"><div th:replace="fragments/nav :: nav"></span>
-            <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"></span>
-            <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"></span>
+            <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"></span>
+            <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"></span>
         </th:block>
 
 
@@ -33,7 +33,7 @@
         <div class="login-tab d-flex justify-content-evenly pb-3">
             <button type="button" id="personal" class="login-tab__person on">개인회원</button>
             <button type="button" id="enterprise" class="login-tab__biz">기업회원</button>
-            <input type="hidden" id="codeType" name="codeType" value=""> 
+            <input type="hidden" id="ROLE" name="ROLE" value=""> 
           </div>
         <div class="modal-body p-5 pt-0">
             <div class="form-floating mb-3">

@@ -25,6 +25,7 @@ public class MemberRepository {
     }
 
     public Optional<Member> findByLoginInfo(String email) {
+        System.out.println("로그인을 위한 이메일 조회");
         return this.findAll().stream()
                 .filter(m -> m.getEmail().equals(email))
                 .findFirst();

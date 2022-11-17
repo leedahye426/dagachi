@@ -3,10 +3,10 @@
     <head th:replace="fragments/header :: header" />
     <body>
 <!-- Responsive navbar-->
-        <th:block th:switch="${session.loginMember?.code}">
+        <th:block th:switch="${session.loginMember?.ROLE}">
             <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-            <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-            <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
+            <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
+            <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
         </th:block>
         <!--content-->
         <div class="container row-cols-10">
@@ -19,6 +19,7 @@
             <span class="card col p-1 mx-3 my-5 border">
                 <h4 class="m-3"> <strong >프로젝트명 </strong>
                     <span th:text="${' '} + ${project.project_title}"></span>
+
                 </h4>
                 <br>
                 <span class="m-3" th:text="${'      '} + ${project.project_content}"></span>
