@@ -67,6 +67,13 @@ public class ProjectRepository {
                 .getResultList();
     }
 
+    public ProjectLike findLikeById(Long project_id, Long member_id) {
+        return (ProjectLike) em.createQuery("select pl from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
+                .setParameter("project_id", project_id)
+                .setParameter("member_id", member_id)
+                .getSingleResult();
+    }
+
     public Long findLikeCntById(Long project_id, Long member_id) {
         return  (Long)em.createQuery("select count(pl) from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
                 .setParameter("project_id", project_id)
