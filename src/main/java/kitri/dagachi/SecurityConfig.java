@@ -23,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity // 스프링 security 지원을 가능하게 함
 @ConditionalOnDefaultWebSecurity
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class SecurityConfig{
+public class SecurityConfig {
 
     @Autowired
     MemberService memberService;
@@ -47,12 +47,13 @@ public class SecurityConfig{
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
                 .antMatchers("/members").anonymous()
                 .antMatchers("/project/enterprise/**",
-                                        "/post/enterDetail/**",
-                                        "/post/personalDetail/**").authenticated()
+                                        "/project/personal/personal_project_detail/**",
+                                        "/post/ent/enterDetail/**",
+                                        "/post/per/personalDetail/**").authenticated()
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정
 //                .anyRequest().authenticated()
-            .and()
+                .and()
                 .authenticationManager(authenticationManager)
                 .formLogin()
                 .loginPage("/members/login") // 사용자 정의 로그인 페이지
@@ -62,13 +63,13 @@ public class SecurityConfig{
                 .failureForwardUrl("/members/login") // 로그인 실패 후 페이지 포워딩
                 .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
                 .permitAll() // 사용자 정의 로그인 페이지 권한 설정
-            .and()
+                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-            .and()
+                .and()
                 .exceptionHandling()
                 .accessDeniedPage("/");
 //            .and()
