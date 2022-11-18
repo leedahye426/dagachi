@@ -1,11 +1,13 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
+import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 //import org.springframework.ui.Model;
@@ -47,7 +49,7 @@ public class EnterPostingController {
 
         System.out.println(post);
 
-        return "/post/enterprise_post_list";
+        return "/post/post_list";
     }
 
 
@@ -56,7 +58,7 @@ public class EnterPostingController {
 
     //insert
 
-    @PostMapping("/post/enterprise_post_list")
+    @PostMapping("/post/enterprise/post_list")
     public String postingRegister(Post post, String[] tag) {
 
         //        System.out.println("===================="+postTags);
@@ -67,32 +69,36 @@ public class EnterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/enterprise_post_list";
+        return "/post/post_list";
     }
 
 
 
 
     //공고등록하기 버튼 클릭시
-    @GetMapping("/post/enterprise_post_register_form")
+    @GetMapping("/post/enterprise/post_register_form")
     public String postingRegisterForm(){
-        return "/post/enterprise_post_register_form";
+        return "/post/post_register_form";
     }
 
 
 
     //공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/enterprise/{postingId}/post_detail")
-    public String postingDetail(@ModelAttribute("postingId") Long postingId,  Model model)
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member)
     {
             Post post = postservice.findOne(postingId);
             String companyName = post.getCompanyName();
              String postingTitle = post.getPostingTitle();
              String postingContent = post.getPostingContent();
+//             Long memberId = member.getId();
+//             post.setMemberId(memberId);
+
+//        System.out.println(memberId);
 
             model.addAttribute("post",post);
 
-            return "post/enterprise_post_detail";
+            return "/post/post_detail";
     }
 
 
@@ -124,7 +130,7 @@ public class EnterPostingController {
 //    }
 
 
-    @GetMapping("/post/enterprise/post_delete/{postingId}")
+    @GetMapping("/post/enterprise/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId)
     {
         System.out.println("postingId: " + postingId);
@@ -132,7 +138,7 @@ public class EnterPostingController {
 
 //        ra.addFlashAttribute("postingId",postingId);
 
-        return "redirect:/post/enterprise/post_list";
+        return "redirect:/post/post_list";
     }
 
 

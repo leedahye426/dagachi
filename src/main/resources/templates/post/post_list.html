@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head th:replace="fragments/header :: header" />
+
 <body>
 <!-- Responsive navbar-->
-<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-    <div th:replace="fragments/nav :: nav"></div>
-</div>
-<div sec:authorize="hasRole('ROLE_PER')">
-    <div th:replace="fragments/personal_nav :: personal_nav"></div>
-</div>
-<div sec:authorize="hasRole('ROLE_ENT')" th:text="post: ${post}">
-    <th:block th:switch="${loginId}">
-        <span th:case="${post.memberId}">
-           <button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/post/enter/register'">공고 등록하기</button>
-            <!--            <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"-->
-            <!--                    th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정-->
-            <!--            </button>-->
-       </span>
-    </th:block>
-    <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
-</div>
+<head th:replace="fragments/nav :: nav" />
 
 
-<div class="card-body" th:each="post : ${post}">
+
+<div class="card-body">
 
 <div class="container position-relative px-4 px-lg-5 my-4">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -41,7 +28,7 @@
     <!--        -->
 
     <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;"
-         th:each="post : ${post}" th:onclick="|location.href='@{|/post/enter/${post.postingId}/detail|}'|">
+         th:each="post : ${post}" th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|">
 
         <!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
 
@@ -64,7 +51,7 @@
 </div>
 
 
-<button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/post/enter/register'">공고 등록하기</button>
+<button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/post/enterprise/post_register_form'">공고 등록하기</button>
 
 
 <!--        <div class="container d-flex justify-content-between" >-->

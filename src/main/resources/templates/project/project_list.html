@@ -3,15 +3,8 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-    <div th:replace="fragments/nav :: nav"></div>
-</div>
-<div sec:authorize="hasRole('ROLE_PER')">
-    <div th:replace="fragments/personal_nav :: personal_nav"></div>
-</div>
-<div sec:authorize="hasRole('ROLE_ENT')">
-    <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
-</div>
+<head th:replace="fragments/nav :: nav" />
+
 
 <!--content-->
 <header class="py-3 bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg')">
@@ -47,21 +40,24 @@
 </div>
 
 <div class="container">
-    <div class="row row-cols-3">
+    <div class="row row-cols-5">
         <div th:each="project : ${projects}"
              th:onclick="|location.href='@{|/project/personal/${project.project_id}/detail|}'|"
-             class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 250px;">
-            <div class="card-body fw-bold mt-5  " style="cursor:pointer">
-                <h4 th:text="'프로젝트명 : ' + ${project.project_title}" class="card-title"></h4><br><br>
+             class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
+            <div class="card-body fw-bold mt-3  " style="cursor:pointer">
+                <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
                 <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
                 <h6 th:text="${project.upload_date}"></h6>
             </div>
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/project/project_register'"
-        style="position: absolute; right: 100px; bottom: 100px;">신규 등록
-</button>
+<div sec:authorize="hasRole('ROLE_PER')">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/project/project_register'"
+            style="position: absolute; right: 100px; bottom: 100px;">신규 등록
+    </button>
+</div>
+
 <!-- Footer-->
 <div th:replace="fragments/footer :: footer"/>
 <!-- Bootstrap core JS-->

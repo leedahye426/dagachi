@@ -37,5 +37,5 @@ function empty() {
     console.log("empty()");
     project_like.classList.add("empty-like");
     project_like.classList.remove("fill-like");
-    project_like.setAttribute('fill', 'white');
+    project_like.setAttribute('fill', 'grey');
 }

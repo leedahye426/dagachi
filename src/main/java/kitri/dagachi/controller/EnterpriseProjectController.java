@@ -35,13 +35,11 @@ public class EnterpriseProjectController {
 
     private final ProjectLikeService projectLikeService;
 
-    @GetMapping("/project/enterprise_project_list")
+    @GetMapping("/project/enterprise/project_list")
     public String list(Model model) {
         List<Project> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
-
-
-        return "project/enterprise/enterprise_project_list";
+        return "project/project_list";
     }
 
     @GetMapping("/project/enterprise/{project_id}/detail")
@@ -58,7 +56,7 @@ public class EnterpriseProjectController {
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/enterprise/enterprise_project_detail";
+        return "project/project_detail";
     }
 
     @GetMapping("/project/enterprise/search")
@@ -66,7 +64,7 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-        return "project/enterprise/enterprise_project_list";
+        return "project/project_list";
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
@@ -82,7 +80,7 @@ public class EnterpriseProjectController {
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise/enterprise_project_detail";
+        return "/project/project_detail";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
     public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
@@ -96,7 +94,7 @@ public class EnterpriseProjectController {
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise/enterprise_project_detail";
+        return "/project/project_detail";
     }
 
     @GetMapping("/project/enterprise/myLike")
@@ -105,7 +103,7 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsById(member_id);
         model.addAttribute("projects", projects);
         for(Project p: projects) System.out.println(p);
-        return "/project/enterprise/enterprise_project_list";
+        return "/project/project_list";
     }
 
 }
