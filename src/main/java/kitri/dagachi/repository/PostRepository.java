@@ -19,7 +19,6 @@ public class PostRepository {
     private final EntityManager em;
 
 
-
     public void save(Post post) {
         LocalDateTime uploadDate = LocalDateTime.now();
         String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -37,15 +36,13 @@ public class PostRepository {
         System.out.println("insert 동작");
     }
 
-    public void savaposttag(PostTags postTags)
-    {
+    public void savaposttag(PostTags postTags) {
         em.persist(postTags);
         em.flush();
     }
 
 
-    public void savaLike(PostingLike postinglike)
-    {
+    public void savaLike(PostingLike postinglike) {
         em.persist(postinglike);
         em.flush();
     }
@@ -76,13 +73,17 @@ public class PostRepository {
         return em.find(Post.class, Posting_Content);
     }
 
-    public Post findOneDate(LocalDateTime Upload_Date) {  return em.find(Post.class, Upload_Date);}
+    public Post findOneDate(LocalDateTime Upload_Date) {
+        return em.find(Post.class, Upload_Date);
+    }
 
     public Post findID(Integer Member_ID) {
         return em.find(Post.class, Member_ID);
     }
 
-    public Post find0ne(Long id){return em.find(Post.class, id);}
+    public Post find0ne(Long id) {
+        return em.find(Post.class, id);
+    }
 
 //            LocalDateTime localdate=LocalDateTime.now();
 //            DateTimeFormatter  Date = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
@@ -90,9 +91,6 @@ public class PostRepository {
 
 //    DateTimeFormatter DateTumeFormatter ;
 //    String formatedNow= now.format(DateTumeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss"));
-
-
-
 
 
     public List<Post> findAll() {
@@ -120,14 +118,11 @@ public class PostRepository {
     }
 
 
-
-
 //    public int delete(Long postingId) {
 //       int result= em.createQuery("delete from posting_board p where p.postingId = :postingId")
 //                .setParameter("postingId",postingId).executeUpdate();
 //         return result;
 //    }
-
 
 
 }

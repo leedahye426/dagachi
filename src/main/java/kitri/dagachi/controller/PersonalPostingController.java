@@ -3,6 +3,7 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.service.FileService;
 
 //import jdk.internal.jimage.ImageReader;
+
 import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +36,6 @@ public class PersonalPostingController {
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
-//    private PersonalProjectController jdbcTemplate;
-
-
-//    메인페이지에서 채용공고 메뉴 클릭 시
-//    @GetMapping("/enter/enter_post")
-//    public String posting(){
-//
-//        return "/post/enterPosting";
-//    }
-
 
     //select
     @GetMapping("/post/person/person_post")
@@ -79,8 +71,7 @@ public class PersonalPostingController {
 
     @PostMapping("/post/person/like")
     @ResponseBody
-    public String like(@RequestParam Long postingId, HttpSession session) {
-
+    public String like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
 
 
         PostingLike postinglike = new PostingLike();
@@ -88,13 +79,11 @@ public class PersonalPostingController {
         postinglike.setPostingId(postingId);
 
         //session 값 가져오기
-        Long memberId = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+        Long memberId = member.getId();
         postinglike.setMemberId(memberId);
 
 
         postservice.save(postinglike);
-
-
 
 
         System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
@@ -102,11 +91,8 @@ public class PersonalPostingController {
         System.out.println("postinglike.getRowNum() : " + postinglike.getRowNum());
 
 
-
-
         return "";
     }
-
 
 
 }

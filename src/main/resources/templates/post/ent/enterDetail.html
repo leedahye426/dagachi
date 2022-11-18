@@ -1,67 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head th:replace="fragments/header :: head" />
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header" />
 <body>
 <!-- Responsive navbar-->
+<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+    <div th:replace="fragments/nav :: nav"></div>
+</div>
+<div sec:authorize="hasRole('ROLE_PER')">
+    <div th:replace="fragments/personal_nav :: personal_nav"></div>
+</div>
+<div sec:authorize="hasRole('ROLE_ENT')">
+    <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
+</div>
 
-<th:block th:switch="${session.loginMember?.ROLE}">
-    <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-    <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-    <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
-</th:block>
-
-
-        <div class="container py-5">
-            <h1 class="mx-5">채용공고</h1>
-                <div class="card-body" th:each="post : ${post}">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">회사이름</label>
-                            <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">공고제목</label>
-                                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">공고내용</label>
-                            <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;" th:text="${post.postingContent}" disabled></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">등록날짜</label>
-                            <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
-                        </div>
-
-<!--                        <form action="/enter/delete" method="post">-->
-<!--                            <input type="hidden" th:field="${post.postingId}">-->
-
-<!--                        <input type="button" th:onclick="|location.href='@{/post/enter/delete(id=${post.postingId})}'|" ></input>-->
-                        <button type="button" value="삭제" id= "delete_btn"  class="btn btn-outline-danger" th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enter/delete/${post.postingId}|}'|" ></button>
-<!--                        <button type="button" value="수정" id= "modify_btn"  class="btn-outline-warning" th:onclick="|if(confirm('정말 수정하시겠습니까?')) location.href='@{|/post/enter/modify/${post.postingId}|}'|"></button>-->
-
-
-                   </form>
-<!--                        <a href="/enter/{post.postingId}/delete" class="btn btn-outline-danger" onclick="return confirm('삭제하시겠습니까?')">remove</a>-->
-
-                    </form>
-                </div>
+<div class="container py-5">
+    <h1 class="mx-5">채용공고</h1>
+    <div class="card-body" th:each="post : ${post}">
+        <form>
+            <div class="mb-3">
+                <label class="form-label">회사이름</label>
+                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
             </div>
-        </div>
-    </main>
+            <div class="mb-3">
+                <label class="form-label">공고제목</label>
+                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">공고내용</label>
+                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"
+                          th:text="${post.postingContent}" disabled></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">등록날짜</label>
+                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
+            </div>
+
+            <!--                        <form action="/enter/delete" method="post">-->
+            <!--                            <input type="hidden" th:field="${post.postingId}">-->
+
+            <!--                        <input type="button" th:onclick="|location.href='@{/post/enter/delete(id=${post.postingId})}'|" ></input>-->
+            <button type="button" value="삭제" id="delete_btn" class="btn btn-outline-danger"
+                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enter/delete/${post.postingId}|}'|"></button>
+            <!--                        <button type="button" value="수정" id= "modify_btn"  class="btn-outline-warning" th:onclick="|if(confirm('정말 수정하시겠습니까?')) location.href='@{|/post/enter/modify/${post.postingId}|}'|"></button>-->
 
 
+        </form>
+        <!--                        <a href="/enter/{post.postingId}/delete" class="btn btn-outline-danger" onclick="return confirm('삭제하시겠습니까?')">remove</a>-->
 
-
-
-
-
-
-
-
-
-
+        </form>
+    </div>
+</div>
+</div>
+</main>
 
 
 <!-- Image element - set the background image for the header in the line below-->
@@ -70,7 +60,7 @@
 
 <!-- Footer-->
 
-        <div th:replace="fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer"/>
 
 
 </body>
@@ -98,5 +88,6 @@
      form.attr("method", "post");
      form.submit();
      });
+
 
 </script>

@@ -1,94 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: head" />
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header" />
 <body>
 <!-- Responsive navbar-->
+<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+    <div th:replace="fragments/nav :: nav"></div>
+</div>
+<div sec:authorize="hasRole('ROLE_PER')">
+    <div th:replace="fragments/personal_nav :: personal_nav"></div>
+</div>
+<div sec:authorize="hasRole('ROLE_ENT')">
+    <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
+</div>
 
 
-<th:block th:switch="${session.loginMember?.code}">
-    <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-    <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-    <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
-</th:block>
+<div class="container col-5 my-5 width : 100%">
+    <form action="/post/enter/enter_post" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>회사명
+                <td><input type="text" name="companyName" value=""></td>
+                </th>
+            </tr>
+            <!--             <tr>-->
+            <!--                 <th>날짜-->
+            <!--                 <td><input type="date" name="upload_date" value=""></td></th>-->
+            <!--             </tr>-->
+            <tr>
+                <th>공고제목
+                <td><input type="text" name="postingTitle" value=""></td>
+                </th>
+            </tr>
+            <tr>
+                <th>공고내용
+                <td><textarea name="postingContent" style="min-height :300px;  width: 300px" value=""></textarea></td>
+                </th>
+            </tr>
+
+            <tr>
+                <th>tag</th>
+                <td>
+                    <div class="checkbox">
+                        <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="IT">
+                        <label class="checkbox1">IT</label>
 
 
+                        <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="예술">
+                        <label class="checkbox2">예술</label>
 
 
+                        <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="토목">
+                        <label class="checkbox3">토목</label>
 
 
- <div class ="container col-5 my-5 width : 100%">
-     <form action="/post/enter/enter_post" method="post">
-         <table>
-             <thead>
-             <tr>
-                 <th>회사명
-                 <td><input type="text"  name="companyName" value=""></td></th>
-             </tr>
-<!--             <tr>-->
-<!--                 <th>날짜-->
-<!--                 <td><input type="date" name="upload_date" value=""></td></th>-->
-<!--             </tr>-->
-             <tr>
-                 <th>공고제목
-                 <td><input type="text"  name="postingTitle" value=""></td></th>
-             </tr>
-             <tr>
-                 <th>공고내용
-                 <td><textarea name="postingContent" style="min-height :300px;  width: 300px" value=""></textarea></td></th>
-             </tr>
+                        <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="전기">
+                        <label class="checkbox3">전기</label>
+                    </div>
+                </td>
 
-             <tr>
-                 <th>tag</th>
-                 <td>
-                 <div class="checkbox" >
-                 <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="IT">
-                 <label class="checkbox1" >IT</label>
+            </tr>
+            <!--             <tr>-->
+            <!--                 <th>담당자-->
+            <!--                 <td><input type="text" name="member_id" value=""></td></th>-->
+            <!--             </tr>-->
+
+            <button type="submit" class="">등록</button>
+            </thead>
+        </table>
+    </form>
+    <!--     <span id="data"></span>-->
 
 
-                 <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="예술">
-                 <label class="checkbox2" >예술</label>
-
-
-                 <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="토목">
-                 <label class="checkbox3" >토목</label>
-
-
-                     <input onclick="CountChecked(this)" class="checkbox" type="checkbox" name="tag" value="전기">
-                     <label class="checkbox3" >전기</label>
-                 </div>
-             </td>
-
-       </tr>
-<!--             <tr>-->
-<!--                 <th>담당자-->
-<!--                 <td><input type="text" name="member_id" value=""></td></th>-->
-<!--             </tr>-->
-
-                 <button type="submit" class="">등록</button>
-             </thead>
-         </table>
-     </form>
-<!--     <span id="data"></span>-->
-
-
-
-
-
-
-
- </div>
-
-
-
-
-
+</div>
 
 
 <!--        </table>-->
-
-
-
 
 
 <!-- Image element - set the background image for the header in the line below-->
@@ -97,14 +84,13 @@
 
 <!-- Footer-->
 
-        <div th:replace="fragments/footer :: footer" />
-
+<div th:replace="fragments/footer :: footer"/>
 
 
 </body>
 </html>
 <!--<script src="js/checkbox.js"></script>-->
-<script type = "text/javascript">
+<script type="text/javascript">
     var maxCount = 3;
     var count=0;
 
@@ -126,6 +112,7 @@
 
     }
 
+
 </script>
 
 <script>
@@ -139,6 +126,7 @@
 <!--       tag[i].checked = true;-->
 <!--    }-->
 <!--}-->
+
 
 </script>
 
