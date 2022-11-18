@@ -33,13 +33,16 @@ $('#checkedEmail').on("click", function() {
     console.log(email);
     const newP = document.createElement('p');
     newP.innerHTML = '<input type=text id = member_email name = member_email size=20 style=border:none value='+email+' readonly>'
-        +"<button type='button' class='btn btn-sm border' onclick='remove(this);'>취소</button>";
+        +"<button type='button' class='btn btn-sm border' onclick='removeEmail(this);'>취소</button>";
     box.append(newP);
     console.log(newP);
 });
 
-const remove = (obj) => {
-            document.getElementById('box').removeChild(obj.parentNode);
+const removeEmail = (obj) => {
+      document.getElementById('box').removeChild(obj.parentNode);
+}
+const removeFile = (obj) => {
+      document.getElementById('fileBox').removeChild(obj.parentNode);
 }
 
 $('#exampleModal').on('hidden.bs.modal', function (e) {
@@ -50,4 +53,45 @@ $('#exampleModal').on('hidden.bs.modal', function (e) {
 });
 
 
+const project_like = document.getElementById("projectLike");
+
+function projectLike(project_id) {
+    console.log('heart click');
+    console.log(project_id);
+
+    if($(".project-like").hasClass("empty-like") === true) {
+        console.log('비어있음');
+        $.ajax({
+            type : "post",
+            url : "/project/enterprise/like/emptyToFill",
+            data : {project_id, project_id},
+            success : function(data) {
+                fill();
+            }
+        });
+    }
+    else {
+        console.log('차있음');
+        $.ajax({
+            type : "post",
+            url : "/project/enterprise/like/fillToEmpty",
+            data : {project_id, project_id},
+            success : function(data) {
+                empty();
+            }
+        });
+    }
+}
+function fill() {
+    console.log("success");
+    project_like.classList.add("fill-like");
+    project_like.classList.remove("empty-like");
+    project_like.src = "/images/like-fill.svg";
+}
+function empty() {
+    console.log("empty()");
+    project_like.classList.add("empty-like");
+    project_like.classList.remove("fill-like");
+    project_like.src = "/images/like.svg";
+}
 

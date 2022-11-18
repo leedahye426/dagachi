@@ -70,12 +70,16 @@ public class PersonalMemberController {
         LocalDateTime now = LocalDateTime.now();
 //        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
+
+
+
         // 멤버 생성 V1
 //        Member member = new Member();
 
 //        member.setROLE("ROLE_PER"); // 개인회원 코드
 //        member.setName(form.getName()); // 이름
 //        member.setEmail(form.getEmail()); // 이메일(이메일 양식 유효성 검증 예정)
+
 
         // 패스워드 암호화
         String encPwd = bCryptPasswordEncoder.encode(form.getPassword());

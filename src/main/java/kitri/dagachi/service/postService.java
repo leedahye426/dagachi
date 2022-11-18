@@ -3,6 +3,7 @@ package kitri.dagachi.service;
 import kitri.dagachi.model.Post;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.model.PostTags;
+import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,11 @@ public class postService {
             }
         }
 
+    public void save(PostingLike postinglike)
+    {
 
-
-//        public void detail(String companyName,String postingTitle, String postingContent)
-//            {
-//                Post post = new Post();
-//                post.setCompanyName(companyName);
-//                post.setPostingTitle(postingTitle);
-//                post.setPostingContent(postingContent);
-//                postRepository.detail(companyName,postingContent,postingTitle);
-//            }
-
+        postRepository.savaLike(postinglike);
+    }
 
 
 

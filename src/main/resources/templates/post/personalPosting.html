@@ -8,10 +8,10 @@
 =======
 >>>>>>> 150015a959196fc7a7c0ecd580d5829fcd1d665a
 
-<th:block th:switch="${session.loginMember?.code}">
+<th:block th:switch="${session.loginMember?.ROLE}">
     <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-    <span th:case="1"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-    <span th:case="2"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
+    <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
+    <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
 </th:block>
 
 
@@ -46,10 +46,10 @@
 <!--             <div class="border-top pt-2" th:text=" '태그 : ' + ${tag?.tag}" id="postingContent" style="font-size: 0.8em; font-width:bold;">-->
 
 
-            <button type="button" id= "btn_like" class="btn btn-sm" onclick="">
-                <span id="like"  > <svg id="heart"  stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="feed-icon like-default" viewBox="0 0 16 16">
+            <button type="button" id= "btn_like" class="btn btn-sm" th:onclick="|javascript:like(${post?.postingId})|">
+                <span id="like"  > <img id="heart"  stroke="white" src="/images/empty_heart.svg" width="25" height="23"  fill="gray" class="like-icon like-default" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                    </svg></span>
+                    </img></span>
             </button>
 
 

@@ -2,6 +2,7 @@ package kitri.dagachi.repository;
 
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
+import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,13 @@ public class PostRepository {
     public void savaposttag(PostTags postTags)
     {
         em.persist(postTags);
+        em.flush();
+    }
+
+
+    public void savaLike(PostingLike postinglike)
+    {
+        em.persist(postinglike);
         em.flush();
     }
 

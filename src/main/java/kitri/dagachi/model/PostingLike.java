@@ -20,7 +20,7 @@ public class PostingLike {
     @Column(name = "row_num")
     private Long rowNum;
 
-    @Column(name = "posing_id")
+    @Column(name = "posting_id")
     private Long postingId;
 
     @Column(name = "member_id")
