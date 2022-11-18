@@ -53,7 +53,7 @@ public class PersonalProjectController {
         for(String tag : tags) System.out.println(tag);
         projectService.register(file, team_name, project_title, project_content, members_email, tags);
 
-        return "redirect:/project/personal/personal_project_list";
+        return "redirect:/project/personal_project_list";
 
 
     }
@@ -81,7 +81,7 @@ public class PersonalProjectController {
     @GetMapping("/project/personal/{project_id}/delete")
     public String delete(@PathVariable Long project_id) {
         projectService.deleteProject(project_id);
-        return "redirect:/project/personal/personal_project_list";
+        return "redirect:/project/personal_project_list";
     }
 
     @GetMapping("/project/personal/{project_id}/update")
@@ -106,7 +106,7 @@ public class PersonalProjectController {
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
         Project project = projectService.findProject(project_id);
 
-        return "redirect:/project/personal/personal_project_list";
+        return "redirect:/project/personal_project_list";
     }
 
 

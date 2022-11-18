@@ -9,6 +9,7 @@ import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectLikeService;
 import kitri.dagachi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,11 +45,12 @@ public class EnterpriseProjectController {
     }
 
     @GetMapping("/project/enterprise/{project_id}/detail")
-    public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session){
+    public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session,
+                             @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
-        Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+        Long member_id = member.getId();
 
         Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
         System.out.println("cnt" + cnt);
@@ -64,12 +66,12 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-        return "project/enterprise/personal_project_list";
+        return "project/enterprise/enterprise_project_list";
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
-    public String emptyToFill(@RequestParam String project_id, HttpSession session, Model model) {
-        Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+    public String emptyToFill(@RequestParam String project_id, HttpSession session, Model model,  @AuthenticationPrincipal Member member) {
+        Long member_id = member.getId();
 
         ProjectLike projectLike = new ProjectLike();
         projectLike.setProject_id(Long.parseLong(project_id));
@@ -83,10 +85,10 @@ public class EnterpriseProjectController {
         return "/project/enterprise/enterprise_project_detail";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
-    public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model) {
+    public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
         //이미 하트를 눌렀음
         System.out.println("이미 누른 하트");
-        Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+        Long member_id = member.getId();
         System.out.println("like 컬럼 삭제");
         ProjectLike projectLike = projectLikeService.findLike(Long.parseLong(project_id),member_id);
         projectLikeService.deleteProjectLike(projectLike);
@@ -97,5 +99,13 @@ public class EnterpriseProjectController {
         return "/project/enterprise/enterprise_project_detail";
     }
 
+    @GetMapping("/project/enterprise/myLike")
+    public String myLike(Model model, @AuthenticationPrincipal Member member) {
+        Long member_id = member.getId();
+        List<Project> projects = projectService.findProjectsById(member_id);
+        model.addAttribute("projects", projects);
+        for(Project p: projects) System.out.println(p);
+        return "/project/enterprise/enterprise_project_list";
+    }
 
 }

@@ -113,4 +113,8 @@ public class ProjectService {
         List<Project> projects = projectRepository.findByTitleTag(keyword, tags);
         return projects;
     }
+
+    public List<Project> findProjectsById(Long member_id) {
+        return projectRepository.findProjectsById(member_id);
+    }
 }
