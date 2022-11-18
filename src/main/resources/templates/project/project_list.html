@@ -49,11 +49,19 @@
                 <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
                 <h6 th:text="${project.upload_date}"></h6>
             </div>
+            <div class="card-footer">
+                <button type="button" style="display:inline-block; position: absolute; right: 425px; top: 120px;background-color:transparent;border:0;outline:0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" id="projectLike"
+                         class="project-like bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 <div sec:authorize="hasRole('ROLE_PER')">
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/project/project_register'"
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/project/personal/project_register_form'"
             style="position: absolute; right: 100px; bottom: 100px;">신규 등록
     </button>
 </div>
