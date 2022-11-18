@@ -12,11 +12,17 @@
 </th:block>
 
         <div class="container py-5">
-            <h1 class="mx-5">채용공고</h1>
+
                 <div class="card-body" th:each="post : ${post}">
+                    <input type="hidden" id="postingId"  th:value="${post?.postingId}">
+                    <h1 class="mx-5">채용공고
+                        <button type="button" id= "btn_like" class="btn btn-sm" th:onclick="|javascript:like(${post?.postingId})|">
+                            <img id="heart"  stroke="white" src="/images/empty_heart.svg" width="25" height="23"  fill="gray" class="like-icon like-default" viewBox="0 0 16 16"></img>
+                        </button>
+                    </h1>
                     <form>
                         <div class="mb-3">
-                            <label class="form-label">회사이름</label>
+                          <label class="form-label">회사이름</label>
                             <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
 
                         </div>
@@ -61,7 +67,8 @@
 
         <div th:replace="fragments/footer :: footer" />
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/heart.js"> </script>
 </body>
 </html>
 

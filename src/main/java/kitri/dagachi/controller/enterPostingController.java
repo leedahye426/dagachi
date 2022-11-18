@@ -49,7 +49,7 @@ public class enterPostingController {
 
         System.out.println(post);
 
-        return "/post/enterPosting";
+        return "/post/ent/enterPosting";
     }
 
 
@@ -69,7 +69,7 @@ public class enterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/enterPosting";
+        return "/post/ent/enterPosting";
     }
 
 
@@ -94,7 +94,7 @@ public class enterPostingController {
 
             model.addAttribute("post",post);
 
-            return "post/enterDetail";
+            return "post/ent/enterDetail";
     }
 
 

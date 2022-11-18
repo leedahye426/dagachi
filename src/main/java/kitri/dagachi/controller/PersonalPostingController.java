@@ -2,6 +2,7 @@ package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
 
+//import jdk.internal.jimage.ImageReader;
 import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
@@ -33,6 +34,7 @@ public class PersonalPostingController {
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
+//    private PersonalProjectController jdbcTemplate;
 
 
 //    메인페이지에서 채용공고 메뉴 클릭 시
@@ -58,7 +60,7 @@ public class PersonalPostingController {
 
         System.out.println(post);
 
-        return "/post/personalPosting";
+        return "/post/per/personalPosting";
     }
 
 
@@ -72,7 +74,7 @@ public class PersonalPostingController {
 
         model.addAttribute("post", post);
 
-        return "post/personalDetail";
+        return "post/per/personalDetail";
     }
 
     @PostMapping("/post/person/like")
@@ -88,6 +90,7 @@ public class PersonalPostingController {
         //session 값 가져오기
         Long memberId = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
         postinglike.setMemberId(memberId);
+
 
         postservice.save(postinglike);
 
@@ -105,5 +108,10 @@ public class PersonalPostingController {
     }
 
 
+
 }
+
+
+
+
 
