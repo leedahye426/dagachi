@@ -16,6 +16,7 @@ import java.util.Collection;
 @Entity
 @Getter @Setter
 @Table(name = "members")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -52,7 +53,7 @@ public class Member implements UserDetails {
 
     @Override // 계정의 권한 목록을 리턴
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        ArrayList<GrantedAuthority> auth = new ArrayList<>();
         auth.add(new SimpleGrantedAuthority(this.ROLE));
         return auth;
     }

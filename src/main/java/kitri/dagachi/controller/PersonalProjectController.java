@@ -31,11 +31,11 @@ public class PersonalProjectController {
     public String list(Model model) {
         List<Project> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
-        return "project/personal_project_list";
+        return "project//personal/personal_project_list";
     }
     @GetMapping("/project/project_register")
     public String projectRegisterForm() {
-        return "project/projectRegisterForm";
+        return "project/personal/projectRegisterForm";
     }
 
     @PostMapping("/project/project_register")
@@ -53,7 +53,7 @@ public class PersonalProjectController {
         for(String tag : tags) System.out.println(tag);
         projectService.register(file, team_name, project_title, project_content, members_email, tags);
 
-        return "redirect:/project/personal_project_list";
+        return "redirect:/project/personal/personal_project_list";
 
 
     }
@@ -66,7 +66,7 @@ public class PersonalProjectController {
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/personal_project_detail";
+        return "project/personal/personal_project_detail";
     }
 
     @GetMapping("/project/personal/search")
@@ -75,13 +75,13 @@ public class PersonalProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         System.out.println("**************");
         model.addAttribute("projects", projects);
-        return "project/personal_project_list";
+        return "project/personal/personal_project_list";
     }
 
     @GetMapping("/project/personal/{project_id}/delete")
     public String delete(@PathVariable Long project_id) {
         projectService.deleteProject(project_id);
-        return "redirect:/project/personal_project_list";
+        return "redirect:/project/personal/personal_project_list";
     }
 
     @GetMapping("/project/personal/{project_id}/update")
@@ -99,14 +99,14 @@ public class PersonalProjectController {
         model.addAttribute("members", members);
         model.addAttribute("projectTags", projectTags);
 
-        return "project/projectUpdate";
+        return "project/personal/projectUpdate";
     }
 
     @PostMapping("project/personal/{project_id}/update")
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
         Project project = projectService.findProject(project_id);
 
-        return "redirect:/project/personal_project_list";
+        return "redirect:/project/personal/personal_project_list";
     }
 
 

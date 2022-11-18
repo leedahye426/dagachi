@@ -4,11 +4,10 @@
     <body>
         <!-- Responsive navbar-->
 
-      <th:block th:switch="${session.loginMember?.ROLE}">
-          <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-          <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-          <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
-      </th:block>
+        <div sec:authorize="hasRole('ROLE_ANONYMOUS')"><div th:replace="fragments/nav :: nav"/></div>
+        <div sec:authorize="hasRole('ROLE_PER')"><div th:replace="fragments/personal_nav :: personal_nav"/></div>
+        <div sec:authorize="hasRole('ROLE_ENT')"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></div>
+
 
         <!-- Header - set the background image for the header in the line below-->
         <header class="py-5 bg-image-full" style="background-image: url('images/black.jpg')">

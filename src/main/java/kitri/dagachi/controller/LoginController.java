@@ -40,19 +40,19 @@ public class LoginController {
 //            return "members/login";
 //        }
 
-        if(bindingResult.hasErrors()) {
-            return "members/login";
-        }
-
-        System.out.println("loginMember.getEmail() : " + loginForm.getEmail());
-        System.out.println("loginMember.getPassword() : " + loginForm.getPasswd());
-        System.out.println("loginMember.getROLE() : " + loginForm.getROLE());
-
-        Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getROLE());
-        System.out.println(loginMember);
-        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());
-        System.out.println("loginMember.getPassword() : " + loginMember.getPassword());
-        System.out.println("loginMember.getROLE() : " + loginMember.getROLE());
+//        if(bindingResult.hasErrors()) {
+//            return "members/login";
+//        }
+//
+//        System.out.println("loginMember.getEmail() : " + loginForm.getEmail());
+//        System.out.println("loginMember.getPassword() : " + loginForm.getPasswd());
+//        System.out.println("loginMember.getROLE() : " + loginForm.getROLE());
+//
+//        Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getROLE());
+//        System.out.println("loginMember: " + loginMember);
+//        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());
+//        System.out.println("loginMember.getPassword() : " + loginMember.getPassword());
+//        System.out.println("loginMember.getROLE() : " + loginMember.getROLE());
 
 //        System.out.println(loginMember);
 //        System.out.println("loginMember.getEmail() : " + loginMember.getEmail());
@@ -64,16 +64,16 @@ public class LoginController {
 //        System.out.println("loginMember.getPassword() : " + loginMember.getPassword());
 //        System.out.println("loginMember.getBusinessNum() : " + loginMember.getBusinessNum());
 
-        if(loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "members/login";
-        }
+//        if(loginMember == null) {
+//            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+//            return "members/login";
+//        }
 
         // 로그인 성공 처리
         // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 반환
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
         // 세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);
+//        session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);
 
         System.out.println("홈으로");
 
@@ -84,15 +84,13 @@ public class LoginController {
     public String logout(HttpServletRequest request) {
 
         // true일 경우 세션이 없으면 신규 세션 반환, false일 경우 세션이 없으면 그냥 null을 반환. 기본값 true
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
 
         return "redirect:/";
     }
 
-//    @PostMapping("/members/loginChk")
-//    public boolean loginChk(@RequestParam("code") Long co)
 
 }

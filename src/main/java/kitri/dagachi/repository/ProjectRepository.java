@@ -3,11 +3,14 @@ package kitri.dagachi.repository;
 import java.util.*;
 
 import kitri.dagachi.model.Project;
+import kitri.dagachi.model.ProjectLike;
 import kitri.dagachi.model.ProjectMember;
 import kitri.dagachi.model.ProjectTag;
+import kitri.dagachi.service.ProjectLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +28,15 @@ public class ProjectRepository {
     public void save(Project project) {
         System.out.println(project);
         em.persist(project);
+    }
+
+    public void saveLike(ProjectLike projectLike) {
+        em.persist(projectLike);
+    }
+
+    public void saveProjectTag(ProjectTag projectTag) {
+        em.persist(projectTag);
+        em.flush();
     }
 
     public void saveProjectMember(ProjectMember projectMember) {
@@ -55,6 +67,20 @@ public class ProjectRepository {
                 .getResultList();
     }
 
+    public ProjectLike findLikeById(Long project_id, Long member_id) {
+        return (ProjectLike) em.createQuery("select pl from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
+                .setParameter("project_id", project_id)
+                .setParameter("member_id", member_id)
+                .getSingleResult();
+    }
+
+    public Long findLikeCntById(Long project_id, Long member_id) {
+        return  (Long)em.createQuery("select count(pl) from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
+                .setParameter("project_id", project_id)
+                .setParameter("member_id", member_id)
+                .getSingleResult();
+    }
+
     public List<Project> findByTag(String[] tags) {
         return em.createQuery("select p from project_tag p where p.project_tag in :tags")
                 .setParameter("tags", tags)
@@ -64,20 +90,22 @@ public class ProjectRepository {
         return em.find(Project.class, project_id);
     }
 
-    public void deleteById(Long project_id) {
-        Project project = findOne(project_id);
-        em.remove(project);
-    }
 
     public List<ProjectTag> findTagById(Long project_id) {
         return em.createQuery("select pt from project_tag pt where pt.project_id = :project_id")
                 .setParameter("project_id", project_id)
                 .getResultList();
     }
-
-    public void saveProjectTag(ProjectTag projectTag) {
-        em.persist(projectTag);
-        em.flush();
+    public void deleteById(Long project_id) {
+        Project project = findOne(project_id);
+        em.remove(project);
     }
+
+    @Transactional
+    public void deleteLike(ProjectLike projectLike) {
+        em.remove(projectLike);
+        System.out.println("like 삭제됨");
+    }
+
 
 }
