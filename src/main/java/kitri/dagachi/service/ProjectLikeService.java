@@ -18,9 +18,14 @@ public class ProjectLikeService {
         projectRepository.saveLike(projectLike);
     }
 
-    public Long findLike(Long project_id, Long member_id) {
+    public Long findLikeCnt(Long project_id, Long member_id) {
+        return projectRepository.findLikeCntById(project_id, member_id);
+    }
+
+    public ProjectLike findLike(Long project_id, Long member_id) {
         return projectRepository.findLikeById(project_id, member_id);
     }
+
     public void deleteProjectLike(ProjectLike projectLike) {
         projectRepository.deleteLike(projectLike);
     }

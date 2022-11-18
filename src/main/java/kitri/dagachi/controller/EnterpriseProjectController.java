@@ -49,9 +49,10 @@ public class EnterpriseProjectController {
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
-//        ProjectLike projectLike = projectLikeService.findLike(project_id,member_id);
-        Long cnt = projectLikeService.findLike(project_id, member_id);
+
+        Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
         System.out.println("cnt" + cnt);
+        model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
@@ -86,9 +87,9 @@ public class EnterpriseProjectController {
         //이미 하트를 눌렀음
         System.out.println("이미 누른 하트");
         Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
-
-//        projectLikeService.deleteProjectLike(projectLike);
         System.out.println("like 컬럼 삭제");
+        ProjectLike projectLike = projectLikeService.findLike(Long.parseLong(project_id),member_id);
+        projectLikeService.deleteProjectLike(projectLike);
 
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);

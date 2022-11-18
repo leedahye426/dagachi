@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head th:replace="fragments/header :: header" />
     <body>
 <!-- Responsive navbar-->
@@ -10,8 +11,10 @@
         </th:block>
         <!--content-->
         <div class="container row-cols-10">
-            <button type="button" style="display:inline-block; position: absolute; right: 425px; top: 120px;" th:id="${project.project_id}" th:onclick="projectLike(this.getAttribute('id'))">
-                <img src="/images/like.svg" class="project-like empty-like " id="projectLike" width="20px" height="20px">
+            <button type="button" style="display:inline-block; position: absolute; right: 425px; top: 120px;background-color:transparent;border:0;outline:0;" th:id="${project.project_id}" th:onclick="projectLike(this, this.getAttribute('id'))">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" id="projectLike" class="project-like bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg>
             </button>
             <span class="card col p-1 mx-3 my-5 border">
                 <h4 class="m-3 width:100%"> <strong >프로젝트명 </strong>
@@ -38,10 +41,12 @@
                     </span>
                 </div>
 
-            <div class="portfolio col p-1 mx-3 my-5 border">
-                <iframe class="mx-auto " th:href="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오">
-                </iframe>
-            </div>
+                <div class="portfolio col p-1 mx-3 my-5 border">
+                    <iframe class="mx-auto " th:href="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오">
+                    </iframe>
+                </div>
+            </span>
+
         </div>
 
 
@@ -51,11 +56,30 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="/js/scripts.js"></script>
         <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="/js/project.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                const project_like = document.getElementById("projectLike");
+                console.log(project_like);
+                const cnt = [[${cnt}]]; 0
+                console.log('detail page load');
+                console.log('cnt : ' + cnt);
+                if(cnt > 0) {
+                    console.log('already filled')
+                    project_like.classList.add("fill-like");
+                    project_like.setAttribute('fill', 'red');
+                }else{
+                    project_like.classList.add("empty-like");
+                    project_like.setAttribute('fill','grey');
+                }
 
+
+            });
+        </script>
     </body>
+    <script src="/js/project_like.js"></script>
 
 </html>
-<script src="/js/project.js"></script>
+
 

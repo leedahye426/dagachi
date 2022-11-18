@@ -1,4 +1,3 @@
-
 const checkedEmail = document.querySelector("#checkedEmail");
 const hiddenInput = document.querySelector("#hiddenInput");
 function emailCheck() {
@@ -53,45 +52,5 @@ $('#exampleModal').on('hidden.bs.modal', function (e) {
 });
 
 
-const project_like = document.getElementById("projectLike");
 
-function projectLike(project_id) {
-    console.log('heart click');
-    console.log(project_id);
-
-    if($(".project-like").hasClass("empty-like") === true) {
-        console.log('비어있음');
-        $.ajax({
-            type : "post",
-            url : "/project/enterprise/like/emptyToFill",
-            data : {project_id, project_id},
-            success : function(data) {
-                fill();
-            }
-        });
-    }
-    else {
-        console.log('차있음');
-        $.ajax({
-            type : "post",
-            url : "/project/enterprise/like/fillToEmpty",
-            data : {project_id, project_id},
-            success : function(data) {
-                empty();
-            }
-        });
-    }
-}
-function fill() {
-    console.log("success");
-    project_like.classList.add("fill-like");
-    project_like.classList.remove("empty-like");
-    project_like.src = "/images/like-fill.svg";
-}
-function empty() {
-    console.log("empty()");
-    project_like.classList.add("empty-like");
-    project_like.classList.remove("fill-like");
-    project_like.src = "/images/like.svg";
-}
 
