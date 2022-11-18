@@ -4,22 +4,32 @@
 <body>
 <!-- Responsive navbar-->
 
-    <div sec:authorize="hasRole('ROLE_ANONYMOUS')"><div th:replace="fragments/nav :: nav"/></div>
-    <div sec:authorize="hasRole('ROLE_PER')"><div th:replace="fragments/personal_nav :: personal_nav"/></div>
-    <div sec:authorize="hasRole('ROLE_ENT')"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></div>
-
+    <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+        <div th:replace="fragments/nav :: nav"></div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_PER')">
+        <div th:replace="fragments/personal_nav :: personal_nav"></div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ENT')">
+        <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
+    </div>
 
 <p th:text="${#authentication.name}"></p>
 <p th:text="${#authentication.authorities}"></p>
 <p th:text="${#authentication.authenticated}"></p>
 <p th:text="${#authentication.principal}"></p>
 <div sec:authorize="isAuthenticated()">
-<span sec:authentication="name"></span><span>
-<span th:text="${loginMember}">member</span>
-<span th:text="${loginMember.name}">member</span>
-<span th:text="${loginMember.id}">member</span>
-
+    <span sec:authentication="name"></span>
+    <span th:text="${loginMember}">member</span>
+    <span th:text="${loginMember.name}">member</span>
+    <span th:text="${loginMember.id}">member</span>
 </div>
+
+<div sec:authorize="isAuthenticated()">
+    val="${loginMember.id}"
+</div>
+
+
 <p th:text="${#loginMember}"></p>
 <!-- Header - set the background image for the header in the line below-->
 <header class="py-5 bg-image-full" style="background-image: url('images/black.jpg')">

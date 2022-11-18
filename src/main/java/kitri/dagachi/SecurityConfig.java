@@ -45,17 +45,10 @@ public class SecurityConfig{
         http.headers().frameOptions().sameOrigin(); // 동일 도메인 내 X-Frame-Options 활성화(PDF viewer)
 
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
-<<<<<<< HEAD
-                .antMatchers("/members/**").anonymous()
+                .antMatchers("/members/**").hasRole("ENT")
                 .antMatchers("/project/enterprise/**",
                                         "/post/enterDetail/**",
                                         "/post/personalDetail/**").authenticated()
-=======
-//                .antMatchers("/project/enterprise/**",
-//                                        "/post/enterDetail/**",
-//                                        "/post/personalDetail/**").authenticated()
-                .antMatchers("/members/**").anonymous()
->>>>>>> 6b43435d6ecd26eee5dd27f6823fd99bcf0d235e
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정
 //                .anyRequest().authenticated()
@@ -66,7 +59,7 @@ public class SecurityConfig{
                 .usernameParameter("email") // loginForm에서 ID의 name값과 일치
                 .passwordParameter("passwd") // loginForm에서 PASSWORD의 name값과 일치
                 .loginProcessingUrl("/members/login") // 로그인 Form Action url
-                .failureForwardUrl("/") // 로그인 실패 후 페이지 포워딩
+                .failureForwardUrl("/members/login") // 로그인 실패 후 페이지 포워딩
                 .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
                 .permitAll() // 사용자 정의 로그인 페이지 권한 설정
             .and()
