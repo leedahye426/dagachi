@@ -40,7 +40,7 @@ public class EnterpriseProjectController {
         model.addAttribute("projects", projects);
 
 
-        return "project/enterprise_project_list";
+        return "project/enterprise/enterprise_project_list";
     }
 
     @GetMapping("/project/enterprise/{project_id}/detail")
@@ -56,7 +56,7 @@ public class EnterpriseProjectController {
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/enterprise_project_detail";
+        return "project/enterprise/enterprise_project_detail";
     }
 
     @GetMapping("/project/enterprise/search")
@@ -64,7 +64,7 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-        return "project/personal_project_list";
+        return "project/enterprise/personal_project_list";
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
@@ -80,7 +80,7 @@ public class EnterpriseProjectController {
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise_project_detail";
+        return "/project/enterprise/enterprise_project_detail";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
     public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model) {
@@ -94,7 +94,7 @@ public class EnterpriseProjectController {
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise_project_detail";
+        return "/project/enterprise/enterprise_project_detail";
     }
 
 
