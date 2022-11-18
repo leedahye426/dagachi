@@ -45,14 +45,19 @@ public class EnterpriseProjectController {
     @GetMapping("/project/enterprise/{project_id}/detail")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session,
                              @AuthenticationPrincipal Member member){
+        System.out.println("-----------------controller-----------");
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = member.getId();
+        System.out.println("----------------findLike 전-----------------");
+        ProjectLike projectLike = projectLikeService.findLike(project_id, member_id);
+        System.out.println("----------------findLike 후-----------------");
 
-        Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
+        int cnt = 1;
+        if(projectLike == null ) cnt = 0;
         System.out.println("cnt" + cnt);
-        model.addAttribute("cnt",cnt);
+        model.addAttribute("cnt", cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
