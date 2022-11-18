@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,19 +28,19 @@ public class PersonalProjectController {
     private final ProjectService projectService;
     private final MemberService memberService;
 
-    @GetMapping("/project/personal_project_list")
+    @GetMapping("/project/personal/project_list")
     public String list(Model model) {
         List<Project> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
-        return "project//personal/personal_project_list";
+        return "/project/project_list";
     }
-    @GetMapping("/project/project_register")
+    @GetMapping("/project/personal/project_register_form")
     public String projectRegisterForm() {
-        return "project/personal/projectRegisterForm";
+        return "project/project_register_form";
     }
 
-    @PostMapping("/project/project_register")
-    public String projectRegister(MultipartHttpServletRequest multiReq) throws IOException {
+    @PostMapping("/project/personal/project_register_form")
+    public String projectRegister(MultipartHttpServletRequest multiReq, @AuthenticationPrincipal Member member) throws IOException {
         String team_name = multiReq.getParameter("team_name");
         String project_title = multiReq.getParameter("project_title");
         String project_content = multiReq.getParameter("project_content");
@@ -51,22 +52,26 @@ public class PersonalProjectController {
 
         String[] tags = multiReq.getParameterValues("tag");
         for(String tag : tags) System.out.println(tag);
-        projectService.register(file, team_name, project_title, project_content, members_email, tags);
 
-        return "redirect:/project/personal_project_list";
+        Long member_id = member.getId();
+        projectService.register(file, team_name, project_title, project_content, members_email, tags, member_id);
+
+        return "redirect:/project/personal/project_list";
 
 
     }
 
     @GetMapping("/project/personal/{project_id}/detail")
-    public String detailPage(@PathVariable("project_id") Long project_id, Model model){
+    public String detailPage(@PathVariable("project_id") Long project_id, Model model,  @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
+        Long loginId = member.getId();
+        model.addAttribute("loginId", loginId);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/personal/personal_project_detail";
+        return "project/project_detail";
     }
 
     @GetMapping("/project/personal/search")
@@ -75,13 +80,13 @@ public class PersonalProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         System.out.println("**************");
         model.addAttribute("projects", projects);
-        return "project/personal/personal_project_list";
+        return "project/project_list";
     }
 
     @GetMapping("/project/personal/{project_id}/delete")
     public String delete(@PathVariable Long project_id) {
         projectService.deleteProject(project_id);
-        return "redirect:/project/personal_project_list";
+        return "redirect:/project/personal/project_list";
     }
 
     @GetMapping("/project/personal/{project_id}/update")
@@ -99,18 +104,18 @@ public class PersonalProjectController {
         model.addAttribute("members", members);
         model.addAttribute("projectTags", projectTags);
 
-        return "project/personal/projectUpdate";
+        return "project/project_update";
     }
 
     @PostMapping("project/personal/{project_id}/update")
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
         Project project = projectService.findProject(project_id);
 
-        return "redirect:/project/personal_project_list";
+        return "redirect:/project/personal/project_list";
     }
 
 
-    @PostMapping("/project/email_check")
+    @PostMapping("/project/personal/email_check")
     @ResponseBody
     public ResponseEntity<?> emailCheck(String email) {
         String checkedEmail = memberService.findOneByEmail(email).getEmail();
