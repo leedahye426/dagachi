@@ -49,7 +49,7 @@ public class LoginController {
         System.out.println("loginMember.getROLE() : " + loginForm.getROLE());
 
         Member loginMember = memberService.loginService(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getROLE());
-        System.out.println(loginMember);
+        System.out.println("loginMember: " + loginMember);
         System.out.println("loginMember.getEmail() : " + loginMember.getEmail());
         System.out.println("loginMember.getPassword() : " + loginMember.getPassword());
         System.out.println("loginMember.getROLE() : " + loginMember.getROLE());
@@ -84,15 +84,13 @@ public class LoginController {
     public String logout(HttpServletRequest request) {
 
         // true일 경우 세션이 없으면 신규 세션 반환, false일 경우 세션이 없으면 그냥 null을 반환. 기본값 true
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
 
         return "redirect:/";
     }
 
-//    @PostMapping("/members/loginChk")
-//    public boolean loginChk(@RequestParam("code") Long co)
 
 }

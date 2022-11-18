@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ApiController {
 
     @Autowired
-    private final MemberService memberService;
     private final EmailService emailService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisService redisService;
+    private final MemberService memberService;
 
     // 회원가입 폼으로부터 이메일 데이터 전달
     @PostMapping("join/emailConfirm")
