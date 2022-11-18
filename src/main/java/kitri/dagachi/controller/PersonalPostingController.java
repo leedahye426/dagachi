@@ -38,7 +38,7 @@ public class PersonalPostingController {
     private final PostRepository postRepository;
 
     //select
-    @GetMapping("/post/person/person_post")
+    @GetMapping("/post/personal/post_list")
     public String enterPosting(Model model) {
 
         List<Post> post = postservice.posting();
@@ -52,12 +52,12 @@ public class PersonalPostingController {
 
         System.out.println(post);
 
-        return "/post/per/personalPosting";
+        return "/post/personal_post_list";
     }
 
 
     //    공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/person/{postingId}/detail")
+    @GetMapping("/post/personal/{postingId}/post_detail")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
@@ -66,10 +66,10 @@ public class PersonalPostingController {
 
         model.addAttribute("post", post);
 
-        return "post/per/personalDetail";
+        return "/post/personal_post_detail";
     }
 
-    @PostMapping("/post/person/like")
+    @PostMapping("/post/personal/post_like")
     @ResponseBody
     public String like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
 

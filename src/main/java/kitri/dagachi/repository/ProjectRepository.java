@@ -81,6 +81,12 @@ public class ProjectRepository {
                 .getSingleResult();
     }
 
+    public List<Project> findProjectsById(Long member_id) {
+        return em.createQuery("select p from project_board p where p.project_id in (select pl.project_id from project_like pl where pl.member_id = :member_id)")
+                .setParameter("member_id", member_id)
+                .getResultList();
+    }
+
     public List<Project> findByTag(String[] tags) {
         return em.createQuery("select p from project_tag p where p.project_tag in :tags")
                 .setParameter("tags", tags)

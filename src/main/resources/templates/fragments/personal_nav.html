@@ -17,7 +17,7 @@
               <a class="nav-link text-dark fw-bold fs-5" href="/project/personal_project_list">프로젝트</a>
             </li>
             <li class="nav-item col-6">
-              <a class="nav-link text-dark fw-bold fs-5" href="/post/person/person_post">채용공고</a>
+              <a class="nav-link text-dark fw-bold fs-5" href="/post/personal/post_list">채용공고</a>
             </li>
             <li class="nav-item col-6">
               <a class="nav-link text-dark fw-bold fs-5" href="#!">자유게시판</a>
@@ -28,16 +28,15 @@
         <div class="col-3"></div>
         <div class="login_box ms-auto">
           <ul class="navbar-nav mb-2 mb-lg-0">
-            
+
             <li class="nav-item dropdown">
               <a class="" href role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="gray" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-              </svg></a>
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg></a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item text-dark text-center px-4" href="#"></a></li>
-                
+                <li><a class="dropdown-item text-dark text-center px-4" th:text="${#authentication.name}" href="#"></a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item text-dark px-4" href="#" >이력서 작성</a></li>
                 <li><a class="dropdown-item text-dark px-4" href="#" >관심 기업</a></li>
@@ -49,9 +48,9 @@
                     <button class="dropdown-item text-dark px-4" href type="submit">로그아웃</button>
                   </form>
                 </li>
+              </ul>
+
           </ul>
-  
-        </ul>
         </div>
       </div>
     </div>
