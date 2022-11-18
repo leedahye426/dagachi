@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head th:replace="fragments/header :: header" />
   <link href="/css/project.css" rel="stylesheet" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <body>
 <!-- Responsive navbar-->
 
-    <th:block th:switch="${session.loginMember?.ROLE}">
-      <span th:case="null"><div th:replace="fragments/nav :: nav"/></span>
-      <span th:case="ROLE_PER"><div th:replace="fragments/personal_nav :: personal_nav"/></span>
-      <span th:case="ROLE_ENT"><div th:replace="fragments/enterprise_nav :: enterprise_nav"/></span>
-    </th:block>
+      <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+        <div th:replace="fragments/nav :: nav"></div>
+      </div>
+      <div sec:authorize="hasRole('ROLE_PER')">
+        <div th:replace="fragments/personal_nav :: personal_nav"></div>
+      </div>
+      <div sec:authorize="hasRole('ROLE_ENT')">
+        <div th:replace="fragments/enterprise_nav :: enterprise_nav"></div>
+      </div>
 
-    <!-- Content section-->
+
+<!-- Content section-->
       <!-- Modal -->
       <div class="modal" tabindex="-1" id="exampleModal">
         <div class="modal-dialog">

@@ -40,7 +40,7 @@ public class EnterpriseProjectController {
         model.addAttribute("projects", projects);
 
 
-        return "project/enterprise_project_list";
+        return "project/enterprise/enterprise_project_list";
     }
 
     @GetMapping("/project/enterprise/{project_id}/detail")
@@ -49,13 +49,14 @@ public class EnterpriseProjectController {
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
-//        ProjectLike projectLike = projectLikeService.findLike(project_id,member_id);
-        Long cnt = projectLikeService.findLike(project_id, member_id);
+
+        Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
         System.out.println("cnt" + cnt);
+        model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/enterprise_project_detail";
+        return "project/enterprise/enterprise_project_detail";
     }
 
     @GetMapping("/project/enterprise/search")
@@ -63,7 +64,7 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-        return "project/personal_project_list";
+        return "project/enterprise/personal_project_list";
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
@@ -79,21 +80,21 @@ public class EnterpriseProjectController {
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise_project_detail";
+        return "/project/enterprise/enterprise_project_detail";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
     public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model) {
         //이미 하트를 눌렀음
         System.out.println("이미 누른 하트");
         Long member_id = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
-
-//        projectLikeService.deleteProjectLike(projectLike);
         System.out.println("like 컬럼 삭제");
+        ProjectLike projectLike = projectLikeService.findLike(Long.parseLong(project_id),member_id);
+        projectLikeService.deleteProjectLike(projectLike);
 
         Project project = projectService.findProject(Long.parseLong(project_id));
         model.addAttribute("project", project);
 
-        return "/project/enterprise_project_detail";
+        return "/project/enterprise/enterprise_project_detail";
     }
 
 
