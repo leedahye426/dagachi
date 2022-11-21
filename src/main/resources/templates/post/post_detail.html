@@ -83,25 +83,28 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/heart.js"></script>
-<!--<script th:inline="javascript">-->
-<!--            $(document).ready(function() {-->
-<!--                const heart = document.getElementById("heart");-->
-<!--                const likeCheck = [[${likeCheck}]]; 0-->
+<script th:inline="javascript">
+            $(document).ready(function(){
 
-<!--                console.log('cnt : ' + likeCheck);-->
-<!--                if(cnt > 0) {-->
-<!--                    console.log('already filled')-->
-<!--                    heart.classList.add("fill-like");-->
-<!--                    heart.setAttribute('fill', 'red');-->
-<!--                }else{-->
-<!--                    heart.classList.add("empty-like");-->
-<!--                    heart.setAttribute('fill','grey');-->
-<!--                }-->
+                const heart = document.getElementById("heart");
+                const likeCheck = [[${cnt}]];
 
 
-<!--            });-->
+                console.log('cnt : ' + likeCheck);
 
-<!--</script>-->
+                if(likeCheck == 1) {
+
+                    heart.classList.add("heart");
+                    heart.setAttribute('fill', 'red');
+                }else{
+                    heart.classList.add("empty_heart");
+                    heart.setAttribute('fill','grey');
+                }
+            });
+
+
+
+</script>
 
 </body>
 </html>

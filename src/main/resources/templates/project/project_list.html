@@ -3,9 +3,7 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav" />
-
-
+<head th:replace="fragments/nav :: nav"/>
 <!--content-->
 <header class="py-3 bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg')">
     <div class="text-center my-5">
@@ -40,31 +38,51 @@
 </div>
 
 <div class="container">
-    <div class="row row-cols-5">
-        <div th:each="project : ${projects}"
-             th:onclick="|location.href='@{|/project/personal/${project.project_id}/detail|}'|"
-             class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
-            <div class="card-body fw-bold mt-3  " style="cursor:pointer">
-                <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
-                <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
-                <h6 th:text="${project.upload_date}"></h6>
-            </div>
-            <div class="card-footer">
-                <button type="button" style="display:inline-block; position: absolute; right: 425px; top: 120px;background-color:transparent;border:0;outline:0;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" id="projectLike"
+    <div sec:authorize="hasRole('ROLE_ENT')">
+        <div class="row row-cols-5">
+            <div th:each="project : ${projects}"
+                 th:onclick="|location.href='@{|/project/enterprise/${project.project_id}/detail|}'|"
+                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
+                <div class="card-body fw-bold mt-3  " style="cursor:pointer">
+                    <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
+                    <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
+                    <h6 th:text="${project.upload_date}"></h6>
+                </div>
+                <button type="button"
+                        style="display:inline-block; position: absolute; right: 30px; bottom: 30px;background-color:transparent;border:0;outline:0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" id="projectLike"
                          class="project-like bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        <path fill-rule="evenodd"
+                              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
+                    <span th:text="${project.like_cnt}"></span>
                 </button>
+
             </div>
         </div>
     </div>
+
+    <div sec:authorize="hasRole('ROLE_PER')">
+        <div class="row row-cols-5">
+            <div th:each="project : ${projects}"
+                 th:onclick="|location.href='@{|/project/personal/${project.project_id}/detail|}'|"
+                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
+
+                <div class="card-body fw-bold mt-3  " style="cursor:pointer">
+                    <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
+                    <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
+                    <h6 th:text="${project.upload_date}"></h6>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm"
+                onclick="location.href='/project/personal/project_register_form'"
+                style="position: absolute; right: 100px; bottom: 100px;">신규 등록
+        </button>
+    </div>
+
 </div>
-<div sec:authorize="hasRole('ROLE_PER')">
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/project/personal/project_register_form'"
-            style="position: absolute; right: 100px; bottom: 100px;">신규 등록
-    </button>
-</div>
+
 
 <!-- Footer-->
 <div th:replace="fragments/footer :: footer"/>

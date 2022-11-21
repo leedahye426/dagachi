@@ -73,10 +73,6 @@ public class postService {
     }
 
 
-
-
-
-
     @Transactional
     public void likeedel(PostingLike postinglike) {
 
@@ -85,6 +81,10 @@ public class postService {
 
     }
 
+    public Long likecnt(Long postingId, Long memeberId)
+    {
+        return postlikerepository.likecnt(postingId, memeberId);
+    }
 
 }
 

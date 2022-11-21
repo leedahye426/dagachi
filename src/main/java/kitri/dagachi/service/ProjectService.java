@@ -98,7 +98,9 @@ public class ProjectService {
         for(Project p : projects) System.out.println(p);
         return projects;
     }
-
+    public void updateCnt(Long project_id, Long cnt) {
+        projectRepository.updateCnt(project_id, cnt);
+    }
     public List<ProjectTag> findTags(Long project_id) {
         return projectRepository.findTagById(project_id);
     }

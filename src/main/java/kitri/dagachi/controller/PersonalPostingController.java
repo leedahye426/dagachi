@@ -8,6 +8,7 @@ import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostingLike;
+import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
@@ -28,6 +29,9 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.awt.Color.gray;
+import static java.awt.Color.red;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,17 +60,33 @@ public class PersonalPostingController {
 
 
     //    공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/personal/{postingId}/detail")
-    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model) {
+    @GetMapping("/post/personal/{postingId}/post_detail")
+
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model,@AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
+        Long memberId = member.getId();
 
+        System.out.println(postingId+memberId);
+
+        Long cnt = postservice.likecnt(postingId, memberId);
+
+        System.out.println("cnt" + cnt);
+//        if( model.addAttribute("cnt",cnt) ==null)
+//        {
+//
+//        }
+        model.addAttribute("cnt", cnt);
         model.addAttribute("post", post);
 
         return "/post/post_detail";
     }
+
+
+
+
 
     @PostMapping("/post/personal/fill_like")
     @ResponseBody

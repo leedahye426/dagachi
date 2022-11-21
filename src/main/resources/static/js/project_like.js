@@ -8,6 +8,7 @@ function projectLike(obj, project_id) {
 
 
     if($(".project-like").hasClass("empty-like") === true) {
+<<<<<<< HEAD
 
 
                $.ajax({
@@ -19,6 +20,17 @@ function projectLike(obj, project_id) {
                     }
                 });
 
+=======
+        $.ajax({
+            type : "post",
+            url : "/project/enterprise/like/emptyToFill",
+            data : {project_id, project_id},
+            success : function(data) {
+                console.log(data);
+                fill(obj);
+            }
+        });
+>>>>>>> c432babbe51b16f2364be65819f0c4f3f6edeeeb
     }
     else {
 

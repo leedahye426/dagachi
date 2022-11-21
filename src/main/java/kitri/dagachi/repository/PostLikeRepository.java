@@ -38,20 +38,6 @@ public class PostLikeRepository {
     }
 
 
-//    @Query
-//    public int likedel(Long memberId )
-//    {
-//
-//
-//        int result =  em.createQuery ("delete from posting_like pl where pl.member_id = :memberId")
-//                .setParameter("postingLike", memberId).executeUpdate();
-////                 .setParameter("memberId", memberId)
-//
-//        return  result;
-//
-//
-//    }
-
     @Transactional
     public void del(PostingLike postinglike)
     {
@@ -64,6 +50,33 @@ public class PostLikeRepository {
 
     }
 
+    @Query
+    public Long likecnt(Long postingId, Long memberId)
+    {
+        return  (Long) em.createQuery("select count(pl) from posting_like pl where pl.postingId = : postingId and pl.memberId = : memberId")
+                .setParameter("postingId",postingId)
+                .setParameter("memberId",memberId)
+                .getSingleResult();
+
+    }
+
+
+
+
+
+    //    @Query
+//    public int likedel(Long memberId )
+//    {
+//
+//
+//        int result =  em.createQuery ("delete from posting_like pl where pl.member_id = :memberId")
+//                .setParameter("postingLike", memberId).executeUpdate();
+////                 .setParameter("memberId", memberId)
+//
+//        return  result;
+//
+//
+//    }
 
 
 

@@ -104,7 +104,7 @@ public class PersonalProjectController {
         model.addAttribute("members", members);
         model.addAttribute("projectTags", projectTags);
 
-        return "project/project_update";
+        return "project/project_update_form";
     }
 
     @PostMapping("project/personal/{project_id}/update")
