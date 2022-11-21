@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static kitri.dagachi.SessionConstants.LOGIN_MEMBER;
@@ -45,19 +46,14 @@ public class EnterpriseProjectController {
     @GetMapping("/project/enterprise/{project_id}/detail")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session,
                              @AuthenticationPrincipal Member member){
-        System.out.println("-----------------controller-----------");
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = member.getId();
-        System.out.println("----------------findLike 전-----------------");
-        ProjectLike projectLike = projectLikeService.findLike(project_id, member_id);
-        System.out.println("----------------findLike 후-----------------");
+        Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
 
-        int cnt = 1;
-        if(projectLike == null ) cnt = 0;
         System.out.println("cnt" + cnt);
-        model.addAttribute("cnt", cnt);
+        model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
@@ -73,33 +69,43 @@ public class EnterpriseProjectController {
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
+    @ResponseBody
     public String emptyToFill(@RequestParam String project_id, HttpSession session, Model model,  @AuthenticationPrincipal Member member) {
         Long member_id = member.getId();
 
         ProjectLike projectLike = new ProjectLike();
         projectLike.setProject_id(Long.parseLong(project_id));
         projectLike.setMember_id(member_id);
+        projectService.updateCnt(Long.parseLong(project_id),1L);
+
         projectLikeService.save(projectLike);
         System.out.println("empty to fill");
 
-        Project project = projectService.findProject(Long.parseLong(project_id));
-        model.addAttribute("project", project);
+//        Project project = projectService.findProject(Long.parseLong(project_id));
+//        project.setLike_cnt(project.getLike_cnt()+1);
+//
+//        model.addAttribute("project", project);
 
-        return "/project/project_detail";
+        return "123";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
+    @ResponseBody
     public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
         //이미 하트를 눌렀음
         System.out.println("이미 누른 하트");
         Long member_id = member.getId();
         System.out.println("like 컬럼 삭제");
         ProjectLike projectLike = projectLikeService.findLike(Long.parseLong(project_id),member_id);
+        projectService.updateCnt(Long.parseLong(project_id),-1L);
+
         projectLikeService.deleteProjectLike(projectLike);
 
-        Project project = projectService.findProject(Long.parseLong(project_id));
-        model.addAttribute("project", project);
+//        Project project = projectService.findProject(Long.parseLong(project_id));
+//        project.setLike_cnt(project.getLike_cnt()-1);
+//        model.addAttribute("project", project);
 
-        return "/project/project_detail";
+
+        return "";
     }
 
     @GetMapping("/project/enterprise/myLike")

@@ -10,6 +10,7 @@ function projectLike(obj, project_id) {
             url : "/project/enterprise/like/emptyToFill",
             data : {project_id, project_id},
             success : function(data) {
+                console.log(data);
                 fill(obj);
             }
         });
