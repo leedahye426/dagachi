@@ -1,14 +1,18 @@
 package kitri.dagachi.service;
 
+import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
+import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +24,7 @@ public class postService {
 
     @Autowired
     private final PostRepository postRepository;
+    private final PostLikeRepository postlikerepository;
 
     //글 작성 처리
     public void register(Post post, String[] tag) {
@@ -56,6 +61,10 @@ public class postService {
         return postRepository.findOne(postingId);
     }
 
+    public PostingLike findlike(Long postingId, Long memberId) {
+        return postlikerepository.findLike(postingId, memberId);
+    }
+
 
     public void delete(Long postingId) {
 
@@ -64,79 +73,19 @@ public class postService {
     }
 
 
-    //글삭제
 
 
-//
-//    public void delete(Long postingId){
-//        postRepository.deleteById(postingId);
-//
-//    }
-
-//    public int delete(Long postingId){
-//         return  postRepository.delete(postingId);
-//
-//    }
-
-//    public List<PostTags> tag(){
-//
-//
-//        return postRepository.findAllt();
-//
-//    }
 
 
-    // 특정게시물 불러오기
-//        public Post detail(){
-//
-//
-//            return "
-//        }
+    @Transactional
+    public void likeedel(PostingLike postinglike) {
 
+        postlikerepository.del(postinglike);
+        System.out.println("삭제되라");
 
-//        @Transactional
-//        public void savePost(PostForm postForm) {
-//                postRepository.save(postForm);
-//
-//        }
-//
-//        public List<PostForm> findPostings() {
-//                return postRepository.findAll();
-//        }
-
-
-//        public void upload(Long Posting_ID, String Company_Name,String Posting_Title,String Posting_Content,String Upload_Date, String Member_ID) {
-//                PostForm postForm = postRepository.findAll();
-//
-//        }
-
-
-//        public List<PostForm> upload() {
-//                return postRepository.findAll();
-//        }
+    }
 
 
 }
-
-
-//// @Transactional
-//        public Long post(String Company_Name , String Posting_Title, String Posting_Content, String Upload_Date, String Member_Id) {
-////     Post post = postRepository.findName(Company_Name);
-////     Post post = postRepository.findTitle(Posting_Title);
-////     Post post = postRepository.findContent(Posting_Content);
-////     Post post = postRepository.findOneDate(Upload_Date);
-////     Post post = postRepository.findID(Member_Id);
-//
-//                Post post = Post.createPost();
-//                postRepository.save(post);
-//                return post.getId();
-// }
-
-//        public List<Post> findOne {return PostRepository.findAllByString();}
-//@Transactional
-// public void CreatePost(){
-//
-// }
-
 
 

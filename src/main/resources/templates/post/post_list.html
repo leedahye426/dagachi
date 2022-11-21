@@ -23,6 +23,23 @@
 </div>
 
 
+<!--<div class="form-ground mb-2">-->
+<!--    <input type="text" class="form-control" placeholder="회사명"/>-->
+<!--</div>-->
+<!--<div class="form-ground mx-sm-1 mb-2">-->
+<!--    <select class="form-control">-->
+<!--       <option value="">keyword</option>-->
+<!--        <option th:each="keyword : ${T(kitri.dagachi.model.Post).values()}"-->
+<!--                th:value="${keyword}"-->
+<!--                th:text="${keyword}">option</option>-->
+<!--    </select>-->
+<!--</div>-->
+<!--    <button type="submit" class="btn btn-promary mb-2">검색</button>-->
+
+
+
+
+
 <div class="container justify-content:space-around; ">
     <!--    <div class="card row row-cols-3" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:20px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">-->
     <!--        -->
@@ -50,8 +67,9 @@
 </div>
 </div>
 
-
+<div sec:authorize="hasRole('ROLE_ENT')">
 <button type="button" class="btn-register" style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;" onclick="location.href='/post/enterprise/post_register_form'">공고 등록하기</button>
+</div>
 
 
 <!--        <div class="container d-flex justify-content-between" >-->

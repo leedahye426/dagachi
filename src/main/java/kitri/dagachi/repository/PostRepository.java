@@ -4,7 +4,7 @@ import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -51,35 +51,30 @@ public class PostRepository {
         return em.find(Post.class, postingId);
     }
 
-//    public void detail(String companyName, String postingTitle, String postingContent)
-//    {
-//        em.persist(companyName);
-//    }
 
 
-//    public post save
-
-//    public PostForm findOne(String Company_Name){return em.find(PostForm.class, id);}
-
-    public Post findName(String Company_Name) {
-        return em.find(Post.class, Company_Name);
+    public Post findName(String companyName) {
+        return em.find(Post.class, companyName);
     }
 
-    public Post findTitle(String Posting_Title) {
-        return em.find(Post.class, Posting_Title);
+    public Post findTitle(String postingTitle) {
+        return em.find(Post.class, postingTitle);
     }
 
-    public Post findContent(String Posting_Content) {
-        return em.find(Post.class, Posting_Content);
+    public Post findContent(String postingContent) {
+        return em.find(Post.class, postingContent);
     }
 
     public Post findOneDate(LocalDateTime Upload_Date) {
         return em.find(Post.class, Upload_Date);
     }
 
-    public Post findID(Integer Member_ID) {
-        return em.find(Post.class, Member_ID);
+    public Post findID(Long memberID) {
+        return em.find(Post.class, memberID);
     }
+
+
+
 
     public Post find0ne(Long id) {
         return em.find(Post.class, id);
@@ -112,10 +107,13 @@ public class PostRepository {
 
         Post post = findOne(postingId);
         System.out.println("================" + post);
+
         em.remove(post);
         em.flush();
 
     }
+
+
 
 
 //    public int delete(Long postingId) {
@@ -126,6 +124,8 @@ public class PostRepository {
 
 
 }
+
+
 
 
 

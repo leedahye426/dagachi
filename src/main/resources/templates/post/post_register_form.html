@@ -8,9 +8,15 @@
 
 
 <div class="container col-5 my-5 width : 100%">
-    <form action="/post/enter/enter_post" method="post">
+    <form action="/post/enterprise/post_list" method="post" enctype="multipart/form-data">
         <table>
             <thead>
+            <tr>
+                <td>로고사진</td>
+                <td><input type="file" name="img"></td>
+
+            </tr>
+
             <tr>
                 <th>회사명
                 <td><input type="text" name="companyName" value=""></td>
@@ -30,6 +36,8 @@
                 <td><textarea name="postingContent" style="min-height :300px;  width: 300px" value=""></textarea></td>
                 </th>
             </tr>
+
+
 
             <tr>
                 <th>tag</th>

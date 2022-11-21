@@ -8,6 +8,7 @@ import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostingLike;
+import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
@@ -36,19 +37,17 @@ public class PersonalPostingController {
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
+    private final PostLikeRepository postlikerepository;
 
     //select
     @GetMapping("/post/personal/post_list")
     public String enterPosting(Model model) {
 
         List<Post> post = postservice.posting();
-//        List<PostTags> tag = postservice.tag();
 
-//        PageRequest pageRequest = PageRequest.of(page, 3,Sort.by(Sort.Direction.DESC, "postingId"));
-//        Page<Post> post = postRepository.findAll(pageRequest);
 
         model.addAttribute("post", post);
-//        model.addAttribute("tag",tag);
+
 
         System.out.println(post);
 
@@ -69,9 +68,9 @@ public class PersonalPostingController {
         return "/post/post_detail";
     }
 
-    @PostMapping("/post/personal/like")
+    @PostMapping("/post/personal/fill_like")
     @ResponseBody
-    public String like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
+    public String fill_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
 
 
         PostingLike postinglike = new PostingLike();
@@ -83,15 +82,37 @@ public class PersonalPostingController {
         postinglike.setMemberId(memberId);
 
 
-        postservice.save(postinglike);
-
-
         System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
         System.out.println("postinglike.getMemberId() : " + postinglike.getMemberId());
         System.out.println("postinglike.getRowNum() : " + postinglike.getRowNum());
 
 
+
+        postservice.save(postinglike);
+
+
+
+
+
         return "";
+    }
+
+    @PostMapping("/post/personal/empty_like")
+    @ResponseBody
+    public String empty_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member)
+    {
+        Long memberId = member.getId();
+
+
+        PostingLike postinglike = postservice.findlike(postingId, memberId);
+
+        System.out.println("posingId : " + postingId);
+        System.out.println("memberId : " + memberId);
+
+        postservice.likeedel(postinglike);
+
+        return "";
+
     }
 
 
