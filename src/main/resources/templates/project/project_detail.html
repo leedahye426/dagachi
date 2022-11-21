@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <th>학력</th>
-                        <td th:text=""></td>
+                        <td ></td>
                     </tr>
                     <tr>
                         <th>경력</th>
@@ -94,10 +94,10 @@
             <tr>
                 <th>팀원 정보</th>
                 <td class="row row-cols-4">
-                    <dl th:each="project_member : ${project_members}" class="card m-3 col p-1 my-5 border">
-                        <div sec:authorize="hasRole('ROLE_ENT')">
-                            <dd id="openModalBtn" class="openModalBtn btn btn-sm"
-                                data-bs-target="#exampleModal">
+                    <dl th:each="project_member : ${project_members}" class="card m-3 col p-1 my-5 border" style="background-color:#FAFAFA;">
+                        <div sec:authorize="hasRole('ROLE_ENT')" class="openModalBtn btn btn-sm"
+                             data-bs-target="#exampleModal">
+                            <dd id="openModalBtn" >
                                 <p th:text="'이름 : ' + ${project_member.name}"> </p>
                                 <p th:text="'이메일 : ' + ${project_member.email}"></p>
                             </dd>
