@@ -15,32 +15,72 @@ function like(id){
         },
         success : function(jdata){
            console.log("..");
+
+//              if(!heart.classList.contains('active')) {
+//                   heart.setAttribute('fill', 'red')
+//                   heart.classList.add('active')
+//
+//                   console.log('red')
+//               } else {
+//                   heart.setAttribute('fill', 'gray')
+//                   heart.classList.remove('active')
+//
+//                   console.log('gray')
+//               }
+
         }
        });
 
 
-        if($(".like-icon").hasClass("like-default") == true)
 
-       {
+                     if(!heart.classList.contains('active')) {
+                          heart.setAttribute('fill', 'red')
+                          heart.classList.add('active')
 
-               heart.classList.add("heart");
-               heart.classList.remove("empty_heart");
-               heart.src="/images/heart.jpg"
 
-       }
+                      }
+                      else {
 
-        else
-       {
+                    heart.setAttribute('fill', 'gray')
+                    heart.classList.remove('active')
 
-               heart.classList.add("empty_heart");
-               heart.classList.remove("heart");
-               heart.src="/images/empty_heart.svg"
-       }
+                      }
+
+//
+//        if($(".like-icon").hasClass("like-default") == true)
+//
+//       {
+//
+//               heart.classList.add("heart");
+//               heart.classList.remove("empty_heart");
+//               heart.setAttribute('fill', 'red');
+//
+//       }
+//
+//        else
+//       {
+//
+//               heart.classList.add("empty_heart");
+//               heart.classList.remove("heart");
+//               heart.setAttribute('fill', 'white');
+//       }
+//
+////            $(document).ready(function(){
+////            const postinglike = document.getEle
+
 
 
     }
 
 
+
+//function fill(obj){
+//console.log(obj);
+//               heart.classList.add("heart");
+//               heart.classList.remove("empty_heart");
+//               heart.setAttribute('fill', 'red');
+//
+//               }
 
 
 

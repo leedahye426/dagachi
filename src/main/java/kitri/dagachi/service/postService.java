@@ -18,52 +18,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class postService {
 
-        @Autowired
-        private final PostRepository postRepository;
+    @Autowired
+    private final PostRepository postRepository;
 
-        //글 작성 처리
-        public void register(Post post,String[] tag) {
-
-
-            postRepository.save(post);
+    //글 작성 처리
+    public void register(Post post, String[] tag) {
 
 
-            Long postingId = post.getPostingId();
-            for (int i = 0; i < tag.length; i++) {
-                PostTags postTags = new PostTags();
-                postTags.setTag(tag[i]);
-                postTags.setPostingId(postingId);
-                postRepository.savaposttag(postTags);
+        postRepository.save(post);
 
-            }
+
+        Long postingId = post.getPostingId();
+        for (int i = 0; i < tag.length; i++) {
+            PostTags postTags = new PostTags();
+            postTags.setTag(tag[i]);
+            postTags.setPostingId(postingId);
+            postRepository.savaposttag(postTags);
+
         }
+    }
 
-    public void save(PostingLike postinglike)
-    {
+    public void save(PostingLike postinglike) {
 
         postRepository.savaLike(postinglike);
     }
 
 
+    //리스트처리
+    public List<Post> posting() {
 
-        //리스트처리
-        public List<Post> posting(){
 
+        return postRepository.findAll();
 
-                return postRepository.findAll();
-
-        }
+    }
 
     public Post findOne(Long postingId) {
         return postRepository.findOne(postingId);
     }
 
 
+    public void delete(Long postingId) {
 
-
-    public void delete(Long postingId){
-
-            postRepository.delete(postingId);
+        postRepository.delete(postingId);
         System.out.println("==============" + postingId);
     }
 
@@ -90,16 +86,12 @@ public class postService {
 //    }
 
 
-
-
-       // 특정게시물 불러오기
+    // 특정게시물 불러오기
 //        public Post detail(){
 //
 //
 //            return "
 //        }
-
-
 
 
 //        @Transactional
@@ -113,34 +105,6 @@ public class postService {
 //        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //        public void upload(Long Posting_ID, String Company_Name,String Posting_Title,String Posting_Content,String Upload_Date, String Member_ID) {
 //                PostForm postForm = postRepository.findAll();
 //
@@ -152,11 +116,7 @@ public class postService {
 //        }
 
 
-
-
-
 }
-
 
 
 //// @Transactional

@@ -1,25 +1,25 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
+import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 //import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping
-public class enterPostingController {
+public class EnterPostingController {
 
     @Autowired
     private final postService postservice;
@@ -36,7 +36,7 @@ public class enterPostingController {
 
 
 //select
-    @GetMapping("/post/enter/enter_post")
+    @GetMapping("/post/enterprise/post_list")
     public String enterPosting(Model model)
     {
 
@@ -49,7 +49,7 @@ public class enterPostingController {
 
         System.out.println(post);
 
-        return "/post/ent/enterPosting";
+        return "/post/post_list";
     }
 
 
@@ -58,7 +58,7 @@ public class enterPostingController {
 
     //insert
 
-    @PostMapping("/post/enter/enter_post")
+    @PostMapping("/post/enterprise/post_list")
     public String postingRegister(Post post, String[] tag) {
 
         //        System.out.println("===================="+postTags);
@@ -69,32 +69,36 @@ public class enterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/ent/enterPosting";
+        return "/post/post_list";
     }
 
 
 
 
     //공고등록하기 버튼 클릭시
-    @GetMapping("/post/enter/register")
+    @GetMapping("/post/enterprise/post_register_form")
     public String postingRegisterForm(){
-        return "/post/postingRegisterForm";
+        return "/post/post_register_form";
     }
 
 
 
     //공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/enter/{postingId}/detail")
-    public String postingDetail(@ModelAttribute("postingId") Long postingId,  Model model)
+    @GetMapping("/post/enterprise/{postingId}/post_detail")
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member)
     {
             Post post = postservice.findOne(postingId);
             String companyName = post.getCompanyName();
              String postingTitle = post.getPostingTitle();
              String postingContent = post.getPostingContent();
+//             Long memberId = member.getId();
+//             post.setMemberId(memberId);
+
+//        System.out.println(memberId);
 
             model.addAttribute("post",post);
 
-            return "post/ent/enterDetail";
+            return "/post/post_detail";
     }
 
 
@@ -126,7 +130,7 @@ public class enterPostingController {
 //    }
 
 
-    @GetMapping("/post/enter/delete/{postingId}")
+    @GetMapping("/post/enterprise/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId)
     {
         System.out.println("postingId: " + postingId);
@@ -134,7 +138,7 @@ public class enterPostingController {
 
 //        ra.addFlashAttribute("postingId",postingId);
 
-        return "redirect:/post/enter/enter_post";
+        return "redirect:/post/post_list";
     }
 
 

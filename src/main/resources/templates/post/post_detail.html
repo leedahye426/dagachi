@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header" />
+<body>
+<!-- Responsive navbar-->
+<head th:replace="fragments/nav :: nav" />
+
+
+
+<div class="container py-5">
+
+    <div class="card-body" th:each="post : ${post}">
+
+
+
+        <input type="hidden" id="postingId" th:value="${post?.postingId}">
+
+        <h1 class="mx-5">채용공고
+            <div sec:authorize="hasRole('ROLE_PER')">
+                <button type="button" class="btn btn-sm" th:onclick="|javascript:like(${post?.postingId})|">
+                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg></button>
+                <!--            <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"-->
+                <!--                    th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정-->
+                <!--            </button>-->
+
+            </div>
+
+        </h1>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">회사이름</label>
+                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
+
+            </div>
+            <div class="mb-3">
+                <label class="form-label">공고제목</label>
+                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">공고내용</label>
+                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"
+                          th:text="${post.postingContent}" disabled></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">등록날짜</label>
+                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ENT')">
+
+                <th:block th:switch="${loginId}">
+        <span th:case="${post.memberId}">
+            <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
+                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/${post.postId}/delete|}'|">
+                    삭제
+            </button>
+            <!--            <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"-->
+            <!--                    th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정-->
+            <!--            </button>-->
+       </span>
+                </th:block>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Image element - set the background image for the header in the line below-->
+
+<!-- Content section-->
+
+<!-- Footer-->
+
+<div th:replace="fragments/footer :: footer"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/heart.js"></script>
+<!--<script th:inline="javascript">-->
+<!--            $(document).ready(function() {-->
+<!--                const heart = document.getElementById("heart");-->
+<!--                const likeCheck = [[${likeCheck}]]; 0-->
+
+<!--                console.log('cnt : ' + likeCheck);-->
+<!--                if(cnt > 0) {-->
+<!--                    console.log('already filled')-->
+<!--                    heart.classList.add("fill-like");-->
+<!--                    heart.setAttribute('fill', 'red');-->
+<!--                }else{-->
+<!--                    heart.classList.add("empty-like");-->
+<!--                    heart.setAttribute('fill','grey');-->
+<!--                }-->
+
+
+<!--            });-->
+
+<!--</script>-->
+
+</body>
+</html>
+
+
+<!--<script>-->
+<!--  function readURL(input){-->
+<!--      if(input.files && input.files[0]){-->
+<!--          var reader = new FileReader();-->
+<!--          reader.onload = function(e){-->
+<!--              document.getElementById('preview').src = e.target.result;-->
+<!--          }-->
+<!--          reader.readAsDataURL(input.files[0]);-->
+<!--      }-->
+<!--      else{-->
+<!--          document.getElementById('preview').src="";-->
+<!--      }-->
+<!--  }-->
+<!--</script>-->

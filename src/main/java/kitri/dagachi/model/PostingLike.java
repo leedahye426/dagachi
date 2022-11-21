@@ -26,7 +26,7 @@ public class PostingLike {
     @Column(name = "member_id")
     private Long memberId;
 
-//    @Column(name = "likeCheck")
+//    @Column(name = "like_check")
 //    private Long likeCheck;
 
 }
