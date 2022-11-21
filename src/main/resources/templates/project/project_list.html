@@ -42,7 +42,7 @@
         <div class="row row-cols-5">
             <div th:each="project : ${projects}"
                  th:onclick="|location.href='@{|/project/enterprise/${project.project_id}/detail|}'|"
-                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
+                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px; background-color:#FAFAFA;box-shadow: 5px 5px grey;">
                 <div class="card-body fw-bold mt-3  " style="cursor:pointer">
                     <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
                     <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
@@ -66,7 +66,7 @@
         <div class="row row-cols-5">
             <div th:each="project : ${projects}"
                  th:onclick="|location.href='@{|/project/personal/${project.project_id}/detail|}'|"
-                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px;">
+                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px; background-color:#FAFAFA;box-shadow: 5px 5px grey;">
 
                 <div class="card-body fw-bold mt-3  " style="cursor:pointer">
                     <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
