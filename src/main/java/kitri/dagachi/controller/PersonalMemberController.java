@@ -30,8 +30,7 @@ public class PersonalMemberController {
     private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
+        // 로그인 V1
 //    @PostMapping("/login")
 //    public String loginMatch(@Valid LoginForm form, BindingResult result) {
 //
