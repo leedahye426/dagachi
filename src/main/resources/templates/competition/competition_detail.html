@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"/>
+<style>
+    tr {
+        border-bottom:0.5px solid #444444;
+    }
+</style>
 <body>
 <!-- Responsive navbar-->
 <head th:replace="fragments/nav :: nav"/>
@@ -10,21 +15,12 @@
         <h1 class="text-white fs-3 fw-bolder">공모전</h1>
     </div>
 </header>
-<div class="container row-cols-10">
-    <th:block th:switch="${loginId}">
-        <span th:case="${competition.id}">
-            <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
-                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/competition.admin/delete/${competition.id}|}'|">
-                    삭제
-            </button>
-            <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"
-                    th:onclick="|location.href='@{|/competition/admin/update/${competition.id}|}'|">수정
-            </button>
-	    </span>
-    </th:block>
-    <div class="title "> <h3 class="text-center mt-5" th:text="${competition.title}"></h3></div>
+<div class="container row-cols-10 border">
     <table class="table">
         <tbody>
+            <tr style="border-bottom:1px solid #444444;">
+                <th><h3 th:text="${competition.title}"></h3></th>
+            </tr>
             <tr>
                 <th>주최주관</th>
                 <td th:text="${competition.host}"></td>
@@ -47,8 +43,19 @@
             </tr>
         </tbody>
     </table>
-
+    <th:block th:switch="${loginMember.id}">
+        <span th:case="${competition.memberId}">
+            <button type="button" class="btn btn-secondary"
+                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/competition/admin/delete/${competition.id}|}'|">
+                    삭제
+            </button>
+            <button type="button" class="btn btn-primary"
+                    th:onclick="|location.href='@{|/competition/admin/update/${competition.id}|}'|">수정
+            </button>
+	    </span>
+    </th:block>
 </div>
+
 
 <!-- Footer-->
 <div th:replace="fragments/footer :: footer"/>

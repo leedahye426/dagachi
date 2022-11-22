@@ -12,13 +12,24 @@
 </header>
 <main class="">
     <div class="container-fluid px-4">
-
-
         <div class="card mb-4">
             <div class="card-header">
-                <a class="btn btn-secondary float-end" href="/competition/admin/register"> <!-- <i class="fas fa-table me-1"></i> -->
-                    <i class="fas fa-edit"></i> 글 작성
-                </a>
+                <span style="display:inline-block; width:80%;">
+                    <form action="/competition/search" method="post" class="align-items-center">
+                        <span style="display:inline-block; width:50%;">
+                            <input type="text" class="form-control " name="keyword" placeholder="search"
+                                   aria-label="Recipient's username" aria-describedby="button-addon2">
+                        </span>
+                        <span style="display:inline-block;">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                        </span>
+                    </form>
+                </span>
+                <span style="display:inline-block; width:18%">
+                    <a class="btn btn-secondary float-end " href="/competition/admin/register"> <!-- <i class="fas fa-table me-1"></i> -->
+                        <i class="fas fa-edit"></i> 글 작성
+                    </a>
+                </span>
             </div>
             <div class="card-body">
                 <table class="table table-hover table-striped">
@@ -37,19 +48,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="c:${competitions}">
-                            <td th:text="${c.id}"></td>
-                            <td  style="text-align:center;"><a th:href="'/competition/admin/detail/' + ${c.id}" th:text="${c.title}"></a></td>
-                            <td th:text="${c.startDate}+'~'+${c.endDate}"></td>
-                            <td th:text="${c.writer}"></td>
-                        </tr>
+                    <tr th:each="c:${competitions}">
+                        <td th:text="${c.id}"></td>
+                        <td style="text-align:center;">
+                            <a th:href="'/competition/admin/detail/' + ${c.id}" th:text="${c.title}"></a>
+                        </td>
+                        <td th:text="${c.startDate}+'~'+${c.endDate}"></td>
+                        <td th:text="${c.writer}"></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </main>
-
 
 
 <!-- Footer-->

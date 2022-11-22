@@ -20,4 +20,18 @@ public class CompetitionRepository {
     public Competition findById(Long id) {
         return em.find(Competition.class, id);
     }
+
+    public void save(Competition competition) {
+        em.persist(competition);
+    }
+
+    public void delete(Competition competition) {
+        em.remove(competition);
+    }
+
+    public List<Competition> findByKeyword(String keyword) {
+        return em.createQuery("select c from competition_board c where c.title LIKE lower('%'||:keyword||'%')")
+                .setParameter("keyword", keyword)
+                .getResultList();
+    }
 }
