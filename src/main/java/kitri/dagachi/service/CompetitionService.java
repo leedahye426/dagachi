@@ -13,8 +13,12 @@ public class CompetitionService {
 
     private final CompetitionRepository competitionRepository;
 
-    public List<Competition> findAll() {
+    public List<Competition> findAllCompetition() {
         return competitionRepository.findAll();
+    }
+
+    public Competition findOne(Long id) {
+        return competitionRepository.findById(id);
     }
 
 }

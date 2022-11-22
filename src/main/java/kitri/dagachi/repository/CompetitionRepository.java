@@ -12,9 +12,12 @@ public class CompetitionRepository {
 
     private final EntityManager em;
 
-
     public List<Competition> findAll() {
-        return em.createQuery("select c from competition c", Competition.class)
+        return em.createQuery("select c from competition_board c", Competition.class)
                 .getResultList();
+    }
+
+    public Competition findById(Long id) {
+        return em.find(Competition.class, id);
     }
 }
