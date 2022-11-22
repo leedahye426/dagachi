@@ -1,64 +1,48 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
+import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 //import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping
-public class enterPostingController {
+public class EnterPostingController {
 
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
 
 
-
-//    메인페이지에서 채용공고 메뉴 클릭 시
-//    @GetMapping("/enter/enter_post")
-//    public String posting(){
-//
-//        return "/post/enterPosting";
-//    }
-
-
-//select
-    @GetMapping("/post/enter/enter_post")
-    public String enterPosting(Model model)
-    {
+    //select
+    @GetMapping("/post/enterprise/post_list")
+    public String enterPosting(Model model) {
 
         List<Post> post = postservice.posting();
-//        List<PostTags> tag = postservice.tag();
 
-
-        model.addAttribute("post",post);
-//        model.addAttribute("tag",tag);
+        model.addAttribute("post", post);
 
         System.out.println(post);
 
-        return "/post/ent/enterPosting";
+        return "/post/post_list";
     }
-
-
-
 
 
     //insert
 
-    @PostMapping("/post/enter/enter_post")
+    @PostMapping("/post/enterprise/post_list")
     public String postingRegister(Post post, String[] tag) {
 
         //        System.out.println("===================="+postTags);
@@ -69,83 +53,43 @@ public class enterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/ent/enterPosting";
+        return "/post/post_list";
     }
-
-
 
 
     //공고등록하기 버튼 클릭시
-    @GetMapping("/post/enter/register")
-    public String postingRegisterForm(){
-        return "/post/postingRegisterForm";
+    @GetMapping("/post/enterprise/post_register_form")
+    public String postingRegisterForm() {
+        return "/post/post_register_form";
     }
-
 
 
     //공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/enter/{postingId}/detail")
-    public String postingDetail(@ModelAttribute("postingId") Long postingId,  Model model)
-    {
-            Post post = postservice.findOne(postingId);
-            String companyName = post.getCompanyName();
-             String postingTitle = post.getPostingTitle();
-             String postingContent = post.getPostingContent();
+    @GetMapping("/post/enterprise/{postingId}/post_detail")
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
+        Post post = postservice.findOne(postingId);
+        String companyName = post.getCompanyName();
+        String postingTitle = post.getPostingTitle();
+        String postingContent = post.getPostingContent();
 
-            model.addAttribute("post",post);
 
-            return "post/ent/enterDetail";
+        model.addAttribute("post", post);
+
+        return "/post/post_detail";
     }
 
 
-
-//    @GetMapping("/post/enter/(id={post.postingId})/delete")
-//    public String delete(Long postingId)
-//    {
-//        postservice.delete(postingId);
-//        return "redirect:/post/enterPosting";
-//    }
-//    @PostMapping("post/enter/delete")
-//    public String delete(Long postingId, RedirectAttributes ra)
-//    {
-//        ra.addFlashAttribute("posingId",postingId);
-//        return "redirect:/post/enterPosting";
-//    }
-
-
-
-//    @PostMapping("/post/enter/delete/{postingId}")
-//    public String postDelete(@PathVariable ("postingId") Long postingId)
-//    {
-//        System.out.println("postingId: " + postingId);
-//        int result=  postservice.delete(postingId);
-//        System.out.println("result:" + result);
-////        ra.addFlashAttribute("postingId",postingId);
-//
-//        return "redirect:/post/enterPosting";
-//    }
-
-
-    @GetMapping("/post/enter/delete/{postingId}")
-    public String postDelete(@PathVariable Long postingId)
-    {
+    //삭제버튼 클릭시
+    @GetMapping("/post/enterprise/delete/{postingId}")
+    public String postDelete(@PathVariable Long postingId) {
         System.out.println("postingId: " + postingId);
-         postservice.delete(postingId);
+        postservice.delete(postingId);
 
-//        ra.addFlashAttribute("postingId",postingId);
 
-        return "redirect:/post/enter/enter_post";
+        return "redirect:/post/post_list";
     }
-
-
-
-    //    @PostMapping("/enter/delete")
-//    public String delete(Long postingId, RedirectAttributes ra)
-//    {
-//        ra.addFlashAttribute("posingId",postingId);
-//        return "redirect:/post/personalPosting";
-//    }
 }
+
 
 
 

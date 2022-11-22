@@ -29,7 +29,7 @@ public class Project {
     private String saved_name;
     private String project_content;
 
-
+    private Long like_cnt;
     public Project() {};
 //
 //    @Builder

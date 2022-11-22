@@ -75,10 +75,18 @@ public class ProjectRepository {
     }
 
     public Long findLikeCntById(Long project_id, Long member_id) {
-        return  (Long)em.createQuery("select count(pl) from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
+        return (Long) em.createQuery("select count(pl) from project_like pl where pl.project_id = :project_id and pl.member_id = :member_id")
                 .setParameter("project_id", project_id)
                 .setParameter("member_id", member_id)
                 .getSingleResult();
+    }
+
+    public void updateCnt(Long project_id, Long cnt) {
+        Project p = findOne(project_id);
+        Long n = (Long) em.createQuery("select pb.like_cnt from project_board pb where pb.project_id = :project_id").setParameter("project_id", project_id).getSingleResult();
+        System.out.println("원래 like 개수 : " + n);
+        p.setLike_cnt(n + cnt);
+
     }
 
     public List<Project> findProjectsById(Long member_id) {

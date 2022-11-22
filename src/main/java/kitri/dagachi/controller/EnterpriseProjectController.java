@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static kitri.dagachi.SessionConstants.LOGIN_MEMBER;
@@ -35,13 +36,11 @@ public class EnterpriseProjectController {
 
     private final ProjectLikeService projectLikeService;
 
-    @GetMapping("/project/enterprise_project_list")
+    @GetMapping("/project/enterprise/project_list")
     public String list(Model model) {
         List<Project> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
-
-
-        return "project/enterprise/enterprise_project_list";
+        return "project/project_list";
     }
 
     @GetMapping("/project/enterprise/{project_id}/detail")
@@ -51,14 +50,14 @@ public class EnterpriseProjectController {
         List<Member> project_members = memberService.findmembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = member.getId();
-
         Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
+
         System.out.println("cnt" + cnt);
         model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
-        return "project/enterprise/enterprise_project_detail";
+        return "project/project_detail";
     }
 
     @GetMapping("/project/enterprise/search")
@@ -66,37 +65,47 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
         //for(String t:tag) System.out.println(t);
         model.addAttribute("projects", projects);
-        return "project/enterprise/enterprise_project_list";
+        return "project/project_list";
     }
 
     @PostMapping("/project/enterprise/like/emptyToFill")
+    @ResponseBody
     public String emptyToFill(@RequestParam String project_id, HttpSession session, Model model,  @AuthenticationPrincipal Member member) {
         Long member_id = member.getId();
 
         ProjectLike projectLike = new ProjectLike();
         projectLike.setProject_id(Long.parseLong(project_id));
         projectLike.setMember_id(member_id);
+        projectService.updateCnt(Long.parseLong(project_id),1L);
+
         projectLikeService.save(projectLike);
         System.out.println("empty to fill");
 
-        Project project = projectService.findProject(Long.parseLong(project_id));
-        model.addAttribute("project", project);
+//        Project project = projectService.findProject(Long.parseLong(project_id));
+//        project.setLike_cnt(project.getLike_cnt()+1);
+//
+//        model.addAttribute("project", project);
 
-        return "/project/enterprise/enterprise_project_detail";
+        return "123";
     }
     @PostMapping("/project/enterprise/like/fillToEmpty")
+    @ResponseBody
     public String fillToEmpty(@RequestParam String project_id, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
         //이미 하트를 눌렀음
         System.out.println("이미 누른 하트");
         Long member_id = member.getId();
         System.out.println("like 컬럼 삭제");
         ProjectLike projectLike = projectLikeService.findLike(Long.parseLong(project_id),member_id);
+        projectService.updateCnt(Long.parseLong(project_id),-1L);
+
         projectLikeService.deleteProjectLike(projectLike);
 
-        Project project = projectService.findProject(Long.parseLong(project_id));
-        model.addAttribute("project", project);
+//        Project project = projectService.findProject(Long.parseLong(project_id));
+//        project.setLike_cnt(project.getLike_cnt()-1);
+//        model.addAttribute("project", project);
 
-        return "/project/enterprise/enterprise_project_detail";
+
+        return "";
     }
 
     @GetMapping("/project/enterprise/myLike")
@@ -105,7 +114,7 @@ public class EnterpriseProjectController {
         List<Project> projects = projectService.findProjectsById(member_id);
         model.addAttribute("projects", projects);
         for(Project p: projects) System.out.println(p);
-        return "/project/enterprise/enterprise_project_list";
+        return "/project/project_list";
     }
 
 }

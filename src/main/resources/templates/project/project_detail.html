@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header"/>
+<body>
+<!-- Responsive navbar-->
+<head th:replace="fragments/nav :: nav" />
+
+<!--content-->
+<!--modal-->
+<div class="modal" tabindex="-1" id="exampleModal" th:each="project_member:${project_members}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" th:text="${project_member.name} + '님의 프로필'"></h5>
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            </div>
+            <div class="modal-body">
+                <tr>
+                    <img src ="">
+                </tr>
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td th:text="${project_member.name}"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td th:text="${project_member.email}"></td>
+                    </tr>
+                    <tr>
+                        <th>학력</th>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <th>경력</th>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">닫기</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container row-cols-10">
+    <div sec:authorize="hasRole('ROLE_ENT')">
+        <button type="button"
+                style="display:inline-block; position: absolute; right: 425px; top: 160px;background-color:transparent;border:0;outline:0;"
+                th:id="${project.project_id}" th:onclick="projectLike(this, this.getAttribute('id'))">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" id="projectLike"
+                 class="project-like bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+            </svg>
+        </button>
+    </div>
+
+    <th:block th:switch="${loginId}">
+        <span th:case="${project.member_id}">
+            <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
+                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/${project.project_id}/delete|}'|">
+                    삭제
+            </button>
+            <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"
+                    th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정
+            </button>
+	    </span>
+    </th:block>
+    <div class="title align-items-center"> <h1 class="text-center mt-5" th:text="${project.project_title}"></h1></div>
+    <table class="table">
+        <colgroup>
+            <col width="20%">
+            <col width="80%">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>팀명</th>
+                <td scope="row" th:text="${project.team_name}"></td>
+            </tr>
+            <tr>
+                <th>등록날짜</th>
+                <td scope="row" th:text="${project.upload_date}"></td>
+            </tr>
+            <tr>
+                <th>프로젝트 개요</th>
+                <td scope="row" th:text="${project.project_content}"></td>
+            </tr>
+            <tr>
+                <th>기술분야</th>
+                <td><span scope="row" th:each="tag : ${project_tags}" th:text="'#' + ${tag.project_tag}"></span></td>
+            </tr>
+            <tr>
+                <th>팀원 정보</th>
+                <td class="row row-cols-4">
+                    <dl th:each="project_member : ${project_members}" class="card m-3 col p-1 my-5 border" style="background-color:#FAFAFA;">
+                        <div sec:authorize="hasRole('ROLE_ENT')" class="openModalBtn btn btn-sm"
+                             data-bs-target="#exampleModal">
+                            <dd id="openModalBtn" >
+                                <p th:text="'이름 : ' + ${project_member.name}"> </p>
+                                <p th:text="'이메일 : ' + ${project_member.email}"></p>
+                            </dd>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_PER')">
+                            <dd >
+                                <p th:text="'이름 : ' + ${project_member.name}"> </p>
+                                <p th:text="'이메일 : ' + ${project_member.email}"></p>
+                            </dd>
+                        </div>
+                    </dl>
+                </td>
+            </tr>
+            <tr>
+                <th>포트폴리오</th>
+                <td scope="row"><iframe class="mx-auto " th:src="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오"></iframe></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+</div>
+<!-- Footer-->
+<div th:replace="fragments/footer :: footer"/>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+<script src="/js/project.js"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src ="/js/profileModal.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        const project_like = document.getElementById("projectLike");
+        console.log(project_like);
+        const cnt = [[${cnt}]];
+        console.log('detail page load');
+        console.log('cnt : ' + cnt);
+        if(cnt > 0) {
+            console.log('already filled')
+            project_like.classList.add("fill-like");
+            project_like.setAttribute('fill', 'red');
+        }else{
+            project_like.classList.add("empty-like");
+            project_like.setAttribute('fill','grey');
+        }
+    });
+</script>
+</body>
+<script src="/js/project_like.js"></script>
+</html>
+

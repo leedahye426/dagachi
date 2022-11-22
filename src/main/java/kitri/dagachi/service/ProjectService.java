@@ -33,7 +33,7 @@ public class ProjectService {
     private String fileDir="D:/test/";
 
 
-    public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email, String[] tags) throws IOException {
+    public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email, String[] tags, Long member_id) throws IOException {
         if (file.isEmpty()) {
             return null;
         }
@@ -53,13 +53,13 @@ public class ProjectService {
         project.setSaved_path(saved_path);
         project.setUpload_date(upload_date);
         project.setProject_content(project_content);
-
-        // 실제로 로컬에 파일명으로 저장
-        file.transferTo(new File(saved_path));
-
+        project.setMember_id(member_id);
 
         // 데이터베이스에 정보 저장
         projectRepository.save(project);
+
+        // 실제로 로컬에 파일명으로 저장
+        file.transferTo(new File(saved_path));
 
         List<Member> team_members = new ArrayList<Member>();
 
@@ -82,7 +82,6 @@ public class ProjectService {
             projectRepository.saveProjectTag(projectTag);
         }
 
-
         return project.getProject_id();
     }
 
@@ -99,7 +98,9 @@ public class ProjectService {
         for(Project p : projects) System.out.println(p);
         return projects;
     }
-
+    public void updateCnt(Long project_id, Long cnt) {
+        projectRepository.updateCnt(project_id, cnt);
+    }
     public List<ProjectTag> findTags(Long project_id) {
         return projectRepository.findTagById(project_id);
     }

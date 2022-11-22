@@ -22,6 +22,7 @@ public class ProjectLikeService {
         return projectRepository.findLikeCntById(project_id, member_id);
     }
 
+
     public ProjectLike findLike(Long project_id, Long member_id) {
         return projectRepository.findLikeById(project_id, member_id);
     }

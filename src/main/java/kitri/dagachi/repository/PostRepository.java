@@ -4,7 +4,7 @@ import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,7 +17,6 @@ import java.util.List;
 public class PostRepository {
 
     private final EntityManager em;
-
 
 
     public void save(Post post) {
@@ -37,15 +36,13 @@ public class PostRepository {
         System.out.println("insert 동작");
     }
 
-    public void savaposttag(PostTags postTags)
-    {
+    public void savaposttag(PostTags postTags) {
         em.persist(postTags);
         em.flush();
     }
 
 
-    public void savaLike(PostingLike postinglike)
-    {
+    public void savaLike(PostingLike postinglike) {
         em.persist(postinglike);
         em.flush();
     }
@@ -54,35 +51,34 @@ public class PostRepository {
         return em.find(Post.class, postingId);
     }
 
-//    public void detail(String companyName, String postingTitle, String postingContent)
-//    {
-//        em.persist(companyName);
-//    }
 
 
-//    public post save
-
-//    public PostForm findOne(String Company_Name){return em.find(PostForm.class, id);}
-
-    public Post findName(String Company_Name) {
-        return em.find(Post.class, Company_Name);
+    public Post findName(String companyName) {
+        return em.find(Post.class, companyName);
     }
 
-    public Post findTitle(String Posting_Title) {
-        return em.find(Post.class, Posting_Title);
+    public Post findTitle(String postingTitle) {
+        return em.find(Post.class, postingTitle);
     }
 
-    public Post findContent(String Posting_Content) {
-        return em.find(Post.class, Posting_Content);
+    public Post findContent(String postingContent) {
+        return em.find(Post.class, postingContent);
     }
 
-    public Post findOneDate(LocalDateTime Upload_Date) {  return em.find(Post.class, Upload_Date);}
-
-    public Post findID(Integer Member_ID) {
-        return em.find(Post.class, Member_ID);
+    public Post findOneDate(LocalDateTime Upload_Date) {
+        return em.find(Post.class, Upload_Date);
     }
 
-    public Post find0ne(Long id){return em.find(Post.class, id);}
+    public Post findID(Long memberID) {
+        return em.find(Post.class, memberID);
+    }
+
+
+
+
+    public Post find0ne(Long id) {
+        return em.find(Post.class, id);
+    }
 
 //            LocalDateTime localdate=LocalDateTime.now();
 //            DateTimeFormatter  Date = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
@@ -90,9 +86,6 @@ public class PostRepository {
 
 //    DateTimeFormatter DateTumeFormatter ;
 //    String formatedNow= now.format(DateTumeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss"));
-
-
-
 
 
     public List<Post> findAll() {
@@ -114,6 +107,7 @@ public class PostRepository {
 
         Post post = findOne(postingId);
         System.out.println("================" + post);
+
         em.remove(post);
         em.flush();
 
@@ -129,8 +123,9 @@ public class PostRepository {
 //    }
 
 
-
 }
+
+
 
 
 

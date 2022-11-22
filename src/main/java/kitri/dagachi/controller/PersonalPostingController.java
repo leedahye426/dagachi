@@ -3,10 +3,13 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.service.FileService;
 
 //import jdk.internal.jimage.ImageReader;
+
 import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostingLike;
+import kitri.dagachi.repository.MemberRepository;
+import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.awt.Color.gray;
+import static java.awt.Color.red;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping
@@ -34,53 +41,56 @@ public class PersonalPostingController {
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
-//    private PersonalProjectController jdbcTemplate;
-
-
-//    메인페이지에서 채용공고 메뉴 클릭 시
-//    @GetMapping("/enter/enter_post")
-//    public String posting(){
-//
-//        return "/post/enterPosting";
-//    }
-
+    private final PostLikeRepository postlikerepository;
 
     //select
-    @GetMapping("/post/person/person_post")
+    @GetMapping("/post/personal/post_list")
     public String enterPosting(Model model) {
 
         List<Post> post = postservice.posting();
-//        List<PostTags> tag = postservice.tag();
 
-//        PageRequest pageRequest = PageRequest.of(page, 3,Sort.by(Sort.Direction.DESC, "postingId"));
-//        Page<Post> post = postRepository.findAll(pageRequest);
 
         model.addAttribute("post", post);
-//        model.addAttribute("tag",tag);
+
 
         System.out.println(post);
 
-        return "/post/per/personalPosting";
+        return "/post/post_list";
     }
 
 
     //    공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/person/{postingId}/detail")
-    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model) {
+    @GetMapping("/post/personal/{postingId}/post_detail")
+
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model,@AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
+        Long memberId = member.getId();
 
+        System.out.println(postingId+memberId);
+
+        Long cnt = postservice.likecnt(postingId, memberId);
+
+        System.out.println("cnt" + cnt);
+//        if( model.addAttribute("cnt",cnt) ==null)
+//        {
+//
+//        }
+        model.addAttribute("cnt", cnt);
         model.addAttribute("post", post);
 
-        return "post/per/personalDetail";
+        return "/post/post_detail";
     }
 
-    @PostMapping("/post/person/like")
-    @ResponseBody
-    public String like(@RequestParam Long postingId, HttpSession session) {
 
+
+
+
+    @PostMapping("/post/personal/fill_like")
+    @ResponseBody
+    public String fill_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
 
 
         PostingLike postinglike = new PostingLike();
@@ -88,13 +98,8 @@ public class PersonalPostingController {
         postinglike.setPostingId(postingId);
 
         //session 값 가져오기
-        Long memberId = (Long)((Member)session.getAttribute(SessionConstants.LOGIN_MEMBER)).getId();
+        Long memberId = member.getId();
         postinglike.setMemberId(memberId);
-
-
-        postservice.save(postinglike);
-
-
 
 
         System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
@@ -103,10 +108,32 @@ public class PersonalPostingController {
 
 
 
+        postservice.save(postinglike);
+
+
+
+
 
         return "";
     }
 
+    @PostMapping("/post/personal/empty_like")
+    @ResponseBody
+    public String empty_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member)
+    {
+        Long memberId = member.getId();
+
+
+        PostingLike postinglike = postservice.findlike(postingId, memberId);
+
+        System.out.println("posingId : " + postingId);
+        System.out.println("memberId : " + memberId);
+
+        postservice.likeedel(postinglike);
+
+        return "";
+
+    }
 
 
 }
