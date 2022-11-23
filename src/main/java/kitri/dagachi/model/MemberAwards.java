@@ -27,9 +27,6 @@ public class MemberAwards {
     @Column(name = "award_name")
     private String awardName;
 
-    @Column(name = "competition_name")
-    private String competitionName;
-
     @Column(name = "award_date")
-    private LocalDateTime awardDate;
+    private String awardDate;
 }

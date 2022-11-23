@@ -19,8 +19,7 @@
 </head>
 <body>
 <!-- Responsive navbar-->
-<div th:replace="fragments/personal_nav :: personal_nav"></div>
-
+<div th:replace="fragments/nav :: nav"></div>
 
 <div class="container row align-items-center  mx-auto mt-5 border">
 
@@ -42,30 +41,42 @@
                 <table style="width: 70%; ">
                     <tr>
                         <td class="basicTitle">이름<span class="essential"> * </span></td>
-                        <td><input class="basicContents" type="text" name="resumeName" id="resumeName"></td>
+                        <td><input class="basicContents" type="text" name="resumeName" id="resumeName" th:value="${member.name}"></td>
                     </tr>
                     <tr>
                         <td class="basicTitle">성별<span class="essential"> * </span></td>
+                        <th:block th:if="${personalInfo.gender.toString().equals('남')}">
                         <td>
-                            <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male" value="">
-                                남
-                            </button>
-                            <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female"
-                                    value="">여
-                            </button>
-                            <input type="hidden" name="member_gender" id="gender" value="">
+                            <button type="button" class="btn btn-primary btn;" style="width: 22%;" id="male">남</button>
+                            <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여</button>
+                            <input type="hidden" name="gender" id="gender" value="남">
                         </td>
+                        </th:block>
+                        <th:block th:if="${personalInfo.gender.toString().equals('여')}">
+                            <td>
+                                <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남</button>
+                                <button type="button" class="btn btn-primary btn;" style="width: 22%" id="female">여</button>
+                                <input type="hidden" name="gender" id="gender" value="여">
+                            </td>
+                        </th:block>
+                        <th:block th:if="${personalInfo.gender.toString().equals('null')}">
+                            <td>
+                                <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남</button>
+                                <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여</button>
+                                <input type="hidden" name="gender" id="gender" value="">
+                            </td>
+                        </th:block>
                     </tr>
                     <tr>
-                        <td class="basicTitle">전화번호(-없이)<span class="essential"> *</span></td>
-                        <td><input class="basicContents" type="tel" name="phoneNum" id="phoneNum"></td>
+                        <td class="basicTitle">보유 기술</td>
+                        <td><input class="basicContents" type="tel" name="phoneNum" id="phoneNum" th:value="${personalInfo.stack}"></td>
                     </tr>
                 </table>
             </div>
         </div>
         <div>
             <label for="member_image" class="border" style="cursor: pointer">프로필 선택</label>
-            <input type="file" id="member_image" name="member_image" accept="image/*" onchange="loadFile(this)"
+            <input type="file" id="member_image" name="image" accept="image/*" onchange="loadFile(this)"
                    style="visibility: hidden;">
         </div>
 
@@ -80,6 +91,48 @@
         <div class="container bg-light" id="highInfo">
 
             <!-- 고등학교 추가 공간 -->
+        
+        <div th:each="education : ${educations}" th:if="|{#strings.contains.toString}|">
+ 
+            <div>
+                <div class="d-flex flex-row-reverse" id="highDel">
+                <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                </div>
+              <table style="width: 70%; " >
+                <tr>
+                  <td class="title">학교명<span class="essential"> * </span></td>
+                  <td><input class="contents" type="text" name="schoolName" id="highName" autocomplete="off" th:value="${education.schoolName}"></td>
+                  <input type="hidden" name="educationType" value="고등학교">
+                </tr>
+                <tr>
+                  <td class="title">재학기간</td>
+                  <td>
+                    <input class="contents date" type="date" id="startDate" value="" name="entranceDate" th:value="${education.startDate}">
+                    <span class="mx-2"> - </span>
+                    <input class="contents date" type="date" id="endDate" value="" name="graduationDate" th:value="${education.endDate}">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
+                  <td>
+                    <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk" >
+                    <script src=""></script>
+                    </select>
+                </tr>
+                <tr>
+                  <td class="title"><label for="major">전공 계열</label></td>
+                  <input type="hidden" name="majorDetail" value="">
+                  <td>
+                    <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk" th:value="${education.majorName}">
+                    <script type="text/javascript" src=""></script>
+                    </select>
+                </tr>
+              </table>
+              <input type="hidden" id="education_name" value="">
+              </div>
+
+        </div>
+
 
         </div>
 

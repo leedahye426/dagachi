@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter @Setter
 public class ResumeForm {
@@ -13,20 +14,24 @@ public class ResumeForm {
     // personal_info
     private Long id; // member_id <- join으로 가져오기
 
+    private String resumeName;
+
     private String image;
 
     private Character gender;
 
-    private String stack;
+    private String phoneNum;
 
     // member_education
     private String schoolName;
 
     private String majorName;
 
-    private LocalDateTime entranceDate;
+    private String majorDetail;
 
-    private LocalDateTime graduationDate;
+    private String entranceDate;
+
+    private String graduationDate;
 
     private String educationType;
 
@@ -35,18 +40,7 @@ public class ResumeForm {
 
     private String certificateIssuer;
 
-    private LocalDateTime issuedDate;
-
-    // member_career
-    private String enterName;
-
-    private String duty;
-
-    private String rank;
-
-    private LocalDateTime joiningDate;
-
-    private LocalDateTime leavingDate;
+    private String issuedDate;
 
     // member_awards
     private String awardAgency;
@@ -55,5 +49,18 @@ public class ResumeForm {
 
     private String competitionName;
 
-    private LocalDateTime awardDate;
+    private String awardDate;
+
+    // member_career
+    private String enterName;
+
+    private String duty;
+
+    private String rank;
+
+    private String joiningDate;
+
+    private String leavingDate;
+
+
 }

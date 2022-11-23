@@ -3,6 +3,8 @@ package kitri.dagachi.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -28,11 +30,14 @@ public class MemberEducation {
     @Column(name = "major_name")
     private String majorName;
 
+    @Column(name = "major_detail")
+    private String majorDetail;
+
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private String startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private String endDate;
 
     @Column(name = "education_type")
     private String educationType;

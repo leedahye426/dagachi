@@ -3,7 +3,6 @@ package kitri.dagachi.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberCeritifcates {
+public class MemberCertificates {
 
     @Id
     @GeneratedValue
@@ -28,6 +27,6 @@ public class MemberCeritifcates {
     private String certificateIssuer;
 
     @Column(name = "issued_date")
-    private LocalDateTime issuedDate;
+    private String issuedDate;
 
 }
