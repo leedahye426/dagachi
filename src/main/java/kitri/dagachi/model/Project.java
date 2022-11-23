@@ -1,16 +1,12 @@
 package kitri.dagachi.model;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity(name="project_board")
 @Getter @Setter
@@ -30,6 +26,16 @@ public class Project {
     private String project_content;
 
     private Long like_cnt;
+    private String approve;
+
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+//    private List<ProjectTag> projectTags = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+//    private List<ProjectLike> projectLikes = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+//    private List<ProjectMember> projectMembers = new ArrayList<>();
     public Project() {};
 //
 //    @Builder

@@ -3,9 +3,7 @@ package kitri.dagachi.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "project_like")
 @Getter @Setter
@@ -17,4 +15,8 @@ public class ProjectLike {
     private Long project_id;
 
     private Long member_id;
+
+//    @ManyToOne
+//    @JoinColumn(name = "project_id")
+//    private Project project;
 }

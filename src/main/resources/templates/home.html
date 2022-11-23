@@ -18,18 +18,21 @@
 <!--    <span th:text="${loginMember.id}">member</span>-->
 <!--</div>-->
 
-<p th:text="${#loginMember}"></p>
+<!--<p th:text="${#loginMember}"></p>-->
 <!-- Header - set the background image for the header in the line below-->
 <header class="py-5 bg-image-full" style="background-image: url('images/black.jpg')">
-    <div class="text-center my-5 row " style="height:200px;">
-        <!--         <img class="img-fluid rounded-circle mb-4" src="" alt="임시"/>-->
+    <div class="text-center my-4 row " style="height:200px;text-align: center">
+        <div>
+            <img class="img-fluid rounded-circle mb-1 " style="width:80px;height:80px"
+                 src="/images/free-icon-friend-3425734.png" alt="임시"></img>
+        </div>
         <h1 class="text-white fs-3 fw-bolder align-self-center">DAGACHI</h1>
         <p class="text-white-50 mb-0">다 가치있고, 다 같이 하는</p>
     </div>
 </header>
 <!-- Content section-->
-<div class="row mx-5 mt-2 my-0" style="background-color:#E6E6E6">
-    <div class="col-6  mx-5 px-5 py-2 ">
+<div class="row mx-0 my-0" style="height:425px;">
+    <div class="col-6  mx-5 my-5 px-5 py-2 ">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -41,21 +44,20 @@
             </div>
             <div class="carousel-inner rounded-3" style="height:30%">
                 <div class="carousel-item active " data-bs-interval="3000">
-                    <a target="_blank" href="https://www.textom.co.kr/home/bbs/view.php?id=notice&page_num=15&page=1&no=136">
-                        <img src="images/공모전/빅데이터분석공모전.jpg" class="d-block w-100 " alt="..." >
+                    <a target="_blank" href="">
+                        <img src="" class="d-block w-100 " alt="...">
                     </a>
                 </div>
                 <div class="carousel-item" data-bs-interval="3000">
-                    <a target="_blank" href="http://ecobuddy.or.kr/04.php?type=view&data=aWR4PTUwMCZwYWdlY250PTAmbGV0dGVyX25vPTE2MSZvZmZzZXQ9MCZzZWFyY2g9JnNlYXJjaHN0cmluZz0mcHJlc2VudF9udW09MTYx||&boardIndex=1&sub=1">
-                        <img src="images/공모전/gs칼텍스공모전.jpg" class="d-block w-100 " alt="..." >
+                    <a target="_blank" href="">
+                        <img src="" class="d-block w-100 " alt="...">
                     </a>
                 </div>
                 <div class="carousel-item" data-bs-interval="3000">
-                    <a target="_blank" href="https://dacon.io/competitions/official/236029/overview/description">
-                        <img src="images/공모전/uos빅데이터경진대회.png" class="d-block w-100 " alt="...">
+                    <a target="_blank" href="">
+                        <img src="" class="d-block w-100 " alt="...">
                     </a>
                 </div>
-
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="prev">
@@ -70,7 +72,7 @@
         </div>
     </div>
 
-    <div class="col-4 px-5 py-2 ">
+    <div class="col-4 px-5 my-5 py-2 ">
         <div class="list-group row ">
             <li class="list-group-item list-group-item-light list-group-item-action active"> 게시판 미리보기
                 <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
