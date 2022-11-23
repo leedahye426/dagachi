@@ -34,4 +34,10 @@ public class CompetitionRepository {
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<Competition> findByMid(Long memberId) {
+        return em.createQuery("select c from competition_board c where c.memberId = :memberId")
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
 }

@@ -10,36 +10,36 @@
         <h1 class="mt-4">공모전 게시글 등록</h1>
         <div class="card mb-4">
             <div class="card-body">
-                <form action="/competition/admin/register" method="post" enctype="multipart/form-data">
+                <form  th:action="@{|/competition/admin/update/${competition.id}|}" method="post" enctype="multipart/form-data">
                     <div class="mb-3 mt-3">
                         <label for="title" class="form-label">title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                        <input type="text" class="form-control" id="title" name="title" th:value="${competition.title}">
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="host" class="form-label">주최주관</label>
-                        <input type="text" class="form-control" id="host" name="host"  required>
+                        <input type="text" class="form-control" id="host" name="host" th:value="${competition.host}">
                     </div>
                     <div class="mb-3">
                         <label for="url" class="form-label">url</label> <input
-                            type="text" class="form-control" id="url" name="url"  required>
+                            type="text" class="form-control" id="url" name="url" th:value="${competition.url}">
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">content</label>
-                        <textarea class="form-control" id="content" name="content"></textarea>
+                        <textarea class="form-control" id="content" name="content" th:text="${competition.content}"></textarea>
                     </div>
                     <div class="mb-3">
                         <span style="display:inline-block; width:48%;">
                             <label for="startDate" class="form-label">시작날짜</label>
-                            <input type="datetime-local" class="form-control" id="startDate" name="startDate"  required>
+                            <input type="datetime-local" class="form-control" id="startDate" name="startDate">
                         </span>
                         <span style="display:inline-block; width:48%;">
                             <label for="endDate" class="form-label">종료날짜</label>
-                            <input type="datetime-local" class="form-control" id="endDate" name="endDate"  required>
+                            <input type="datetime-local" class="form-control" id="endDate" name="endDate">
                         </span>
                     </div>
                     <div class="mb-3">
                         <label for="file" class="form-label">포스터</label>
-                        <input type="file" class="form-control" id="file" name="file"   required>
+                        <input type="file" class="form-control" id="file" name="file">
                     </div>
 
                     <button type="submit" class="btn btn-outline-primary">등록</button>

@@ -35,11 +35,12 @@
             </tr>
             <tr>
                 <th>지원하기</th>
-                <td th:text="${competition.url}"></td>
+                    <td><a href="${competition.url}" th:text="${competition.url}"></a></td>
             </tr>
             <tr>
                 <td th:text="${competition.content}"></td>
-<!--             <td>   이미지 보여줄 공간 </td> >-->
+                <td><img th:src="${competition.savedPath}" alt="공모전 포스터"></td>
+
             </tr>
         </tbody>
     </table>

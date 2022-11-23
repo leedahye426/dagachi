@@ -2,10 +2,7 @@ package kitri.dagachi.repository;
 
 import java.util.*;
 
-import kitri.dagachi.model.Project;
-import kitri.dagachi.model.ProjectLike;
-import kitri.dagachi.model.ProjectMember;
-import kitri.dagachi.model.ProjectTag;
+import kitri.dagachi.model.*;
 import kitri.dagachi.service.ProjectLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -57,12 +54,12 @@ public class ProjectRepository {
     public List<Project> findByTitleTag(String keyword, String[] tags) {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         if(tags != null) {
-            return em.createQuery("select p from project_board p where p.project_title Like lower('%'||:keyword||'%') and p.project_id in (select pt.project_id from project_tag pt where pt.project_tag in :tags)")
+            return em.createQuery("select p from project_board p where p.project_title Like lower('%'||:keyword||'%') and p.approve = 'Y' and p.project_id in (select pt.project_id from project_tag pt where pt.project_tag in :tags)")
                     .setParameter("tags", Arrays.asList(tags))
                     .setParameter("keyword", keyword)
                     .getResultList();
         }
-        else return em.createQuery("select p from project_board p where p.project_title LIKE lower('%'||:keyword||'%')")
+        else return em.createQuery("select p from project_board p where p.project_title LIKE lower('%'||:keyword||'%') and p.approve = 'Y'")
                 .setParameter("keyword",keyword)
                 .getResultList();
     }
@@ -121,5 +118,30 @@ public class ProjectRepository {
         System.out.println("like 삭제됨");
     }
 
+    public void updateApproveYtoN(Long project_id) {
+        Project project = findOne(project_id);
+        project.setApprove("Y");
+
+    }
+
+    public void updateApproveNtoY(Long project_id) {
+        Project project = findOne(project_id);
+        project.setApprove("N");
+    }
+
+    public List<Project> findApprovedProject() {
+        return em.createQuery("select p from project_board p where p.approve = 'Y'")
+                .getResultList();
+    }
+
+    public void deleteProjectMember(Long project_id) {
+         em.createQuery("delete from project_members pm where pm.project_id = :project_id")
+                .setParameter("project_id", project_id).executeUpdate();
+    }
+
+    public void deleteTag(Long project_id) {
+        em.createQuery("delete from project_tag pt where pt.project_id = :project_id")
+                .setParameter("project_id", project_id).executeUpdate();
+    }
 
 }

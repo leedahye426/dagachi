@@ -5,7 +5,7 @@ function emailCheck() {
 
     $.ajax({
         type : "post",
-        url : "/project/email_check",
+        url : "/project/personal/email_check",
         data : {email : email},
         success : function(data) {
             getEmail(data);
