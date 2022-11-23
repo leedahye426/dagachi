@@ -1,0 +1,42 @@
+tr, th, td {
+    padding-bottom: 10px;
+}
+
+.basicTitle {
+    width: 35%;
+    font-weight: 600;
+    font-size: small;
+}
+
+.basicContents {
+    width: 60%;
+    font-size: small;
+}
+
+.title {
+    width: 25%;
+    font-weight: 600
+}
+
+.infoTitle {
+    width: 30%;
+}
+
+
+.contents {
+    width: 60%;
+}
+
+.date{
+    width: 26%;
+}
+
+hr {
+    border: 0;
+}
+
+.dot {
+    border: 0;
+    border-top: 2px dotted #8c8c8c;
+    margin-top: 9px;
+}

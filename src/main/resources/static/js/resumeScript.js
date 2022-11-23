@@ -2,7 +2,7 @@ const gradList = ["졸업 여부", "졸업", "재학중", "휴학중", "수료",
 const highMajorList = ["계열 선택", "문과계열", "이과계열", "전문(실업)계", "예체능계", "특성화/마이스터고", "특수목적고"]
 const univMajorList = ["계열 선택", "인문계열", "사회계열", "교육계열", "공학계열", "자연계열", "의학계열", "예체능계열"]
 const reasonList = ["업직종 전환", "근무조건", "경영악화", "계약만료", "출산/육아", "학업", "유학", "개인사정", "직접입력"]
-const univType = ["대학(2,3년제)", "대학(4년제)", "대학원"]
+const univType = ["대학(2,3년제)", "대학(4년제)", "대학원(석사)", "대학원(박사)"]
 
 const highList = ["국립국악고등학교",
 "서울대학교사범대학부설고등학교",
@@ -2754,18 +2754,19 @@ const univList = ["동국대학교",
 "한양여자대학교",
 "한국폴리텍Ⅰ대학"]
 
+let gradeList = ""
+let majorList = ""
+
+for(let i=0; i<gradList.length; i++) {
+  gradeList += `<option value="${gradList[i]}>${gradList[i]}</option>`;
+}
+for(let i=0; i<highMajorList.length; i++) {
+  majorList += `<option value="${highMajorList[i]}">${highMajorList[i]}</option>`;
+}
+
 // 고등학교 추가
 $("#addHigh").on('click', function() {
 
-  let gradeList = ""
-  let majorList = ""
-
-  for(let i=0; i<gradList.length; i++) {
-    gradeList += `<option value="${i}">${gradList[i]}</option>`;
-  }
-  for(let i=0; i<highMajorList.length; i++) {
-    majorList += `<option value="${i}">${highMajorList[i]}</option>`;
-  }  
   
   $("#highInfo").append(
     `
@@ -2776,26 +2777,28 @@ $("#addHigh").on('click', function() {
   <table style="width: 70%; " >
     <tr>
       <td class="title">학교명<span class="essential"> * </span></td>
-      <td><input class="contents" type="text" name="highName" id="highName" autocomplete="off"></td>
+      <td><input class="contents" type="text" name="schoolName" id="highName" autocomplete="off"></td>
+      <input type="hidden" name="educationType" value="고등학교">
     </tr>
     <tr>
       <td class="title">재학기간</td>
       <td>
-        <input class="contents date" type="date" id="startDate" value=""><span class="mx-2"> - </span>
-        <input class="contents date" type="date" id="endDate" value="">
+        <input class="contents date" type="date" id="startDate" value="" name="entranceDate"><span class="mx-2"> - </span>
+        <input class="contents date" type="date" id="endDate" value="" name="graduationDate">
       </td>
     </tr>
     <tr>
       <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
       <td>
-        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk">
+        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk" >
         ${gradeList}
         </select>
     </tr>
     <tr>
       <td class="title"><label for="major">전공 계열</label></td>
+      <input type="hidden" name="majorDetail" value="">
       <td>
-        <select class="form-select major" style="width: 60%;" name="majorChk" id="majorChk">
+        <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk" >
         ${majorList}
         </select>
     </tr>
@@ -2804,27 +2807,24 @@ $("#addHigh").on('click', function() {
   </div>
     `
     )
-
-
-
 });
+
+let typeList = ""
+let majorListUniv = ""
+
+for(let i=0; i<univType.length; i++) {
+  typeList +=`<option value="${univType[i]}">${univType[i]}</option>`;
+}
+for(let i=0; i<gradList.length; i++) {
+    gradeList += `<option value="${gradList[i]}">${gradList[i]}</option>`;
+}
+for(let i=0; i<univMajorList.length; i++) {
+  majorListUniv += `<option value="${univMajorList[i]}">${univMajorList[i]}</option>`;
+}  
 
 // 대학교 추가
 $("#addUniv").on('click', function() {
 
-  let typeList = ""
-  let gradeList = ""
-  let majorList = ""
-
-  for(let i=0; i<univType.length; i++) {
-    typeList +=`<option value="${i+1}">${univType[i]}</option>`;
-  }
-  for(let i=0; i<gradList.length; i++) {
-      gradeList += `<option value="${i}">${gradList[i]}</option>`;
-  }
-  for(let i=0; i<univMajorList.length; i++) {
-    majorList += `<option value="${i}">${univMajorList[i]}</option>`;
-  }  
  
     $("#univInfo").append(
     `
@@ -2832,24 +2832,24 @@ $("#addUniv").on('click', function() {
     <div class="d-flex flex-row-reverse" id="UnivDel">
     <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
     </div>  
-    <table style="width: 70%; " >
+    <table style="width: 70%;">
         <tr>
         <td class="title"><label for="univType">학교<span class="essential"> * </span></td>
         <td>
-        <select class="form-select univType" style="width: 60%;" name="univType" id="univType">
+        <select class="form-select univType" style="width: 60%;" name="educationType" id="univType">
         ${typeList}
         </select>
         </td>
         </tr>
         <tr>
         <td class="title">학교명<span class="essential"> * </span></td>
-        <td><input class="contents" type="text" name="univName" id="univName" autocomplete="off"></td>
+        <td><input class="contents" type="text" name="schoolName" id="univName" autocomplete="off"></td>
         </tr>
         <tr>
         <td class="title">재학기간</td>
         <td>
-            <input class="contents date" type="date" id="univStartDate" value=""><span class="mx-2"> - </span>
-            <input class="contents date" type="date" id="univEndDate" value="">
+            <input class="contents date" type="date" id="univStartDate" value="" name="entranceDate"><span class="mx-2"> - </span>
+            <input class="contents date" type="date" id="univEndDate" value="" name="graduationDate">
         </td>
         </tr>
         <tr>
@@ -2862,10 +2862,10 @@ $("#addUniv").on('click', function() {
         <tr>
         <td class="title"><label for="univMajor">전공<span class="essential"> * </span></label></td>
         <td>
-            <select class="form-select univMajor" style="width: 60%;" name="univMajorChk" id="univMajorChk">
-            ${majorList}
+            <select class="form-select univMajor" style="width: 60%;" name="majorName" id="univMajorChk">
+            ${majorListUniv}
             </select>
-            <input class="mt-2" type="text" name="majorName" id="majorName">
+            <input class="mt-2" type="text" name="majorDetail" id="detailName">
         </tr>
     </table>
     <input type="hidden" id="education_name" value="">
@@ -2885,17 +2885,17 @@ $("#addCertificate").on('click', function() {
     <table style="width: 70%; " >
     <tr>
       <td class="title">자격증명</td>
-      <td><input class="contents" type="text" name="certificate_name" id="certificate_name" autocomplete="off"></td>
+      <td><input class="contents" type="text" name="certificateName" id="certificate_name" autocomplete="off"></td>
     </tr>
     <tr>
       <td class="title">발행처/기관</td>
-      <td><input class="contents" type="text" name="certificate_issuer" id="certificate_issuer"></td>
+      <td><input class="contents" type="text" name="certificateIssuer" id="certificate_issuer"></td>
     </tr>
     <tr>
     <tr>
       <td class="title">취득일</td>
       <td>
-        <input class="contents date" type="date" id="issued_date" style="width: 40%;">
+        <input class="contents date" type="date" id="issued_date" style="width: 40%;" name="issuedDate">
       </td>
     </tr>
   </table>
@@ -2915,17 +2915,17 @@ $("#addAward").on('click', function() {
     <table style="width: 70%; " >
     <tr>
       <td class="title">수상명</td>
-      <td><input class="contents" type="text" name="award_name" id="award_name" autocomplete="off"></td>
+      <td><input class="contents" type="text" name="awardName" id="award_name" autocomplete="off"></td>
     </tr>
     <tr>
       <td class="title">수여기관</td>
-      <td><input class="contents" type="text" name="award_agency" id="award_agency"></td>
+      <td><input class="contents" type="text" name="awardAgency" id="award_agency"></td>
     </tr>
     <tr>
     <tr>
       <td class="title">취득일</td>
       <td>
-        <input class="contents date" type="date" id="award_date" style="width: 40%;">
+        <input class="contents date" type="date" id="award_date" name="awardDate" style="width: 40%;">
       </td>
     </tr>
   </table>
@@ -2934,15 +2934,14 @@ $("#addAward").on('click', function() {
    ) 
 });
 
+let list = ""
+
+  for(let i=0; i<reasonList.length; i++) {
+   list += `<option value="${i+1}">${reasonList[i]}</option>`;
+  }
+  
 // 경력 사항 추가
 $("#addCareer").on('click', function() {
-  
-  let list = ""
-
-    for(let i=0; i<reasonList.length; i++) {
-     list += `<option value="${i+1}">${reasonList[i]}</option>`;
-    }
-    console.log(list);
   
   $("#careerInfo").append(
         `
@@ -2953,13 +2952,13 @@ $("#addCareer").on('click', function() {
     <table style="width: 70%; " >
     <tr>
       <td class="title">회사명<span class="essential"> * </span></td>
-      <td><input class="contents" type="text" name="univType" id="univType" autocomplete="off"></td>
+      <td><input class="contents" type="text" name="enterName" id="enterName" autocomplete="off"></td>
     </tr>
     <tr>
       <td class="title">재직기간</td>
       <td>
-        <input class="contents date" type="date" id="univStartDate" value=""><span class="mx-2"> - </span>
-        <input class="contents date" type="date" id="univEndDate" value="">
+        <input class="contents date" type="date" id="joiningDate" name="joiningDate" value=""><span class="mx-2"> - </span>
+        <input class="contents date" type="date" id="leavingDate" name="leavingDate" value="">
       </td>
     </tr>
     <tr>
@@ -2973,12 +2972,12 @@ $("#addCareer").on('click', function() {
     <tr>
       <td class="title">직급</label></td>
       <td>
-        <input class="mt-2" type="text" name="jobGrad" id="jobGrad">
+        <input class="mt-2" type="text" name="rank" id="jobGrad">
     </tr>
     <tr>
       <td class="title">근무부서</label></td>
       <td>
-        <input class="mt-2" type="text" name="jobPart" id="jobPart">
+        <input class="mt-2" type="text" name="duty" id="jobPart">
     </tr>
     <tr>
       <td class="title">담당업무</label></td>
@@ -2998,12 +2997,12 @@ $(document).on('click', (e) => {
     if(e.target.id == "male") {
         $("#male").attr("class", "btn btn-primary btn");
         $("#female").attr("class", "btn btn-secondary btn");
-        $("#gender").val("M");
+        $("#gender").val("남");
     }
     else if(e.target.id == "female") {
         $("#female").attr("class", "btn btn-primary btn");
         $("#male").attr("class", "btn btn-secondary btn");
-        $("#gender").val("W");
+        $("#gender").val("여");
     }
 
     if(e.target.id == "del") {
@@ -3049,4 +3048,13 @@ function resumeChk() {
   console.log('click');
 
   $("#resumeForm").submit();
+}
+
+window.onload = function() {
+  $("#gradChk").append(`${gradeList}`);
+  $("#majorChk").append(`${majorList}`);
+  $("#univType").append(`${typeList}`);
+  $("#univGradChk").append(`${gradList}`);
+  $("#univMajorChk").append(`${majorListUniv}`);
+  $("#reasonChk").append(`${list}`)
 }

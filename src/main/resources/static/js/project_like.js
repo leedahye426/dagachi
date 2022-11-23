@@ -4,49 +4,28 @@ function projectLike(obj, project_id) {
     console.log('heart click');
     console.log('project id :' + project_id);
 
-
-
-
     if($(".project-like").hasClass("empty-like") === true) {
-<<<<<<< HEAD
-
-
-               $.ajax({
-                    type : "post",
-                    url : "/project/enterprise/like/emptyToFill",
-                    data : {project_id, project_id},
-                    success : function(data) {
-                        fill(obj)
-                    }
-                });
-
-=======
-        $.ajax({
+       $.ajax({
             type : "post",
             url : "/project/enterprise/like/emptyToFill",
             data : {project_id, project_id},
             success : function(data) {
-                console.log(data);
-                fill(obj);
+                fill(obj)
             }
         });
->>>>>>> c432babbe51b16f2364be65819f0c4f3f6edeeeb
     }
     else {
-
       $.ajax({
-                    type : "post",
-                    url : "/project/enterprise/like/emptyToFill",
-                    data : {project_id, project_id},
-                    success : function(data) {
-                       empty();
-                    }
-                });
-
-
+            type : "post",
+            url : "/project/enterprise/like/emptyToFill",
+            data : {project_id, project_id},
+            success : function(data) {
+               empty();
+            }
+        });
     }
 }
-}
+
 
 function fill(obj) {
     console.log("fill()");
@@ -61,4 +40,4 @@ function empty() {
      project_like.classList.add("empty-like");
      project_like.classList.remove("fill-like");
      project_like.setAttribute('fill', 'grey');
-
+}

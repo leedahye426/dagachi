@@ -30,7 +30,7 @@ public class ProjectService {
     private final MemberRepository memberRepository;
 
 
-    private String fileDir="D:/test/";
+    private String fileDir="D:/test/portfolio/";
 
 
     public Long register(MultipartFile file, String team_name, String project_title, String project_content, String[] members_email, String[] tags, Long member_id) throws IOException {
@@ -54,7 +54,8 @@ public class ProjectService {
         project.setUpload_date(upload_date);
         project.setProject_content(project_content);
         project.setMember_id(member_id);
-
+        project.setApprove("N");
+        project.setLike_cnt(0L);
         // 데이터베이스에 정보 저장
         projectRepository.save(project);
 
@@ -84,12 +85,50 @@ public class ProjectService {
 
         return project.getProject_id();
     }
+    public void update(MultipartFile file, Project project, String[] members_email, String[] tags) {
+        String orgName = file.getOriginalFilename();
+        String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
+        String savedName = uuid + orgName;
+        String savedPath = fileDir + savedName;
 
+        project.setOrg_name(orgName);
+        project.setSaved_name(savedName);
+        project.setSaved_path(savedPath);
+
+        Long project_id = project.getProject_id();
+        projectRepository.deleteProjectMember(project_id);
+        projectRepository.deleteTag(project_id);
+
+        List<Member> team_members = new ArrayList<Member>();
+
+        for(String member_email : members_email) {
+            team_members.add(memberRepository.findByEmail(member_email));
+        }
+
+        for(Member team_member : team_members) {
+            ProjectMember projectMember = new ProjectMember();
+            projectMember.setProject_id(project.getProject_id());
+            projectMember.setMember_id(team_member.getId());
+            projectRepository.saveProjectMember(projectMember);
+        }
+
+        System.out.println("------------------------------------------");
+        for(String tag: tags) {
+            ProjectTag projectTag = new ProjectTag();
+            projectTag.setProject_id(project.getProject_id());
+            projectTag.setProject_tag(tag);
+            projectRepository.saveProjectTag(projectTag);
+        }
+
+    }
 
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
 
+    public List<Project> findApprovedProject() {
+        return projectRepository.findApprovedProject();
+    }
     public Project findProject(Long project_id) {
         return projectRepository.findOne(project_id);
     }
@@ -117,5 +156,13 @@ public class ProjectService {
 
     public List<Project> findProjectsById(Long member_id) {
         return projectRepository.findProjectsById(member_id);
+    }
+
+    public void updateApproveYtoN(Long project_id) {
+        projectRepository.updateApproveYtoN(project_id);
+    }
+
+    public void updateApproveNtoY(Long project_id) {
+        projectRepository.updateApproveNtoY(project_id);
     }
 }

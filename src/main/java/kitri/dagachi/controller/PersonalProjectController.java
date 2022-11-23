@@ -30,7 +30,7 @@ public class PersonalProjectController {
 
     @GetMapping("/project/personal/project_list")
     public String list(Model model) {
-        List<Project> projects = projectService.findAllProjects();
+        List<Project> projects = projectService.findApprovedProject();
         model.addAttribute("projects", projects);
         return "/project/project_list";
     }
@@ -109,8 +109,24 @@ public class PersonalProjectController {
 
     @PostMapping("project/personal/{project_id}/update")
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
-        Project project = projectService.findProject(project_id);
+        String team_name = multiReq.getParameter("team_name");
+        String project_title = multiReq.getParameter("project_title");
+        String project_content = multiReq.getParameter("project_content");
+        MultipartFile file = multiReq.getFile("file");
 
+        Project project = projectService.findProject(project_id);
+        project.setTeam_name(team_name);
+        project.setProject_title(project_title);
+        project.setProject_content(project_content);
+
+        String[] members_email = multiReq.getParameterValues("member_email");
+        System.out.println("**********email*********");
+        for(String email: members_email) System.out.println(email);
+
+        String[] tags = multiReq.getParameterValues("tag");
+        for(String tag : tags) System.out.println(tag);
+
+        projectService.update(file, project, members_email, tags);
         return "redirect:/project/personal/project_list";
     }
 

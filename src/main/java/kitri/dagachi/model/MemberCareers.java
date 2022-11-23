@@ -3,7 +3,6 @@ package kitri.dagachi.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberCareer {
+public class MemberCareers {
 
     @Id
     @GeneratedValue
@@ -31,8 +30,8 @@ public class MemberCareer {
     private String rank;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private String startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private String endDate;
 }

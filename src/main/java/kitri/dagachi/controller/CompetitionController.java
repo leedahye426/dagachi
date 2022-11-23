@@ -24,14 +24,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class CompetitionController {
     private final CompetitionService competitionService;
 
-    @GetMapping("/competition/admin/competition_list")
+    @GetMapping("/competition/competition_list")
     public String list(Model model) {
         List<Competition> competitions = competitionService.findAllCompetition();
         model.addAttribute("competitions",competitions);
         return "competition/competition_list";
     }
 
-    @GetMapping("/competition/admin/detail/{id}")
+    @GetMapping("/competition/detail/{id}")
     public String detail(@PathVariable Long id, Model model, @AuthenticationPrincipal Member member) {
         Competition competition = competitionService.findOne(id);
         Member loginMember = member;
@@ -72,9 +72,10 @@ public class CompetitionController {
         MultipartFile file = multiReq.getFile("file");
 
         competitionService.register(competition, file);
+
         Long id = competition.getId();
         model.addAttribute("id", id);
-        return "redirect:/competition/admin/competition_list";
+        return "redirect:/competition/competition_list";
     }
 
     @GetMapping("/competition/admin/delete/{id}")
@@ -82,13 +83,56 @@ public class CompetitionController {
         Competition competition = competitionService.findOne(id);
         competitionService.deleteOne(competition);
 
-        return "redirect:/competition/admin/competition_list";
+        return "redirect:/competition/competition_list";
     }
 
     @PostMapping("/competition/search")
     public String search(@RequestParam String keyword, Model model) {
         List<Competition> competitions = competitionService.findCompetitions(keyword);
         System.out.println("---------------search--------------");
+        model.addAttribute("competitions", competitions);
+        return "competition/competition_list";
+    }
+
+    @GetMapping("/competition/admin/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        Competition competition = competitionService.findOne(id);
+        model.addAttribute("competition", competition);
+
+        return "competition/competition_update";
+    }
+
+    @PostMapping("/competition/admin/update/{id}")
+    public String update(@PathVariable Long id, MultipartHttpServletRequest multiReq, Member member) throws IOException {
+        String title = multiReq.getParameter("title");
+        String host = multiReq.getParameter("host");
+        String url = multiReq.getParameter("url");
+        String content = multiReq.getParameter("content");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime startDate = LocalDateTime.parse(multiReq.getParameter("startDate"),formatter);
+        LocalDateTime endDate = LocalDateTime.parse(multiReq.getParameter("endDate"),formatter);
+
+        MultipartFile file = multiReq.getFile("file");
+
+        Competition competition = competitionService.findOne(id);
+        competition.setTitle(title);
+        competition.setHost(host);
+        competition.setUrl(url);
+        competition.setContent(content);
+        competition.setStartDate(startDate);
+        competition.setEndDate(endDate);
+
+
+        competitionService.update(competition, file);
+        return "redirect:/competition/competition_list";
+
+    }
+
+    @GetMapping("/competition/admin/myCompetition")
+    public String myCompetition(Model model, @AuthenticationPrincipal Member member) {
+        Long memberId = member.getId();
+        List<Competition> competitions = competitionService.findByLoginId(memberId);
         model.addAttribute("competitions", competitions);
         return "competition/competition_list";
     }

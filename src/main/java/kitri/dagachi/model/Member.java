@@ -16,7 +16,6 @@ import java.util.Collection;
 @Entity
 @Getter @Setter
 @Table(name = "members")
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
