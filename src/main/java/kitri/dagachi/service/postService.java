@@ -1,10 +1,7 @@
 package kitri.dagachi.service;
 
-import kitri.dagachi.model.Member;
-import kitri.dagachi.model.Post;
+import kitri.dagachi.model.*;
 //import kitri.dagachi.repository.FileRepository;
-import kitri.dagachi.model.PostTags;
-import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,7 +31,10 @@ public class postService {
     private final PostRepository postRepository;
     private final PostLikeRepository postlikerepository;
 
-    //글 작성 처리
+
+
+
+    //글 작성 처리(insert)
     public void register(Post post, String[] tag) {
 
 
@@ -50,12 +51,10 @@ public class postService {
         }
 
 
-
-
-
 //        postRepository.LOGO(path,filename);
     }
 
+    //좋아요 저장(insert)
     public void save(PostingLike postinglike) {
 
         postRepository.savaLike(postinglike);
@@ -70,9 +69,29 @@ public class postService {
 
     }
 
+    //삭제
+    public void delete(Long postingId) {
+
+        postRepository.delete(postingId);
+        System.out.println("==============" + postingId);
+    }
+
+
+
     public Post findOne(Long postingId) {
         return postRepository.findOne(postingId);
     }
+
+    //검색
+    @Transactional
+    public List<Post> search(String keyword){
+        return  postRepository.findByTitleContaining(keyword);
+
+    }
+
+
+
+    // 여기서부터는 like
 
     public PostingLike findMid(Long memberId) {
         return postlikerepository.findMID(memberId);
@@ -84,13 +103,9 @@ public class postService {
     }
 
 
-    public void delete(Long postingId) {
-
-        postRepository.delete(postingId);
-        System.out.println("==============" + postingId);
-    }
 
 
+    //좋아요 취소
     @Transactional
     public void likeedel(PostingLike postinglike) {
 
@@ -98,6 +113,8 @@ public class postService {
         System.out.println("삭제되라");
 
     }
+
+    //새로고침 시 하트 유지 하기 위한 cnt
 
     public Long likecnt(Long postingId, Long memeberId)
     {

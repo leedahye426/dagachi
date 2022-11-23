@@ -88,6 +88,22 @@ public class PersonalPostingController {
         return "/post/post_detail";
     }
 
+    @GetMapping("/post/personal/post_search")
+    public String search(String keyword, Model model)
+    {
+
+        List<Post> searchList = postservice.search(keyword);
+
+        model.addAttribute("post",searchList);
+
+        return "/post/post_list";
+    }
+
+
+
+
+
+
 
 
 

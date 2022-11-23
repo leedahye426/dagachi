@@ -1,11 +1,13 @@
 package kitri.dagachi.repository;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -111,17 +113,23 @@ public class PostRepository {
 
 
 
-    public String LOGO(String path, String filename)
+//    public String LOGO(String path, String filename)
+//    {
+//
+//        return (String) em.createQuery("insert into posting_board (path, filename) value('path','filename')")
+//                .setParameter("path", path)
+//                .setParameter("filename", filename)
+//                .getSingleResult();
+//
+//
+//    }
+
+
+    public List<Post> findByTitleContaining(String keyword)
     {
-
-
-
-        return (String) em.createQuery("insert into posting_board (path, filename) value('path','filename')")
-                .setParameter("path", path)
-                .setParameter("filename", filename)
-                .getSingleResult();
-
-
+        return em.createQuery("select p from posting_board p where (p.companyName) Like ('%'||:keyword||'%')",Post.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
     }
 
 

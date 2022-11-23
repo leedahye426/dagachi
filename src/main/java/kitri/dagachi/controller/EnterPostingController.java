@@ -3,8 +3,10 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.service.FileService;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostFile;
 import kitri.dagachi.repository.PostRepository;
 
+import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +37,7 @@ public class EnterPostingController {
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
+    private final PostFileService postfileservice;
 
 
     //select
@@ -98,6 +104,49 @@ public class EnterPostingController {
 
         return "redirect:/post/post_list";
     }
+
+
+    //파일업로드해보자!
+//    @PostMapping("/post/enterprise/logo")
+//    public String logo(@RequestParam("uploadfile") MultipartFile[] uploadFile,
+//                       Post post, RedirectAttributes redirectAttributes) throws IOException
+//    {
+//        Post logopost = postfileservice.createPost(post);
+//
+//        List<PostFile> filepost = new ArrayList<>();
+//
+//        for(MultipartFile mf: uploadFile)
+//        {
+//            PostFile postfile = postfileservice.savefile(mf,post.getPostingId());
+//            filepost.add(postfile);
+//        }
+//
+//        redirectAttributes.addAttribute("filepost",filepost);
+//
+//        return "redirect:/post/post_list";
+//    }
+//
+//    @GetMapping("/post/enterprise/logo")
+//    public String getPost(@PathVariable Long postingId, Model model)
+//    {
+//        Post post = postfileservice.findById(postingId);
+//
+//        if(post == null)
+//        {
+//            return "/";
+//        }
+//
+//        List<PostFile> postFiles = postfileservice.findByFiles(postingId);
+//
+//        model.addAttribute("files", postFiles);
+//
+//        model.addAttribute("post",post);
+//
+//        return "/post/post_list";
+//    }
+
+
+
 
 //    @PostMapping("/post/enterprise/logo")
 //    @RequestMapping
