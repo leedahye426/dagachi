@@ -8,14 +8,21 @@ import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.id.PostInsertIdentifierGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +48,12 @@ public class postService {
             postRepository.savaposttag(postTags);
 
         }
+
+
+
+
+
+//        postRepository.LOGO(path,filename);
     }
 
     public void save(PostingLike postinglike) {
@@ -60,6 +73,11 @@ public class postService {
     public Post findOne(Long postingId) {
         return postRepository.findOne(postingId);
     }
+
+    public PostingLike findMid(Long memberId) {
+        return postlikerepository.findMID(memberId);
+    }
+
 
     public PostingLike findlike(Long postingId, Long memberId) {
         return postlikerepository.findLike(postingId, memberId);
@@ -84,6 +102,16 @@ public class postService {
     public Long likecnt(Long postingId, Long memeberId)
     {
         return postlikerepository.likecnt(postingId, memeberId);
+    }
+
+    public List<PostingLike> likeall(Long memberId)
+    {
+        return postlikerepository.LikeAll(memberId);
+    }
+
+    public Post findById(Long postingId)
+    {
+        return postlikerepository.findById(postingId);
     }
 
 }

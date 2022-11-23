@@ -1,6 +1,7 @@
 package kitri.dagachi.model;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity(name="posting_board")
 @Getter @Setter
+//@RequiredArgsConstructor
 public class Post {
 
     @Id
@@ -30,6 +32,10 @@ public class Post {
 
     @Column(name = "member_id")
     private Long memberId;
+
+//    private String path;
+//
+//    private String fileName;
 
 
 

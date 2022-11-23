@@ -5,79 +5,94 @@
 
 <body>
 <!-- Responsive navbar-->
+
+
 <head th:replace="fragments/nav :: nav"/>
 
 
-<div class="card-body">
+<!--<div class="card-body">-->
 
-    <div class="container position-relative px-4 px-lg-5 my-4">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <!--        <div class="col-md-10 col-lg-8 col-xl-7">-->
+<!--    <div class="container position-relative px-4 px-lg-5 ">-->
+<!--        <div class="row gx-4 gx-lg-5 justify-content-center">-->
+<!--                    <div class="col-md-10 col-lg-8 col-xl-7" margin:20px>-->
             <div class="site-heading"
-                 style=" margin:20px; padding:20px; background-color : gray; color:white; justify-content-center">
-                <h1>채용공고</h1>
+                 style="padding:50px; background-color : gray; color:white; justify-content-center">
+                <h1 style="text-align: center">채용공고</h1>
             </div>
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<th:block th:switch="${loginId}">-->
+
+<div class = "container py-3" style="position : absolute; left:50%;">
+    <div class="input-group ">
+        <div class="form-outline">
+            <input type="search" id="form1" class="form-control" />
         </div>
+        <button type="button" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
 </div>
 
 
-<!--<div class="form-ground mb-2">-->
-<!--    <input type="text" class="form-control" placeholder="회사명"/>-->
-<!--</div>-->
-<!--<div class="form-ground mx-sm-1 mb-2">-->
-<!--    <select class="form-control">-->
-<!--       <option value="">keyword</option>-->
-<!--        <option th:each="keyword : ${T(kitri.dagachi.model.Post).values()}"-->
-<!--                th:value="${keyword}"-->
-<!--                th:text="${keyword}">option</option>-->
-<!--    </select>-->
-<!--</div>-->
-<!--    <button type="submit" class="btn btn-promary mb-2">검색</button>-->
 
-
-<div class="container justify-content:space-around; ">
-    <!--    <div class="card row row-cols-3" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:20px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">-->
-    <!--        -->
-        <div sec:authorize="hasRole('ROLE_PER')">
-            <div class="card row row-cols-3 mx-5"
-                 style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;"
-                 th:each="post : ${post}" th:onclick="|location.href='@{|/post/personal/${post.postingId}/post_detail|}'|">
-
-        </div>
-        <div sec:authorize="hasRole('ROLE_ENT')">
-            <div class="card row row-cols-3 mx-5"
-                 style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;"
-                 th:each="post : ${post}"
-                 th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|">
-\        </div>
-
-            <!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
-
-
-            <div class="card-body b" style="width: 14rem; height: 10rem;">
-                <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
-                <p class="card-text" id="posting"></p>
+<div class="container justify-content:space-around " >
+<div sec:authorize="hasRole('ROLE_PER')">
+        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/${post.postingId}/post_detail|}'|" >
+            <div class="card-body b" style="width: 14rem; height: 10rem;" >
+                <h5 class="card-title fw-bold py-5" name="postingContent" th:text=" ${post?.postingContent}"></h5>
+                <p class="card-text" name="posting"></p>
                 <form>
-                    <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" id="companyName"></h6>
+                    <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" name="companyName"></h6>
                     <h7 th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7>
                 </form>
-                <!--             <div class="border-top pt-2" th:text=" '태그 : ' + ${tag?.tag}" id="postingContent" style="font-size: 0.8em; font-width:bold;">-->
-
-                </button>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
 
+
+
+
+
+    <!--    <div class="card row row-cols-3" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:20px;" th:each = "post : ${post}" th:onclick="|location.href='@{|/enter/${post.postingId}/detail|}'|">-->
+<div class="container justify-content:space-around; " >
 <div sec:authorize="hasRole('ROLE_ENT')">
-    <button type="button" class="btn-register"
-            style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;"
-            onclick="location.href='/post/enterprise/post_register_form'">공고 등록하기
-    </button>
+                <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|" >
+                    <div class="card-body b" style="width: 14rem; height: 10rem;" >
+                        <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
+                        <p class="card-text" id="posting"></p>
+                        <form>
+                            <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" name="companyName"></h6>
+                            <h7 th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7>
+                        </form>
+                    </div>
+                </div>
+
+
+
+        <button type="button" class="btn-register"
+        style="position: absolute; right:300px; top:300px; color:white; font-weight: bold; background-color: black;"
+        onclick="location.href='/post/enterprise/post_register_form'">공고 등록하기
+        </button>
+    </div>
 </div>
+<!--            <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|">-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--       <span class="logo"><img src="/enter/detail" class="card-img-top" id="company_image" alt="img" ></span>-->
 
 
 <!--        <div class="container d-flex justify-content-between" >-->
@@ -281,6 +296,7 @@
 <!--          }-->
 <!--&lt;!&ndash;          &ndash;&gt;-->
 <!--&lt;!&ndash;        </script>&ndash;&gt;-->
+
 </body>
 </html>
 

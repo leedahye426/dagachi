@@ -23,9 +23,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.CookieManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +42,8 @@ import static java.awt.Color.red;
 @RequestMapping
 public class PersonalPostingController {
 
+
+    private final EntityManager em;
     @Autowired
     private final postService postservice;
     private final PostRepository postRepository;
@@ -45,11 +51,12 @@ public class PersonalPostingController {
 
     //select
     @GetMapping("/post/personal/post_list")
-    public String enterPosting(Model model) {
+    public String enterPosting(Model model, @AuthenticationPrincipal Member member) {
 
         List<Post> post = postservice.posting();
+        Long memberId = member.getId();
 
-
+        model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
 
 
@@ -74,10 +81,7 @@ public class PersonalPostingController {
         Long cnt = postservice.likecnt(postingId, memberId);
 
         System.out.println("cnt" + cnt);
-//        if( model.addAttribute("cnt",cnt) ==null)
-//        {
-//
-//        }
+
         model.addAttribute("cnt", cnt);
         model.addAttribute("post", post);
 
@@ -87,7 +91,7 @@ public class PersonalPostingController {
 
 
 
-
+    //좋아요
     @PostMapping("/post/personal/fill_like")
     @ResponseBody
     public String fill_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member) {
@@ -117,6 +121,7 @@ public class PersonalPostingController {
         return "";
     }
 
+    //좋아요 취소
     @PostMapping("/post/personal/empty_like")
     @ResponseBody
     public String empty_like(@RequestParam Long postingId, HttpSession session, Model model, @AuthenticationPrincipal Member member)
@@ -134,6 +139,33 @@ public class PersonalPostingController {
         return "";
 
     }
+
+
+    //찜목록
+    @GetMapping("/post/personal/like_list")
+    public String likelist(Model model, @AuthenticationPrincipal Member member)
+    {
+        Long memberId= member.getId();
+        List<PostingLike> postingLikes = postservice.likeall(memberId);
+        List<Post> post = new ArrayList<>(); // 배열 초기화
+
+
+        for (PostingLike p : postingLikes){
+            post.add(postservice.findById(p.getPostingId()));
+        }
+
+        model.addAttribute("post",post); // post_list에 보내기 때문에 같은 타입으로 보내야 함. post
+
+
+
+            return "/post/post_list";
+
+
+
+
+    }
+
+
 
 
 }
