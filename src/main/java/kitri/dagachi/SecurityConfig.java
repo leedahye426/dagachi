@@ -47,9 +47,12 @@ public class SecurityConfig {
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
                 .antMatchers("/members").anonymous()
                 .antMatchers("/project/enterprise/**",
-                                        "/project/personal/personal_project_detail/**",
                                         "/post/ent/enterDetail/**",
-                                        "/post/per/personalDetail/**").authenticated()
+                                        "/project/enterprise/**",
+                                        "/project/enterprise_project_list").hasAnyRole("ENT", "ADMIN")
+                .antMatchers("/project/personal/**",
+                                        "/post/person/**").hasAnyRole("PER", "ADMIN")
+                .antMatchers("/post/enter/enter_post").permitAll()
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정
 //                .anyRequest().authenticated()
