@@ -65,7 +65,7 @@ public class ResumeController {
         model.addAttribute("awards", memberAwards);
         model.addAttribute("careers", memberCareers);
 
-        return "/members/resume";
+        return "/members/resumeEdit";
     }
 
     @PostMapping("resumeEdit")
@@ -96,23 +96,28 @@ public class ResumeController {
         System.out.println("form.getCompetitionName() : " + form.getCompetitionName());
         System.out.println("form.getAwardDate() : " + form.getAwardDate());
 
-        if (resumeRepository.findById(member.getId()).getId() > 0) {
-            System.out.println("멤버 데이터가 있음");
-            resumeService.deleteInfo(member.getId());
+        try {
+            if (resumeRepository.findById(member.getId()).getId() > 0L) {
+                System.out.println("멤버 데이터가 있음");
+                resumeService.deleteInfo(member.getId());
+            }
         }
-        PersonalInfo personalInfo = PersonalInfo.builder()
-                .id(member.getId())
-                .image(form.getImage())
-                .gender(form.getGender())
-                .stack(form.getPhoneNum())
-                .build();
-        resumeService.saveInfo(personalInfo);
+        catch (NullPointerException e) {
+            PersonalInfo personalInfo = PersonalInfo.builder()
+                    .id(member.getId())
+                    .image(form.getImage())
+                    .gender(form.getGender())
+                    .stack(form.getPhoneNum())
+                    .build();
+            resumeService.saveInfo(personalInfo);
+        }
 
         resumeRepository.deleteAllEducationById(member.getId());
         if (form.getSchoolName() != null) {
             for (int i = 0; i < (form.getSchoolName()).split(",").length; i++) {
                 MemberEducation memberEducation = MemberEducation.builder()
                         .id(member.getId())
+                        .gradChk(form.getGradChk().split(",")[i])
                         .schoolName(form.getSchoolName().split(",")[i])
                         .majorName(form.getMajorName().split(",")[i])
                         .majorDetail(form.getMajorDetail().split(",")[i])
@@ -157,8 +162,10 @@ public class ResumeController {
                 MemberCareers memberCareers = MemberCareers.builder()
                         .id(member.getId())
                         .enterName(form.getEnterName().split(",")[i])
-                        .duty(form.getDuty().split(",")[i])
                         .rank(form.getRank().split(",")[i])
+                        .dept(form.getDept().split(",")[i])
+                        .reasonChk(form.getReasonChk().split(",")[i])
+                        .duty(form.getDuty().split(",")[i])
                         .startDate(form.getJoiningDate().split(",")[i])
                         .endDate(form.getLeavingDate().split(",")[i])
                         .build();

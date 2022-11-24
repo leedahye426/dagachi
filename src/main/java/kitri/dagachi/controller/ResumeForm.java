@@ -23,6 +23,8 @@ public class ResumeForm {
     private String phoneNum;
 
     // member_education
+    private String gradChk;
+
     private String schoolName;
 
     private String majorName;
@@ -54,9 +56,13 @@ public class ResumeForm {
     // member_career
     private String enterName;
 
+    private String rank;
+
+    private String dept;
+
     private String duty;
 
-    private String rank;
+    private String reasonChk;
 
     private String joiningDate;
 

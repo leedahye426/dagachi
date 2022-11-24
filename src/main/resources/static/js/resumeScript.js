@@ -2518,7 +2518,6 @@ const univList = ["동국대학교",
 "강원대학교",
 "경동대학교",
 "상지대학교",
-"서울대학교",
 "연세대학교 미래캠퍼스",
 "한라대학교",
 "한림대학교",
@@ -2758,11 +2757,14 @@ let gradeList = ""
 let majorList = ""
 
 for(let i=0; i<gradList.length; i++) {
-  gradeList += `<option value="${gradList[i]}>${gradList[i]}</option>`;
+  gradeList += `<option value="${gradList[i]}">${gradList[i]}</option>`;
 }
+
 for(let i=0; i<highMajorList.length; i++) {
   majorList += `<option value="${highMajorList[i]}">${highMajorList[i]}</option>`;
 }
+
+
 
 // 고등학교 추가
 $("#addHigh").on('click', function() {
@@ -2790,7 +2792,7 @@ $("#addHigh").on('click', function() {
     <tr>
       <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
       <td>
-        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk" >
+        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk">
         ${gradeList}
         </select>
     </tr>
@@ -2798,7 +2800,7 @@ $("#addHigh").on('click', function() {
       <td class="title"><label for="major">전공 계열</label></td>
       <input type="hidden" name="majorDetail" value="">
       <td>
-        <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk" >
+        <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk">
         ${majorList}
         </select>
     </tr>
@@ -2814,9 +2816,6 @@ let majorListUniv = ""
 
 for(let i=0; i<univType.length; i++) {
   typeList +=`<option value="${univType[i]}">${univType[i]}</option>`;
-}
-for(let i=0; i<gradList.length; i++) {
-    gradeList += `<option value="${gradList[i]}">${gradList[i]}</option>`;
 }
 for(let i=0; i<univMajorList.length; i++) {
   majorListUniv += `<option value="${univMajorList[i]}">${univMajorList[i]}</option>`;
@@ -2939,7 +2938,7 @@ let list = ""
   for(let i=0; i<reasonList.length; i++) {
    list += `<option value="${i+1}">${reasonList[i]}</option>`;
   }
-  
+
 // 경력 사항 추가
 $("#addCareer").on('click', function() {
   
@@ -2977,12 +2976,12 @@ $("#addCareer").on('click', function() {
     <tr>
       <td class="title">근무부서</label></td>
       <td>
-        <input class="mt-2" type="text" name="duty" id="jobPart">
+        <input class="mt-2" type="text" name="division" id="division">
     </tr>
     <tr>
       <td class="title">담당업무</label></td>
       <td>
-        <input class="mt-2" type="text" name="jobRes" id="jobRes">
+        <input class="mt-2" type="text" name="duty" id="duty">
     </tr>
   </table>
   </div>
@@ -3051,10 +3050,10 @@ function resumeChk() {
 }
 
 window.onload = function() {
-  $("#gradChk").append(`${gradeList}`);
-  $("#majorChk").append(`${majorList}`);
-  $("#univType").append(`${typeList}`);
-  $("#univGradChk").append(`${gradList}`);
-  $("#univMajorChk").append(`${majorListUniv}`);
+  $(".gradChk").append(`${gradeList}`);
+  $(".majorChk").append(`${majorList}`);
+  $(".univType").append(`${typeList}`);
+  $(".univGradChk").append(`${gradeList}`);
+  $(".univMajorChk").append(`${majorListUniv}`);
   $("#reasonChk").append(`${list}`)
 }

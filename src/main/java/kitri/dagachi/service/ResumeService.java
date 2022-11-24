@@ -33,8 +33,8 @@ public class ResumeService {
         return resumeRepository.findAllEducationById(id);
     }
 
-    public void saveCertificates(MemberCertificates ceritifcatese) {
-        resumeRepository.saveMemberCertificates(ceritifcatese);
+    public void saveCertificates(MemberCertificates certificates) {
+        resumeRepository.saveMemberCertificates(certificates);
     }
 
     public List<MemberCertificates> findAllCertificate(Long id) {

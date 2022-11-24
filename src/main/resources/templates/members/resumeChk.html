@@ -35,7 +35,7 @@
             <div class="mt-3 mx-3" style="width: 100%;">
                 <div>
                     <span class="basicTitlefw-bold fs-4" colspan="2" th:text="|${member.name}|">member.name</span>
-                    <span class="fs-6 fw-normal" th:text="|(${personalInfo.gender}, 00세)|">gender, 00세</span>
+                    <span class="fs-6 fw-normal" th:text="|(${personalInfo?.gender}, 00세)|">gender, 00세</span>
                 </div>
                 <table style="width: 50%;" class="mt-3">
                     </tr>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td class="basicTitle">보유 기술</td>
-                        <td class="basicContents" th:text="${personalInfo.stack}">stack or skill</td>
+                        <td class="basicContents" th:text="${personalInfo?.stack}">stack or skill</td>
                     </tr>
                 </table>
             </div>
@@ -64,173 +64,186 @@
 
             <div th:each="education : ${educations}">
                 <th:block th:if="|${#strings.contains(education.educationType.toString(), '고등학교')}|">
-                <table style="width: 70%" class="mt-2">
+                    <table style="width: 70%" class="mt-2">
+                        <tr>
+                            <td class="title">학교명</td>
+                            <td th:text="${education.schoolName}">키트리고등학교</td>
+                        </tr>
+                        <tr>
+                            <td class="title">재학기간</td>
+                            <td th:text="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')} 
+                                        ~
+                                        ${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}|">2022-06-22
+                                - 2022-12-08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title"><label for="grad">졸업여부</label></td>
+                            <td th:text="${education.gradChk}">졸업</td>
+                        </tr>
+                        <tr>
+                            <td class="title"><label for="major">전공 계열</label></td>
+                            <td th:text="${education.majorName}">이과 계열</td>
+                        </tr>
+                    </table>
+                    <hr class="dot" style="margin-top: 12px;">
+                </th:block>
+            </div>
+
+        </div>
+
+        <!-- 대학교 -->
+
+        <hr style="margin-bottom:0px">
+        <div class="container bg-light pt-2" id="univInfo">
+
+            <div th:each="education : ${educations}">
+                <th:block th:if="|${#strings.contains(education.educationType.toString(), '대학')}|">
+                    <table style="width: 70%;" class="mt-2">
+                        <tr>
+                            <td class="title"><label for="univType">학교</td>
+                            <td th:text="${education.educationType}">대학(4년제)</td>
+                        </tr>
+                        <tr>
+                            <td class="title">학교명</td>
+                            <td th:text="${education.schoolName}">키트리대학교</td>
+                        </tr>
+                        <tr>
+                            <td class="title">재학기간</td>
+                            <td th:text="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')} 
+                                        ~ 
+                                        ${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}|">2022-06-22
+                                - 2022-12-08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title"><label for="univGrad">졸업여부</label></td>
+                            <td th:text="${education.gradChk}">졸업</td>
+                        </tr>
+                        <tr>
+                            <td class="title"><label for="univMajor">전공</label></td>
+                            <td th:text="${education.majorName}">공학계열</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td th:text="${education.majorDetail}">컴퓨터공학과</td>
+                        </tr>
+                    </table>
+                    <hr class="dot" style="margin-top: 12px;">
+                </th:block>
+            </div>
+
+        </div>
+
+        <!-- 수상경력 -->
+
+        <h4 class="mt-5 mx-2 fw-bolder">자격증</h4>
+
+        <hr style="margin-bottom:0px">
+        <div class="container bg-light pt-2" id="certificateInfo">
+            <!-- 자격증 추가 공간 -->
+
+            <div th:each="certificate : ${certificates}">
+                <table style="width: 70%;" class="mt-2">
                     <tr>
-                        <td class="title">학교명</td>
-                        <td th:text="${education.schoolName}">키트리고등학교</td>
+                        <td class="title">자격증명</td>
+                        <td th:text="${certificate.certificateName}">정보처리기사</td>
                     </tr>
                     <tr>
-                        <td class="title">재학기간</td>
-                        <td th:text="|${education.startDate} - ${education.endDate}|">2022-06-22 - 2022-12-08</td>
+                        <td class="title">발행처/기관</td>
+                        <td th:text="${certificate.certificateIssuer}">한국산업인력공단</td>
                     </tr>
                     <tr>
-                        <td class="title"><label for="grad">졸업여부</label></td>
-                        <td >졸업(추가예정)</td>
-                    </tr>
                     <tr>
-                        <td class="title"><label for="major">전공 계열</label></td>
-                        <td th:text="${education.majorName}">이과 계열</td>
+                        <td class="title">취득일</td>
+                        <td th:text="|${#temporals.createDate(certificate.issuedDate, 'yyyy-MM-dd HH:mm:ss')}">
+                            2022-01-01
+                        </td>
                     </tr>
                 </table>
                 <hr class="dot" style="margin-top: 12px;">
-            </th:block>
+            </div>
+
         </div>
 
-    </div>
+        <!-- 수상경력 -->
 
-    <!-- 대학교 -->
+        <h4 class="mt-5 fw-bolder">수상경력</h4>
+        <hr style="margin-bottom:0px">
 
-    <hr style="margin-bottom:0px">
-    <div class="container bg-light pt-2" id="univInfo">
 
-        <div th:each="education : ${educations}">
-            <th:block th:if="|${#strings.contains(education.educationType.toString(), '대학')}|">
-            <table style="width: 70%;" class="mt-2">
-                <tr>
-                    <td class="title"><label for="univType">학교</td>
-                    <td th:text="${education.educationType}">대학(4년제)</td>
-                </tr>
-                <tr>
-                    <td class="title">학교명</td>
-                    <td th:text="${education.schoolName}">키트리대학교</td>
-                </tr>
-                <tr>
-                    <td class="title">재학기간</td>
-                    <td th:text="|${education.startDate} - ${education.endDate}|">2022-06-22 - 2022-12-08</td>
-                </tr>
-                <tr>
-                    <td class="title"><label for="univGrad">졸업여부</label></td>
-                    <td>졸업(추가예정)</td>
-                </tr>
-                <tr>
-                    <td class="title"><label for="univMajor">전공</label></td>
-                    <td th:text="${education.majorName}">공학계열</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td th:text="${education.majorDetail}">컴퓨터공학과</td>
-                </tr>
-            </table>
-            <hr class="dot" style="margin-top: 12px;">
-        </th:block>
+        <div class="container bg-light pt-2">
+            <!-- 수상경력 추가 공간 -->
+
+            <div th:each="award : ${awards}">
+                <table style="width: 70%;" class="mt-2">
+                    <tr>
+                        <td class="title">수상명</td>
+                        <td th:text="${award.awardName}">수상수상</td>
+                    </tr>
+                    <tr>
+                        <td class="title">수여기관</td>
+                        <td th:text="${award.awardAgency}">수상처</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td class="title">수상일자</td>
+                        <td th:text="|${#temporals.createDate(award.awardDate, 'yyyy-MM-dd HH:mm:ss')}">2022-11-23</td>
+                    </tr>
+                </table>
+                <hr class="dot" style="margin-top: 12px;">
+            </div>
+
         </div>
 
-    </div>
+        <!-- 경력사항 -->
 
-    <!-- 수상경력 -->
+        <h4 class="mt-5 fw-bolder">경력사항</h4>
+        <hr style="margin-bottom:0px">
 
-    <h4 class="mt-5 mx-2 fw-bolder">자격증</h4>
 
-    <hr style="margin-bottom:0px">
-    <div class="container bg-light pt-2" id="certificateInfo">
-        <!-- 자격증 추가 공간 -->
+        <div class="container bg-light pt-2" id="careerInfo">
+            <!-- 경력사항 추가 공간 -->
 
-        <div th:each="certificate : ${certificates}">
-            <table style="width: 70%;" class="mt-2">
-                <tr>
-                    <td class="title">자격증명</td>
-                    <td th:text="${certificate.certificateName}">정보처리기사</td>
-                </tr>
-                <tr>
-                    <td class="title">발행처/기관</td>
-                    <td th:text="${certificate.certificateIssuer}">한국산업인력공단</td>
-                </tr>
-                <tr>
-                <tr>
-                    <td class="title">취득일</td>
-                    <td th:text="${certificate.issuedDate}">2022-01-01</td>
-                </tr>
-            </table>
-            <hr class="dot" style="margin-top: 12px;">
+            <div th:each="career : ${careers}">
+                <table style="width: 70%;" class="mt-2">
+                    <tr>
+                        <td class="title">회사명</td>
+                        <td th:text="${career.enterName}">키트리</td>
+                    </tr>
+                    <tr>
+                        <td class="title">재직기간</td>
+                        <td th:text="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')} 
+                        ~ 
+                        ${#temporals.createDate(career.endDate, 'yyyy-MM-dd HH:mm:ss')}|">2022-06-22 - 2022-12-08
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title"><label for="reason">퇴사사유</label></td>
+                        <td th:value="${career.reasonChk}">직무전환(추가예정)</td>
+                    </tr>
+                    <tr>
+                        <td class="title">직급</label></td>
+                        <td th:text="${career.rank}">주임</td>
+                    </tr>
+                    <tr>
+                        <td class="title">근무부서</label></td>
+                        <td th:value="${career.dept}">전산(추가예정)</td>
+                    </tr>
+                    <tr>
+                        <td class="title">담당업무</label></td>
+                        <td th:text="${career.duty}">데이터베이스</td>
+                    </tr>
+                </table>
+                <hr class="dot" style="margin-top: 12px;">
+            </div>
+
         </div>
-
-    </div>
-
-    <!-- 수상경력 -->
-
-    <h4 class="mt-5 fw-bolder">수상경력</h4>
-    <hr style="margin-bottom:0px">
-
-
-    <div class="container bg-light pt-2">
-        <!-- 수상경력 추가 공간 -->
-
-        <div th:each="award : ${awards}">
-            <table style="width: 70%;" class="mt-2">
-                <tr>
-                    <td class="title">수상명</td>
-                    <td th:text="${award.awardName}">수상수상</td>
-                </tr>
-                <tr>
-                    <td class="title">수여기관</td>
-                    <td th:text="${award.awardAgency}">수상처</td>
-                </tr>
-                <tr>
-                <tr>
-                    <td class="title">수상일자</td>
-                    <td th:text="${award.awardDate}">2022-11-23</td>
-                </tr>
-            </table>
-            <hr class="dot" style="margin-top: 12px;">
+        <div class="d-flex justify-content-center mt-5 mb-5">
+            <input type="button" class="btn btn-secondary btn-sm col-4"
+                   value="이력서 수정" onclick="location.href='/members/resumeEdit'">
         </div>
-
     </div>
-
-    <!-- 경력사항 -->
-
-    <h4 class="mt-5 fw-bolder">경력사항</h4>
-    <hr style="margin-bottom:0px">
-
-
-    <div class="container bg-light pt-2" id="careerInfo">
-        <!-- 경력사항 추가 공간 -->
-
-        <div th:each="career : ${careers}">
-            <table style="width: 70%;" class="mt-2">
-                <tr>
-                    <td class="title">회사명</td>
-                    <td th:text="${career.enterName}">키트리</td>
-                </tr>
-                <tr>
-                    <td class="title">재직기간</td>
-                    <td th:text="|${career.startDate} - ${career.endDate}|">2022-06-22 - 2022-12-08</td>
-                </tr>
-                <tr>
-                    <td class="title"><label for="reason">퇴사사유</label></td>
-                    <td>직무전환(추가예정)</td>
-                </tr>
-                <tr>
-                    <td class="title">직급</label></td>
-                    <td th:text="${career.rank}">주임</td>
-                </tr>
-                <tr>
-                    <td class="title">근무부서</label></td>
-                    <td>전산(추가예정)</td>
-                </tr>
-                <tr>
-                    <td class="title">담당업무</label></td>
-                    <td th:text="${career.duty}">데이터베이스</td>
-                </tr>
-            </table>
-            <hr class="dot" style="margin-top: 12px;">
-        </div>
-
-    </div>
-    <div class="d-flex justify-content-center mt-5 mb-5">
-        <input type="button" class="btn btn-secondary btn-sm col-4"
-               value="이력서 수정" onclick="location.href='/members/resumeEdit'">
-    </div>
-</div>
 </div>
 
 <!-- Footer-->

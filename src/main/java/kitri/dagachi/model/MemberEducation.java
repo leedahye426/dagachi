@@ -24,14 +24,11 @@ public class MemberEducation {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "education_type")
+    private String educationType;
+
     @Column(name = "school_name")
     private String schoolName;
-
-    @Column(name = "major_name")
-    private String majorName;
-
-    @Column(name = "major_detail")
-    private String majorDetail;
 
     @Column(name = "start_date")
     private String startDate;
@@ -39,6 +36,16 @@ public class MemberEducation {
     @Column(name = "end_date")
     private String endDate;
 
-    @Column(name = "education_type")
-    private String educationType;
+    @Column(name = "school_graduate")
+    private String gradChk;
+
+    @Column(name = "major_name")
+    private String majorName;
+
+    @Column(name = "major_detail")
+    private String majorDetail;
+
+
+
+
 }
