@@ -1,16 +1,20 @@
 package kitri.dagachi.repository;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Repository
@@ -29,7 +33,9 @@ public class PostRepository {
         System.out.println("post.getCompanyName() : " + post.getCompanyName());
         System.out.println("post.getPostingTitle() : " + post.getPostingTitle());
         System.out.println("post.getPostingContent() : " + post.getPostingContent());
-        System.out.println("post.getUpload_date() : " + post.getUploadDate());
+//        System.out.println("post.getUpload_date() : " + post.getUploadDate());
+//        System.out.println("post.path : " + post.getPath());
+//        System.out.println("post.filename : " + post.getFileName());
 
         em.persist(post);
         em.flush();
@@ -93,15 +99,6 @@ public class PostRepository {
                 .getResultList();
     }
 
-//    public Page<Post> findAll(int pageRequest){
-//
-//        return em.createQuery(select )
-//    }
-
-//    public List<PostTags> findAllt() {
-//        return em.createQuery("select p from posting_board p", PostTags.class)
-//                .getResultList();
-//    }
 
     public void delete(Long postingId) {
 
@@ -116,14 +113,32 @@ public class PostRepository {
 
 
 
-//    public int delete(Long postingId) {
-//       int result= em.createQuery("delete from posting_board p where p.postingId = :postingId")
-//                .setParameter("postingId",postingId).executeUpdate();
-//         return result;
+//    public String LOGO(String path, String filename)
+//    {
+//
+//        return (String) em.createQuery("insert into posting_board (path, filename) value('path','filename')")
+//                .setParameter("path", path)
+//                .setParameter("filename", filename)
+//                .getSingleResult();
+//
+//
 //    }
 
 
+    public List<Post> findByTitleContaining(String keyword)
+    {
+        return em.createQuery("select p from posting_board p where (p.companyName) Like ('%'||:keyword||'%')",Post.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
+    }
+
+
+
+
 }
+
+
+
 
 
 

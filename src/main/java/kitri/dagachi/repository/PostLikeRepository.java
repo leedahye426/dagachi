@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -35,6 +36,20 @@ public class PostLikeRepository {
                         .setParameter("memberId",memberId)
                         .getSingleResult();
 
+    }
+
+
+    public List<PostingLike> LikeAll(Long memberId) {
+        return em.createQuery("select pl from posting_like pl where pl.memberId =:memberId")
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+
+    public Post findById(Long postingId) {
+        return (Post) em.createQuery("select p from posting_board p where p.postingId = :postingId")
+                .setParameter("postingId", postingId)
+                .getSingleResult();
     }
 
 

@@ -1,6 +1,8 @@
 package kitri.dagachi.model;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity(name="posting_board")
 @Getter @Setter
+//@RequiredArgsConstructor
 public class Post {
 
     @Id
@@ -31,8 +34,25 @@ public class Post {
     @Column(name = "member_id")
     private Long memberId;
 
+//    @Column(name="file_path")
+//    private String filePath;
+//
+//    @Column(name="file_name")
+//    private String fileName;
 
-
+//    @Builder
+//    public Post(Long postingId, String companyName, String postingTitle, String postingContent, String path, String fileName) {
+//        this.postingId = postingId;
+//        this.companyName = companyName;
+//        this.postingTitle = postingTitle;
+//        this.postingContent = postingContent;
+//        this.path = path;
+//        this.fileName = fileName;
+////        this.origName = origName;
+////        this.savedNm = savedNm;
+////        this.savedPath = savedPath;
+////
+//    }
 
 
 //    @Column(name = "posting_tag")
