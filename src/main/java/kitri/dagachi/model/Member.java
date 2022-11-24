@@ -49,6 +49,8 @@ public class Member implements UserDetails {
     @Column(name = "member_addr")
     private String addr;
 
+    @Column(name = "member_addr_detail")
+    private String addrDetail;
 
     @Override // 계정의 권한 목록을 리턴
     public Collection<? extends GrantedAuthority> getAuthorities() {

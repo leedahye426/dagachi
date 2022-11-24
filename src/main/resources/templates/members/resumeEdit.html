@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 <body>
@@ -37,27 +38,31 @@
                 <img class="img-fulid" src="dagachi_logo.jpg" id="profileImg" width="130px" height="180px">
                 <input type="hidden" name="fileName" value="">
             </div>
-            <div class="mt-4 mx-2" style="width: 100%;">
-                <table style="width: 70%; ">
+            <div class="mt-2 mx-2" style="width: 100%;">
+                <div>
+                    <span class="basicTitlefw-bold fs-4" colspan="2" th:text="|${member.name}|">member.name</span>
+                    <span class="fs-6 fw-normal" th:text="|(${personalInfo?.gender}, 00세)|">gender, 27세</span>
+                </div>
+                <table style="width: 90%; ">
                     <tr>
-                        <td class="basicTitle">이름<span class="essential"> * </span></td>
-                        <td><input class="basicContents" type="text" name="resumeName" id="resumeName"
-                                   th:value="${member.name}"></td>
+                        <td class="basicTitle">이메일</td>
+                        <td><input class="basicContents" type="text" name="email" id="email" th:value="${member.email}"></td>
                     </tr>
+                    <!--
                     <tr>
                         <td class="basicTitle">성별<span class="essential"> * </span></td>
-
-                    <th:block th:switch="${personalInfo?.gender}">
-                        <span th:case="null">
-                            <td>
-                                <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남
-                                </button>
-                                <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여
+                        
+                        <th:block th:switch="${personalInfo?.gender}">
+                            <span th:case="null">
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여
                                 </button>
                                 <input type="hidden" name="gender" id="gender" value="">
                             </td>
                         </span>
-
+                        
                         <span th:case="남">
                             <td>
                                 <button type="button" class="btn btn-primary btn;" style="width: 22%;" id="male">남
@@ -67,7 +72,7 @@
                                 <input type="hidden" name="gender" id="gender" value="남">
                             </td>
                         </span>
-
+                        
                         <span th:case="여">
                             <td>
                                 <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남
@@ -78,11 +83,22 @@
                             </td>
                         </span>
                     </th:block>
-
-                    </tr>
+                    
+                </tr>
+                -->
+                <tr>
+                    <td class="basicTitle">주소<span class="essential"> * </span></td>
+                    <td><input class="basicContents" type="text" name="addr" id="addr" style="width:100%" th:value="${member.addr}"></td>
+                </tr>
+                <tr>
+                    <td class="basicTitle">상세 주소<span class="essential"> * </span></td>
+                    <td>
+                        <input class="basicContents" type="text" name="addrDetail" id="addrDetail" style="width:100%;" th:value="${member.addrDetail}">
+                    </td>
+                </tr>
                     <tr>
                         <td class="basicTitle">보유 기술</td>
-                        <td><input class="basicContents" type="tel" name="phoneNum" id="phoneNum"
+                        <td><input class="basicContents" type="tel" name="stack" id="stack"
                                    th:value="${personalInfo?.stack}"></td>
                     </tr>
                 </table>
@@ -355,7 +371,7 @@
                         <tr>
                           <td class="title">근무부서</label></td>
                           <td>
-                            <input class="mt-2" type="text" name="dept" id="dept;">
+                            <input class="mt-2" type="text" name="dept" id="dept;" th:value="${career.dept}">
                         </tr>
                         <tr>
                           <td class="title">담당업무</label></td>

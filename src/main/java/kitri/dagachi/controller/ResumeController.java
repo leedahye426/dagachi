@@ -38,6 +38,10 @@ public class ResumeController {
         List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
         List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
 
+        System.out.println("member.getAddr() : " + member.getAddr());
+        System.out.println("member.getAddrDetail() : " + member.getAddrDetail());
+
+
         model.addAttribute("member", member);
         model.addAttribute("personalInfo", personalInfo);
         model.addAttribute("educations", memberEducations);
@@ -58,6 +62,8 @@ public class ResumeController {
         List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
         List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
 
+        System.out.println("member.getAddrDetail() : " + member.getAddrDetail());
+
         model.addAttribute("member", member);
         model.addAttribute("personalInfo", personalInfo);
         model.addAttribute("educations", memberEducations);
@@ -76,7 +82,7 @@ public class ResumeController {
         System.out.println("member.getId() : " + member.getId());
         System.out.println("form.getImage() : " + form.getImage());
         System.out.println("form.getGender() : " + form.getGender());
-        System.out.println("form.getStack() : " + form.getPhoneNum());
+        System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
         System.out.println("form.getCertificateIssuer() : " + form.getCertificateIssuer());
         System.out.println("form.getIssuedDate() : " + form.getIssuedDate());
@@ -103,11 +109,14 @@ public class ResumeController {
             }
         }
         catch (NullPointerException e) {
+            member.setAddr(form.getAddr());
+            member.setAddrDetail(form.getAddrDetail());
+
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
                     .image(form.getImage())
-                    .gender(form.getGender())
-                    .stack(form.getPhoneNum())
+//                    .gender(form.getGender())
+                    .stack(form.getStack())
                     .build();
             resumeService.saveInfo(personalInfo);
         }

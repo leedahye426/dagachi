@@ -37,7 +37,10 @@
                     <span class="basicTitlefw-bold fs-4" colspan="2" th:text="|${member.name}|">member.name</span>
                     <span class="fs-6 fw-normal" th:text="|(${personalInfo?.gender}, 00세)|">gender, 00세</span>
                 </div>
-                <table style="width: 50%;" class="mt-3">
+                <table style="width: 90%;" class="mt-3">
+                    <tr>
+                        <td class="basicTitle">휴대 번호</td>
+                        <td class="basicContents">010-1234-5687(인증확인상태)</td>
                     </tr>
                     <tr>
                         <td class="basicTitle">이메일</td>
@@ -45,7 +48,7 @@
                     </tr>
                     <tr>
                         <td class="basicTitle">주소</td>
-                        <td class="basicContents">사랑시 고백구 행복동(추가예정)</td>
+                        <td class="basicContents" th:text="|${member.addr} ${member.addrDetail}|">사랑시 고백구 행복동(추가예정)</td>
                     </tr>
                     <tr>
                         <td class="basicTitle">보유 기술</td>
@@ -220,7 +223,7 @@
                     </tr>
                     <tr>
                         <td class="title"><label for="reason">퇴사사유</label></td>
-                        <td th:value="${career.reasonChk}">직무전환(추가예정)</td>
+                        <td th:text="${career.reasonChk}">직무전환(추가예정)</td>
                     </tr>
                     <tr>
                         <td class="title">직급</label></td>
@@ -228,7 +231,7 @@
                     </tr>
                     <tr>
                         <td class="title">근무부서</label></td>
-                        <td th:value="${career.dept}">전산(추가예정)</td>
+                        <td th:text="${career.dept}">전산(추가예정)</td>
                     </tr>
                     <tr>
                         <td class="title">담당업무</label></td>
