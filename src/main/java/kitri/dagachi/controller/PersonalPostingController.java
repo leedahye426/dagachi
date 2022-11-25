@@ -88,6 +88,7 @@ public class PersonalPostingController {
         return "/post/post_detail";
     }
 
+    //검색
     @GetMapping("/post/personal/post_search")
     public String search(String keyword, Model model)
     {

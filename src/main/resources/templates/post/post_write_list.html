@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: header"/>
+
+<!-- Responsive navbar-->
+
+
+<head th:replace="fragments/nav :: nav"/>
+
+<body style="overflow-x: hidden">
+<form method="GET" th:each="post : ${post}" action="/post/enterprise/list">
+
+  <table class="table table-hover">
+
+    <thead>
+    <tr>
+      <th scope="col">번호</th>
+      <th scope="col">공고제목</th>
+      <th scope="col">내용</th>
+      <th scope="col">등록날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td th:text="${post.postingTitle}"></td>
+      <td th:text="${post.postingContent}"></td>
+      <td th:text="${post.uploadDate}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+</form>
+
+
+
+</body>
+
+</html>

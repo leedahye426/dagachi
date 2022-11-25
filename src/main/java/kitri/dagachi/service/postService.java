@@ -1,5 +1,7 @@
 package kitri.dagachi.service;
 
+import kitri.dagachi.dto.PostDto;
+import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.*;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.repository.PostLikeRepository;
@@ -60,6 +62,13 @@ public class postService {
         postRepository.savaLike(postinglike);
     }
 
+    //파일
+
+//    public void savaPost(PostDto postDto)
+//    {
+//        postRepository.savaPost(postDto);
+//    }
+
 
     //리스트처리
     public List<Post> posting() {
@@ -102,7 +111,30 @@ public class postService {
         return postlikerepository.findLike(postingId, memberId);
     }
 
+    //작성 글 보여주기
+    public List<Post> findlist(Long memberId)
+    {
+        return postRepository.findById(memberId);
+    }
 
+
+    //파일
+//    @Transactional
+//    public PostDto getPost(Long id){
+//
+//        Post post = postRepository.findById(id); //fileId불러오기
+//
+//        PostDto postdto = PostDto.builder()
+//                        .id(post.getPostingId())
+//                        .companyName(post.getCompanyName())
+//                        .postingTitle(post.getPostingTitle())
+//                        .postingContent(post.getPostingContent())
+//                        .uploadDate(post.getUploadDate())
+//                        .fileId(post.getFileId())
+//                        .build();
+//
+//        return postdto;
+//    }
 
 
     //좋아요 취소
@@ -130,6 +162,7 @@ public class postService {
     {
         return postlikerepository.findById(postingId);
     }
+
 
 }
 

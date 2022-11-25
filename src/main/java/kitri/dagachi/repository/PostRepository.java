@@ -1,6 +1,8 @@
 package kitri.dagachi.repository;
 
 import io.lettuce.core.dynamic.annotation.Param;
+import kitri.dagachi.dto.PostDto;
+import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
@@ -53,6 +55,21 @@ public class PostRepository {
         em.flush();
     }
 
+
+
+
+
+
+//    public void savaPost(PostDto postDto) {
+//        em.persist(postDto);
+//        em.flush();
+//    }
+
+
+
+
+
+
     public Post findOne(Long postingId) {
         return em.find(Post.class, postingId);
     }
@@ -86,12 +103,22 @@ public class PostRepository {
         return em.find(Post.class, id);
     }
 
+
+
+
+
+
 //            LocalDateTime localdate=LocalDateTime.now();
 //            DateTimeFormatter  Date = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
 
 
 //    DateTimeFormatter DateTumeFormatter ;
 //    String formatedNow= now.format(DateTumeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss"));
+
+
+
+
+
 
 
     public List<Post> findAll() {
@@ -110,19 +137,13 @@ public class PostRepository {
 
     }
 
+    public List<Post> findById(Long memberId) {
+        return em.createQuery("select p from posting_board p where p.memberId =:memberId")
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
 
 
-
-//    public String LOGO(String path, String filename)
-//    {
-//
-//        return (String) em.createQuery("insert into posting_board (path, filename) value('path','filename')")
-//                .setParameter("path", path)
-//                .setParameter("filename", filename)
-//                .getSingleResult();
-//
-//
-//    }
 
 
     public List<Post> findByTitleContaining(String keyword)
@@ -132,6 +153,14 @@ public class PostRepository {
                 .getResultList();
     }
 
+
+
+//    public Post findById(Long id)
+//    {
+//        return (Post) em.createQuery("select p from posting_board p where p.postingId =:id")
+//                .setParameter("id", id)
+//                .getSingleResult();
+//    }
 
 
 

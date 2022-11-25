@@ -1,8 +1,7 @@
 package kitri.dagachi.model;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +10,16 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class PostFile {
 
     @Id
-
     @Column(name = "posting_id")
-    private Long PostingId;
+    private Long id;
 
+
+    @Column(name="orig_file_name")
+    private String origFileName;
 
     @Column(name="file_name")
     private String fileName;
@@ -26,11 +28,14 @@ public class PostFile {
     @Column(name="file_path")
     private  String filePath;
 
-    public PostFile(PostFile postfile) {
+    @Builder
+    public PostFile(Long id, String origFileName, String fileName, String filePath) {
 
-        this.fileName = postfile.fileName;
-        this.filePath = postfile.filePath;
-        this.PostingId = postfile.PostingId;
+
+        this.id = id;
+        this.origFileName = origFileName;
+        this.fileName = fileName;
+        this.filePath = filePath;
 
     }
 }

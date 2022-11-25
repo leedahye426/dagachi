@@ -1,13 +1,17 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
+import kitri.dagachi.dto.PostDto;
+import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostFile;
+import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 
 import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
+import kitri.dagachi.util.MD5Generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +40,8 @@ public class EnterPostingController {
 
     @Autowired
     private final postService postservice;
-    private final PostRepository postRepository;
-    private final PostFileService postfileservice;
+
+//    private final PostFileService postfileservice;
 
 
     //select
@@ -57,9 +61,12 @@ public class EnterPostingController {
     //insert
 
     @PostMapping("/post/enterprise/post_list")
-    public String postingRegister(Post post, String[] tag) {
+    public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member) {
 
         //        System.out.println("===================="+postTags);
+
+        Long memberId = member.getId();
+        post.setMemberId(memberId);
 
         System.out.println(tag[0]);
         System.out.println(tag[1]);
@@ -85,10 +92,11 @@ public class EnterPostingController {
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
-        Long memberId = member.getId();
+        Long loginId = member.getId();
 
-        System.out.println(postingId+memberId);
+//        System.out.println(postingId+memberId);
 
+        model.addAttribute("memberId", loginId);
         model.addAttribute("post", post);
 
         return "/post/post_detail";
@@ -102,12 +110,77 @@ public class EnterPostingController {
         postservice.delete(postingId);
 
 
-        return "redirect:/post/post_list";
+        return "redirect:/post/enterprise/post_list";
     }
 
 
+    //작성글
+
+    @GetMapping("/post/enterprise/list")
+        public String list(Model model, @AuthenticationPrincipal Member member)
+        {
+
+            Long memberId = member.getId();
+            List<Post> list = postservice.findlist(memberId);
+            List<Post> post = new ArrayList<>();
+
+            for (Post p : list){
+                post.add(postservice.findById(p.getPostingId()));
+            }
+
+
+            model.addAttribute("post",post);
+
+            return "/post/post_write_list";
+        }
+
     //파일업로드해보자!
+
+//    public EnterPostingController(postService postservice, PostFileService postfileservice)
+//    {
+//        this.postservice = postservice;
+//        this.postfileservice = postfileservice;
+//    }
 //    @PostMapping("/post/enterprise/logo")
+//    public String savelogo(@RequestParam("file") MultipartFile files, PostDto postDto)
+//    {
+//        try{
+//            String origFileName = files.getOriginalFilename();
+//            String fileName = new MD5Generator(origFileName).toString();
+//            //실행되는 위치의 files 폴더에 파일이 저장됩니다.
+//            String savePath = System.getProperty("user.dir")+ "\\files";
+//            //파일이 저장되는 폴더가 ㅇ벗으면 폴더를 생성합니다.
+//
+//            if(!new File(savePath).exists())
+//            {
+//                try{
+//                    new File(savePath).mkdir();
+//                }
+//                catch (Exception e)
+//                {
+//                    e.getStackTrace();
+//                }
+//            }
+//            String filePath = savePath+"\\"+fileName;
+//            files.transferTo(new File(filePath));
+//
+//            PostFileDto postfiledto = new PostFileDto();
+//            postfiledto.setOrigFileName(origFileName);
+//            postfiledto.setFileName(fileName);
+//            postfiledto.setFilePath(filePath);
+//
+//            Long fileId = postfileservice.saveFile(postfiledto);
+//            postDto.setFileId(fileId);
+//            postservice.savaPost(postDto);
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return "redirect:/post/enterprise/post_list";
+//
+//    }
+
+
 //    public String logo(@RequestParam("uploadfile") MultipartFile[] uploadFile,
 //                       Post post, RedirectAttributes redirectAttributes) throws IOException
 //    {

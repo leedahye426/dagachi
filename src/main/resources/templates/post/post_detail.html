@@ -40,7 +40,7 @@
             </div>
 
             <div sec:authorize="hasRole('ROLE_ENT')">
-                <th:block th:switch="${loginId}">
+                <th:block th:switch="${memberId}">
                      <span th:case="${post.memberId}">
                         <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
                             th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/${post.postingId}/delete|}'|">
