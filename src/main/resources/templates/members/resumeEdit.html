@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Full Width Pics - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <link href="/css/myStyle.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+</head>
+<body>
+<!-- Responsive navbar-->
+<div th:replace="fragments/nav :: nav"></div>
+
+<div class="container row align-items-center  mx-auto mt-5 border">
+
+    <form class="mx-auto px-4" style="width:70%;" role="form"
+          action="resumeEdit" method="post" id="resumeForm" enctype="multipart/form-data">
+
+        <div class="">
+
+        </div>
+
+        <h4 class="mt-3">기본 정보</h4>
+
+        <div class="container bg-light d-flex" style="padding-left:0px">
+            <div class="border">
+                <img class="img-fulid" src="dagachi_logo.jpg" id="profileImg" width="130px" height="180px">
+                <input type="hidden" name="fileName" value="">
+            </div>
+            <div class="mt-2 mx-2" style="width: 100%;">
+                <div>
+                    <span class="basicTitlefw-bold fs-4" colspan="2" th:text="|${member.name}|">member.name</span>
+                    <span class="fs-6 fw-normal" th:text="|(${personalInfo?.gender}, 00세)|">gender, 27세</span>
+                </div>
+                <table style="width: 90%; ">
+                    <tr>
+                        <td class="basicTitle">이메일</td>
+                        <td><input class="basicContents" type="text" name="email" id="email" th:value="${member.email}"></td>
+                    </tr>
+                    <!--
+                    <tr>
+                        <td class="basicTitle">성별<span class="essential"> * </span></td>
+                        
+                        <th:block th:switch="${personalInfo?.gender}">
+                            <span th:case="null">
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여
+                                </button>
+                                <input type="hidden" name="gender" id="gender" value="">
+                            </td>
+                        </span>
+                        
+                        <span th:case="남">
+                            <td>
+                                <button type="button" class="btn btn-primary btn;" style="width: 22%;" id="male">남
+                                </button>
+                                <button type="button" class="btn btn-secondary btn;" style="width: 22%" id="female">여
+                                </button>
+                                <input type="hidden" name="gender" id="gender" value="남">
+                            </td>
+                        </span>
+                        
+                        <span th:case="여">
+                            <td>
+                                <button type="button" class="btn btn-secondary btn;" style="width: 22%;" id="male">남
+                                </button>
+                                <button type="button" class="btn btn-primary btn;" style="width: 22%" id="female">여
+                                </button>
+                                <input type="hidden" name="gender" id="gender" value="여">
+                            </td>
+                        </span>
+                    </th:block>
+                    
+                </tr>
+                -->
+                <tr>
+                    <td class="basicTitle">주소<span class="essential"> * </span></td>
+                    <td><input class="basicContents" type="text" name="addr" id="addr" style="width:100%" th:value="${member.addr}"></td>
+                </tr>
+                <tr>
+                    <td class="basicTitle">상세 주소<span class="essential"> * </span></td>
+                    <td>
+                        <input class="basicContents" type="text" name="addrDetail" id="addrDetail" style="width:100%;" th:value="${member.addrDetail}">
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="basicTitle">보유 기술</td>
+                        <td><input class="basicContents" type="tel" name="stack" id="stack"
+                                   th:value="${personalInfo?.stack}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <label for="member_image" class="border" style="cursor: pointer">프로필 선택</label>
+            <input type="file" id="member_image" name="image" accept="image/*" onchange="loadFile(this)"
+                   style="visibility: hidden;">
+        </div>
+
+        <h4 class="mt-5">학력사항</h4>
+        <div class="d-flex flex-row-reverse mx-5">
+            <button type="button" class="btn btn-secondary mb-3" id="addHigh">고등학교 +</button>
+        </div>
+        <hr style="margin-bottom: 0px">
+
+        <!-- 고등학교 -->
+
+        <div class="container bg-light" id="highInfo">
+
+            <!-- 고등학교 추가 공간 -->
+
+            <div th:each="education : ${educations}">
+                <th:block th:if="|${#strings.contains(education.educationType.toString(), '고등학교')}|">
+
+                    <div>
+                        <div class="d-flex flex-row-reverse" id="highDel">
+                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        </div>
+                        <table style="width: 70%; ">
+                            <tr>
+                                <td class="title">학교명<span class="essential"> * </span></td>
+                                <td><input class="contents" type="text" name="schoolName" id="highName"
+                                           autocomplete="off" th:value="${education.schoolName}"></td>
+                                <input type="hidden" name="educationType" value="고등학교">
+                            </tr>
+                            <tr>
+                                <td class="title">재학기간</td>
+                                <td>
+                                    <input class="contents date" type="date" id="startDate" name="entranceDate"
+                                           th:value="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                    <span class="mx-2"> - </span>
+                                    <input class="contents date" type="date" id="endDate" name="graduationDate"
+                                           th:value="|${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
+                                <td>
+                                    <select class="form-select gradChk" style="width: 60%;" name="gradChk" id="gradChk" required>
+                                        <option hidden selected value="${education.gradChk}" th:utext="${education.gradChk}"></option>
+                                    </select>
+                            </tr>
+                            <tr>
+                                <td class="title"><label for="major">전공 계열</label></td>
+                                <input type="hidden" name="majorDetail" value="">
+                                <td>
+                                    <select class="form-select majorChk" style="width: 60%;" name="majorName"
+                                            id="majorChk">
+                                        <option hidden selected value="${education.majorName}" th:utext="${education.majorName}"></option>
+                                    </select>
+                            </tr>
+                        </table>
+                        <input type="hidden" id="education_name" value="">
+                    </div>
+
+                </th:block>
+            </div>
+
+        </div>
+
+        <!-- 대학교 -->
+        <div class="d-flex flex-row-reverse mx-5 mt-3">
+            <button type="button" class="btn btn-secondary mb-3" id="addUniv">대학(원) +</button>
+        </div>
+        <hr style="margin-bottom: 0px">
+
+        <div class="container bg-light" id="univInfo">
+            <!-- 대학(원) 추가 공간 -->
+            <div th:each="education : ${educations}">
+                <th:block th:if="|${#strings.contains(education.educationType.toString(), '대학')}|">
+
+                    <div>
+                        <div class="d-flex flex-row-reverse" id="UnivDel">
+                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        </div>
+                        <table style="width: 70%;">
+                            <tr>
+                                <td class="title"><label for="univType">학교<span class="essential"> * </span></td>
+                                <td>
+                                    <select class="form-select univType" style="width: 60%;" name="educationType"
+                                            id="univType" required>
+                                        <option hidden selected value="${education.educationType}" th:utext="${education.educationType}"></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="title">학교명<span class="essential"> * </span></td>
+                                <td><input class="contents" type="text" name="schoolName" id="univName"
+                                           autocomplete="off" th:value="${education.schoolName}"></td>
+                            </tr>
+                            <tr>
+                                <td class="title">재학기간</td>
+                                <td>
+                                    <input class="contents date" type="date" id="startDate" name="entranceDate"
+                                           th:value="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                    <span class="mx-2"> - </span>
+                                    <input class="contents date" type="date" id="endDate" name="graduationDate"
+                                           th:value="|${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="title"><label for="univGrad">졸업여부<span class="essential"> * </span></label>
+                                </td>
+                                <td>
+                                    <select class="form-select univGradChk" style="width: 60%;" name="univGradChk"
+                                            id="univGradChk" required>
+                                        <option hidden selected value="${education.gradChk}" th:utext="${education.gradChk}"></option>
+                                    </select>
+                            </tr>
+                            <tr>
+                                <td class="title"><label for="univMajor">전공<span class="essential"> * </span></label>
+                                </td>
+                                <td>
+                                    <select class="form-select univMajorChk" style="width: 60%;" name="majorName"
+                                            id="univMajorChk" required>
+                                        <option hidden selected value="${education.majorName}" th:utext="${education.majorName}"></option>
+                                    </select>
+                                    <input class="mt-2" type="text" name="majorDetail" id="detailName"
+                                           th:value="${education.majorDetail}">
+                            </tr>
+                        </table>
+                        <input type="hidden" id="education_name" value="">
+                    </div>
+
+            </div>
+        </div>
+
+            <!-- 수상경력 -->
+
+            <h4 class="mt-5">자격증</h4>
+
+            <div class="d-flex flex-row-reverse mx-5">
+                <button type="button" class="btn btn-secondary " id="addCertificate">자격증 내역 +</button>
+            </div>
+            <hr style="margin-bottom: 0px">
+            <div class="container bg-light" id="certificateInfo">
+                <!-- 자격증 추가 공간 -->
+                <div th:each="certificate : ${certificates}">
+
+                    <div>
+                        <div class="d-flex flex-row-reverse" id="cerDel">
+                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        </div>
+                        <table style="width: 70%; " >
+                        <tr>
+                          <td class="title">자격증명</td>
+                          <td><input class="contents" type="text" name="certificateName" id="certificate_name" autocomplete="off"
+                            th:value="${certificate.certificateName}"></td>
+                        </tr>
+                        <tr>
+                          <td class="title">발행처/기관</td>
+                          <td><input class="contents" type="text" name="certificateIssuer" id="certificate_issuer"
+                            th:value="${certificate.certificateIssuer}"></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                          <td class="title">취득일</td>
+                          <td>
+                            <input class="contents date" type="date" id="issued_date" style="width: 40%;" name="issuedDate"
+                            th:value="|${#temporals.createDate(certificate.issuedDate, 'yyyy-MM-dd HH:mm:ss')}">
+                          </td>
+                        </tr>
+                      </table>
+                      </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- 수상경력 -->
+
+            <h4 class="mt-5">수상경력</h4>
+            <div class="d-flex flex-row-reverse mx-5">
+                <button type="button" class="btn btn-secondary " id="addAward">수상 내역 +</button>
+            </div>
+            <hr style="margin-bottom: 0px">
+
+            <div class="container bg-light" id="awardInfo">
+                <!-- 수상경력 추가 공간 -->
+
+                <div th:each="award : ${awards}">
+                    
+                    <div>
+                        <div class="d-flex flex-row-reverse" id="awaDel">
+                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        </div>
+                        <table style="width: 70%; " >
+                        <tr>
+                          <td class="title">수상명</td>
+                          <td><input class="contents" type="text" name="awardName" id="award_name" autocomplete="off"
+                            th:value="${award.awardName}"></td>
+                        </tr>
+                        <tr>
+                          <td class="title">수여기관</td>
+                          <td><input class="contents" type="text" name="awardAgency" id="award_agency"
+                            th:value="${award.awardAgency}"></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                          <td class="title">취득일</td>
+                          <td>
+                            <input class="contents date" type="date" id="award_date" name="awardDate" style="width: 40%;"
+                            th:value="|${#temporals.createDate(award.awardDate, 'yyyy-MM-dd HH:mm:ss')}">
+                          </td>
+                        </tr>
+                      </table>
+                      </div>
+                
+                </div>
+
+            </div>
+
+            <!-- 경력사항 -->
+
+            <h4 class="mt-5">경력사항</h4>
+            <div class="d-flex flex-row-reverse mx-5">
+                <button type="button" class="btn btn-secondary " id="addCareer">경력 사항 +</button>
+            </div>
+            <hr style="margin-bottom: 0px">
+
+            <div class="container bg-light" id="careerInfo">
+                <!-- 경력사항 추가 공간 -->
+
+                <div th:each="career : ${careers}">
+                    
+                    <div>
+                        <div class="d-flex flex-row-reverse" id="careerDel">
+                        <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        </div>                
+                        <table style="width: 70%; " >
+                        <tr>
+                          <td class="title">회사명<span class="essential"> * </span></td>
+                          <td><input class="contents" type="text" name="enterName" id="enterName" autocomplete="off"
+                            th:value="${career.enterName}"></td>
+                        </tr>
+                        <tr>
+                          <td class="title">재직기간</td>
+                          <td>
+                            <input class="contents date" type="date" id="joiningDate" name="joiningDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
+                            <span class="mx-2"> - </span>
+                            <input class="contents date" type="date" id="leavingDate" name="leavingDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="title"><label for="reason">퇴사사유<span class="essential"> * </span></label></td>
+                          <td>
+                            <select class="form-select reasonChk" style="width: 60%;" name="reasonChk" id="reasonChk">
+                            </select>
+                            <input type="hidden" id="reasonHidden" value="">
+                        </tr>
+                        <tr>
+                          <td class="title">직급</label></td>
+                          <td>
+                            <input class="mt-2" type="text" name="rank" id="jobGrad" th:value="${career.rank}">
+                        </tr>
+                        <tr>
+                          <td class="title">근무부서</label></td>
+                          <td>
+                            <input class="mt-2" type="text" name="dept" id="dept;" th:value="${career.dept}">
+                        </tr>
+                        <tr>
+                          <td class="title">담당업무</label></td>
+                          <td>
+                            <input class="mt-2" type="text" name="duty" id="duty" th:value="${career.duty}">
+                        </tr>
+                      </table>
+                      </div>
+                
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center mt-5 mb-5">
+                <input type="button" class="btn btn-secondary btn-sm col-4" value="이력서 작성" onclick="resumeChk()">
+            </div>
+    </form>
+</div>
+
+<!-- Footer-->
+<footer class="bg-white border border-top d-flex
+        flex-column justify-content -center align-items-center py-4 mb-0 bg-dark">
+    <div class="container"><p class="m-0 text-center text-dark">Copyright &copy; Your Website 2022</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+<script src="/js/resumeScript.js"></script>
+</body>
+</html>

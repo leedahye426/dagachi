@@ -3,26 +3,25 @@ package kitri.dagachi.controller;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 @Getter @Setter
 public class ResumeForm {
 
     // personal_info
     private Long id; // member_id <- join으로 가져오기
 
-    private String resumeName;
+    private String addr;
+
+    private String addrDetail;
 
     private String image;
 
     private Character gender;
 
-    private String phoneNum;
+    private String stack;
 
     // member_education
+    private String gradChk;
+
     private String schoolName;
 
     private String majorName;
@@ -54,9 +53,13 @@ public class ResumeForm {
     // member_career
     private String enterName;
 
+    private String rank;
+
+    private String dept;
+
     private String duty;
 
-    private String rank;
+    private String reasonChk;
 
     private String joiningDate;
 

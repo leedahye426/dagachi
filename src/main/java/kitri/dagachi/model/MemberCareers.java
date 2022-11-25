@@ -23,11 +23,17 @@ public class MemberCareers {
     @Column(name = "enter_name")
     private String enterName;
 
+    @Column(name = "rank")
+    private String rank;
+
     @Column(name = "duty")
     private String duty;
 
-    @Column(name = "rank")
-    private String rank;
+    @Column(name = "dept")
+    private String dept;
+
+    @Column(name = "reason")
+    private String reasonChk;
 
     @Column(name = "start_date")
     private String startDate;

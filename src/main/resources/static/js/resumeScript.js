@@ -2518,7 +2518,6 @@ const univList = ["동국대학교",
 "강원대학교",
 "경동대학교",
 "상지대학교",
-"서울대학교",
 "연세대학교 미래캠퍼스",
 "한라대학교",
 "한림대학교",
@@ -2754,15 +2753,56 @@ const univList = ["동국대학교",
 "한양여자대학교",
 "한국폴리텍Ⅰ대학"]
 
+$("#addr").on('click', function() {
+  console.log('click');
+  
+  $addr = "";
+
+  new daum.Postcode({
+      oncomplete: function(data) {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+          // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          var roadAddr = data.roadAddress; // 도로명 주소 변수
+          var extraRoadAddr = ''; // 참고 항목 변수
+
+          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+          if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+              extraRoadAddr += data.bname;
+          }
+          // 건물명이 있고, 공동주택일 경우 추가한다.
+          if(data.buildingName !== '' && data.apartment === 'Y'){
+             extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+          if(extraRoadAddr !== ''){
+              extraRoadAddr = ' (' + extraRoadAddr + ')';
+          }
+
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          $addr = $addr + `(${data.zonecode}) ${roadAddr} `;
+          console.log($addr);
+          $("#addr").val($addr);
+
+      }
+  }).open();
+
+});
+
 let gradeList = ""
 let majorList = ""
 
 for(let i=0; i<gradList.length; i++) {
-  gradeList += `<option value="${gradList[i]}>${gradList[i]}</option>`;
+  gradeList += `<option value="${gradList[i]}">${gradList[i]}</option>`;
 }
+
 for(let i=0; i<highMajorList.length; i++) {
   majorList += `<option value="${highMajorList[i]}">${highMajorList[i]}</option>`;
 }
+
+
 
 // 고등학교 추가
 $("#addHigh").on('click', function() {
@@ -2790,7 +2830,7 @@ $("#addHigh").on('click', function() {
     <tr>
       <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
       <td>
-        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk" >
+        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk">
         ${gradeList}
         </select>
     </tr>
@@ -2798,7 +2838,7 @@ $("#addHigh").on('click', function() {
       <td class="title"><label for="major">전공 계열</label></td>
       <input type="hidden" name="majorDetail" value="">
       <td>
-        <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk" >
+        <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk">
         ${majorList}
         </select>
     </tr>
@@ -2814,9 +2854,6 @@ let majorListUniv = ""
 
 for(let i=0; i<univType.length; i++) {
   typeList +=`<option value="${univType[i]}">${univType[i]}</option>`;
-}
-for(let i=0; i<gradList.length; i++) {
-    gradeList += `<option value="${gradList[i]}">${gradList[i]}</option>`;
 }
 for(let i=0; i<univMajorList.length; i++) {
   majorListUniv += `<option value="${univMajorList[i]}">${univMajorList[i]}</option>`;
@@ -2939,7 +2976,7 @@ let list = ""
   for(let i=0; i<reasonList.length; i++) {
    list += `<option value="${i+1}">${reasonList[i]}</option>`;
   }
-  
+
 // 경력 사항 추가
 $("#addCareer").on('click', function() {
   
@@ -2977,12 +3014,12 @@ $("#addCareer").on('click', function() {
     <tr>
       <td class="title">근무부서</label></td>
       <td>
-        <input class="mt-2" type="text" name="duty" id="jobPart">
+        <input class="mt-2" type="text" name="division" id="division">
     </tr>
     <tr>
       <td class="title">담당업무</label></td>
       <td>
-        <input class="mt-2" type="text" name="jobRes" id="jobRes">
+        <input class="mt-2" type="text" name="duty" id="duty">
     </tr>
   </table>
   </div>
@@ -3046,15 +3083,17 @@ $(document).on('focus', "#univName", function() {
 function resumeChk() {
 
   console.log('click');
-
+  
   $("#resumeForm").submit();
 }
 
 window.onload = function() {
-  $("#gradChk").append(`${gradeList}`);
-  $("#majorChk").append(`${majorList}`);
-  $("#univType").append(`${typeList}`);
-  $("#univGradChk").append(`${gradList}`);
-  $("#univMajorChk").append(`${majorListUniv}`);
+  $(".gradChk").append(`${gradeList}`);
+  $(".majorChk").append(`${majorList}`);
+  $(".univType").append(`${typeList}`);
+  $(".univGradChk").append(`${gradeList}`);
+  $(".univMajorChk").append(`${majorListUniv}`);
   $("#reasonChk").append(`${list}`)
 }
+
+
