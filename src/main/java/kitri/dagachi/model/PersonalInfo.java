@@ -25,5 +25,4 @@ public class PersonalInfo {
     @Column(name = "member_stack")
     private String stack;
 
-
 }

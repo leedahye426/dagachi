@@ -20,7 +20,7 @@ public class ResumeRepository {
 
         System.out.println("repositorySave");
         em.persist(personalInfo);
-        em.flush();
+//        em.flush();
     }
 
     public PersonalInfo findById(Long id) {
@@ -45,8 +45,11 @@ public class ResumeRepository {
     }
 
     public void deleteAllEducationById(Long id) {
+        System.out.println("delete쿼리 작동");
         em.createQuery("DELETE FROM MemberEducation m WHERE m.id = :id")
-                .setParameter("id", id);
+                .setParameter("id", id)
+                .executeUpdate();
+        em.clear();
     }
 
     // 자격증 DB 저장
@@ -64,7 +67,9 @@ public class ResumeRepository {
 
     public void deleteAllCertificateById(Long id) {
         em.createQuery("DELETE FROM MemberCertificates m WHERE m.id = :id")
-                .setParameter("id", id);
+                .setParameter("id", id)
+                .executeUpdate();
+        em.clear();
     }
 
     // 수상경력 DB 저장
