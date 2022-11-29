@@ -52,7 +52,7 @@
                             <a th:href="'/project/admin/project_approve_detail/' + ${project.project_id}"
                                th:text="${project.project_title}"></a>
                         </td>
-                        <td th:text="${project.upload_date}"></td>
+                        <td th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:text="${project.team_name}"></td>
                         <td th:text="${project.approve}"></td>
                     </tr>

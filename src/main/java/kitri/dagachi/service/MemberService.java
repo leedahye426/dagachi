@@ -3,6 +3,7 @@ package kitri.dagachi.service;
 //import kitri.dagachi.SecurityConfig;
 import kitri.dagachi.controller.ResumeForm;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +73,9 @@ public class MemberService implements UserDetailsService {
 //                .orElse(null);
 //    }
 
+    public Member findOne(Long id) {
+        return memberRepository.findOne(id);
+    }
     public List<Member> findmembers(Long project_id) {
         return memberRepository.findByProjectId(project_id);
     }
@@ -126,6 +130,10 @@ public class MemberService implements UserDetailsService {
             return authUser;
         }
         return null;
+    }
+
+    public PersonalInfo findInfo(Long memberId) {
+        return memberRepository.findInfo(memberId);
     }
 
 }

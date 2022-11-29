@@ -76,9 +76,7 @@ public class PersonalProjectController {
 
     @GetMapping("/project/personal/search")
     public String search(@RequestParam(required = false)  String keyword, @RequestParam(required = false)  String[] tag, Model model) {
-        System.out.println("**************");
         List<Project> projects = projectService.findProjectsByKeywordTag(keyword,tag);
-        System.out.println("**************");
         model.addAttribute("projects", projects);
         return "project/project_list";
     }

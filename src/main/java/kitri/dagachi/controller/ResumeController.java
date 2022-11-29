@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,7 +31,10 @@ public class ResumeController {
     private final EntityManager em;
     private final ResumeRepository resumeRepository;
     private final MemberService memberService;
+<<<<<<< HEAD
+=======
     private final MemberRepository memberRepository;
+>>>>>>> 36b47858195e476c9622e5a7f769c18943d407ee
 
 
     @GetMapping("resumeChk")
@@ -58,6 +62,26 @@ public class ResumeController {
         return "/members/resumeChk";
     }
 
+    @GetMapping("resumeChk/{memberId}")
+    public String resumeViewById(@PathVariable Long memberId,
+                             Model model) {
+
+        Member member = memberService.findOne(memberId);
+        PersonalInfo personalInfo = resumeRepository.findById(member.getId());
+        List<MemberEducation> memberEducations = resumeService.findAllEducation(member.getId());
+        List<MemberCertificates> memberCertificates = resumeService.findAllCertificate(member.getId());
+        List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
+        List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
+
+        model.addAttribute("member", member);
+        model.addAttribute("personalInfo", personalInfo);
+        model.addAttribute("educations", memberEducations);
+        model.addAttribute("certificates", memberCertificates);
+        model.addAttribute("awards", memberAwards);
+        model.addAttribute("careers", memberCareers);
+
+        return "/members/resumeChk";
+    }
     @GetMapping("resumeEdit")
     public String resumeForm(@AuthenticationPrincipal Member member,
                              Model model) {
@@ -89,7 +113,7 @@ public class ResumeController {
                             HttpServletRequest request) {
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("form.getImage() : " + form.getImage());
+        System.out.println("form.getImage() : " + form.getProfile());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -141,7 +165,7 @@ public class ResumeController {
 
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
-                    .image(form.getImage())
+                    .image(form.getProfile())
 //                    .gender(form.getGender()
                     .stack(form.getStack())
                     .build();

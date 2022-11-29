@@ -1,7 +1,10 @@
 package kitri.dagachi.controller;
 
 import kitri.dagachi.SessionConstants;
+import kitri.dagachi.model.Competition;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.service.CompetitionService;
+import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +17,12 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+    private final CompetitionService competitionService;
 
     // 세션 세팅 V1
 //    @GetMapping("/")    // HttpSession이 존재하면 session attribute에서 name이 SessionConstatns.LOGIN_MEMBER인 값을 가져와 loginMember와 바인딩
@@ -49,6 +55,10 @@ public class HomeController {
 
         if(member != null)  model.addAttribute("loginMember", member);
 
+        List<Competition> competitions = competitionService.findAllCompetition();
+        System.out.println("________________________");
+        for(Competition c : competitions) System.out.println(c.getOrgName());
+        model.addAttribute("competitions", competitions);
         return "home";
     }
 

@@ -81,7 +81,6 @@ public class ProjectRepository {
     public void updateCnt(Long project_id, Long cnt) {
         Project p = findOne(project_id);
         Long n = (Long) em.createQuery("select pb.like_cnt from project_board pb where pb.project_id = :project_id").setParameter("project_id", project_id).getSingleResult();
-        System.out.println("원래 like 개수 : " + n);
         p.setLike_cnt(n + cnt);
 
     }
@@ -115,7 +114,6 @@ public class ProjectRepository {
     @Transactional
     public void deleteLike(ProjectLike projectLike) {
         em.remove(projectLike);
-        System.out.println("like 삭제됨");
     }
 
     public void updateApproveYtoN(Long project_id) {
