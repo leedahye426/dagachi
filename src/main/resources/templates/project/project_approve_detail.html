@@ -72,7 +72,7 @@
         </tr>
         <tr>
             <th>등록날짜</th>
-            <td scope="row" th:text="${project.upload_date}"></td>
+            <td scope="row" th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd HH:ss:mm')}"></td>
         </tr>
         <tr>
             <th>프로젝트 개요</th>
@@ -101,7 +101,7 @@
         <tr>
             <th>포트폴리오</th>
             <td scope="row">
-                <iframe class="mx-auto " th:src="${project.saved_path}" width="100%" height="700" align="center"
+                <iframe class="mx-auto " th:src="'/upload/' + ${project.saved_name}" width="100%" height="950" align="center"
                         title="포트폴리오"></iframe>
             </td>
         </tr>

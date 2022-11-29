@@ -1,10 +1,7 @@
 package kitri.dagachi.controller;
 
 import kitri.dagachi.SessionConstants;
-import kitri.dagachi.model.Member;
-import kitri.dagachi.model.Project;
-import kitri.dagachi.model.ProjectLike;
-import kitri.dagachi.model.ProjectTag;
+import kitri.dagachi.model.*;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectLikeService;
 import kitri.dagachi.service.ProjectService;
@@ -52,11 +49,19 @@ public class EnterpriseProjectController {
         Long member_id = member.getId();
         Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
 
+
+        List<PersonalInfo> personalInfo = new ArrayList<>();
+        for(Member m : project_members) {
+            personalInfo.add(memberService.findInfo(m.getId()));
+        }
+        System.out.println("______________________________________________________________");
+        for(PersonalInfo p : personalInfo) System.out.println(p.getId());
         System.out.println("cnt" + cnt);
         model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
+        model.addAttribute("personalInfo", personalInfo);
         return "project/project_detail";
     }
 

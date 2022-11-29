@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"/>
 <style>
+    th {
+        border-right:0.5px solid #444444;
+    }
     tr {
         border-bottom:0.5px solid #444444;
     }
@@ -19,7 +22,7 @@
     <table class="table">
         <tbody>
             <tr style="border-bottom:1px solid #444444;">
-                <th><h3 th:text="${competition.title}"></h3></th>
+                <th style="border-right:0"><h2 th:text="${competition.title}"></h2></th>
             </tr>
             <tr>
                 <th>주최주관</th>
@@ -31,16 +34,20 @@
             </tr>
             <tr>
                 <th>지원기간</th>
-                <td th:text="${competition.startDate} + '~' + ${competition.endDate}"></td>
+                <td th:text="${#temporals.format(competition.startDate, 'yyyy년 MM월 dd일 HH시 mm분')}  + ' ~ ' + ${#temporals.format(competition.endDate, 'yyyy년 MM월 dd일 HH시 mm분')}"></td>
             </tr>
             <tr>
                 <th>지원하기</th>
                     <td><a href="${competition.url}" th:text="${competition.url}"></a></td>
             </tr>
-            <tr>
-                <td th:text="${competition.content}"></td>
-                <td><img th:src="${competition.savedPath}" alt="공모전 포스터"></td>
+            <tr style="border-bottom:0">
+                <td colspan="2" th:text="${competition.content}"></td>
+            </tr>
+            <tr >
 
+                <td colspan="2">
+                    <img th:src="'/upload/' + ${competition.savedName}" alt="공모전 포스터">
+                </td>
             </tr>
         </tbody>
     </table>

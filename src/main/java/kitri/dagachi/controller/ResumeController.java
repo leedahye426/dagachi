@@ -2,6 +2,7 @@ package kitri.dagachi.controller;
 
 import kitri.dagachi.model.*;
 import kitri.dagachi.repository.ResumeRepository;
+import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,6 +27,7 @@ public class ResumeController {
     private final ResumeService resumeService;
     private final EntityManager em;
     private final ResumeRepository resumeRepository;
+    private final MemberService memberService;
 
 
     @GetMapping("resumeChk")
@@ -48,6 +51,26 @@ public class ResumeController {
         return "/members/resumeChk";
     }
 
+    @GetMapping("resumeChk/{memberId}")
+    public String resumeViewById(@PathVariable Long memberId,
+                             Model model) {
+
+        Member member = memberService.findOne(memberId);
+        PersonalInfo personalInfo = resumeRepository.findById(member.getId());
+        List<MemberEducation> memberEducations = resumeService.findAllEducation(member.getId());
+        List<MemberCertificates> memberCertificates = resumeService.findAllCertificate(member.getId());
+        List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
+        List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
+
+        model.addAttribute("member", member);
+        model.addAttribute("personalInfo", personalInfo);
+        model.addAttribute("educations", memberEducations);
+        model.addAttribute("certificates", memberCertificates);
+        model.addAttribute("awards", memberAwards);
+        model.addAttribute("careers", memberCareers);
+
+        return "/members/resumeChk";
+    }
     @GetMapping("resumeEdit")
     public String resumeForm(@AuthenticationPrincipal Member member,
                              Model model) {

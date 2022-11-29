@@ -112,7 +112,6 @@ public class ProjectService {
             projectRepository.saveProjectMember(projectMember);
         }
 
-        System.out.println("------------------------------------------");
         for(String tag: tags) {
             ProjectTag projectTag = new ProjectTag();
             projectTag.setProject_id(project.getProject_id());
