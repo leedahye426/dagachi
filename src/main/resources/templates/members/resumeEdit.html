@@ -105,14 +105,14 @@
             </div>
         </div>
         <div>
-            <label for="member_image" class="border" style="cursor: pointer">프로필 선택</label>
-            <input type="file" id="member_image" name="image" accept="image/*" onchange="loadFile(this)"
+            <label for="member_profile" class="border" style="cursor: pointer">프로필 선택</label>
+            <input type="file" id="member_profile" name="profile" accept="image/*" onchange="loadFile(this)"
                    style="visibility: hidden;">
         </div>
 
         <h4 class="mt-5">학력사항</h4>
-        <div class="d-flex flex-row-reverse mx-5">
-            <button type="button" class="btn btn-secondary mb-3" id="addHigh">고등학교 +</button>
+        <div class="d-flex flex-row-reverse mt-4">
+            <button type="button" class="btn btn-primary" id="addHigh">고등학교 +</button>
         </div>
         <hr style="margin-bottom: 0px">
 
@@ -127,7 +127,7 @@
 
                     <div>
                         <div class="d-flex flex-row-reverse" id="highDel">
-                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                            <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
                         </div>
                         <table style="width: 70%; ">
                             <tr>
@@ -150,16 +150,16 @@
                                 <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
                                 <td>
                                     <select class="form-select gradChk" style="width: 60%;" name="gradChk" id="gradChk" required>
-                                        <option hidden selected value="${education.gradChk}" th:utext="${education.gradChk}"></option>
+                                        <option hidden th:value="${education.gradChk}" th:utext="${education.gradChk}"></option>
                                     </select>
                             </tr>
                             <tr>
                                 <td class="title"><label for="major">전공 계열</label></td>
-                                <input type="hidden" name="majorDetail" value="">
+                                <input type="hidden" name="majorDetail" value="-">
                                 <td>
                                     <select class="form-select majorChk" style="width: 60%;" name="majorName"
                                             id="majorChk">
-                                        <option hidden selected value="${education.majorName}" th:utext="${education.majorName}"></option>
+                                        <option hidden th:value="${education.majorName}" th:utext="${education.majorName}"></option>
                                     </select>
                             </tr>
                         </table>
@@ -172,8 +172,8 @@
         </div>
 
         <!-- 대학교 -->
-        <div class="d-flex flex-row-reverse mx-5 mt-3">
-            <button type="button" class="btn btn-secondary mb-3" id="addUniv">대학(원) +</button>
+        <div class="d-flex flex-row-reverse mt-4">
+            <button type="button" class="btn btn-primary" id="addUniv">대학(원) +</button>
         </div>
         <hr style="margin-bottom: 0px">
 
@@ -184,7 +184,7 @@
 
                     <div>
                         <div class="d-flex flex-row-reverse" id="UnivDel">
-                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                            <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
                         </div>
                         <table style="width: 70%;">
                             <tr>
@@ -192,7 +192,7 @@
                                 <td>
                                     <select class="form-select univType" style="width: 60%;" name="educationType"
                                             id="univType" required>
-                                        <option hidden selected value="${education.educationType}" th:utext="${education.educationType}"></option>
+                                        <option hidden th:value="${education.educationType}" th:utext="${education.educationType}"></option>
                                     </select>
                                 </td>
                             </tr>
@@ -215,9 +215,8 @@
                                 <td class="title"><label for="univGrad">졸업여부<span class="essential"> * </span></label>
                                 </td>
                                 <td>
-                                    <select class="form-select univGradChk" style="width: 60%;" name="univGradChk"
-                                            id="univGradChk" required>
-                                        <option hidden selected value="${education.gradChk}" th:utext="${education.gradChk}"></option>
+                                    <select class="form-select univGradChk" style="width: 60%;" name="gradChk" id="univGradChk" required>
+                                        <option hidden th:value="${education.gradChk}" th:utext="${education.gradChk}"></option>
                                     </select>
                             </tr>
                             <tr>
@@ -226,7 +225,7 @@
                                 <td>
                                     <select class="form-select univMajorChk" style="width: 60%;" name="majorName"
                                             id="univMajorChk" required>
-                                        <option hidden selected value="${education.majorName}" th:utext="${education.majorName}"></option>
+                                        <option hidden th:value="${education.majorName}" th:utext="${education.majorName}"></option>
                                     </select>
                                     <input class="mt-2" type="text" name="majorDetail" id="detailName"
                                            th:value="${education.majorDetail}">
@@ -242,8 +241,8 @@
 
             <h4 class="mt-5">자격증</h4>
 
-            <div class="d-flex flex-row-reverse mx-5">
-                <button type="button" class="btn btn-secondary " id="addCertificate">자격증 내역 +</button>
+            <div class="d-flex flex-row-reverse mt-4">
+                <button type="button" class="btn btn-primary" id="addCertificate">자격증 내역 +</button>
             </div>
             <hr style="margin-bottom: 0px">
             <div class="container bg-light" id="certificateInfo">
@@ -252,7 +251,7 @@
 
                     <div>
                         <div class="d-flex flex-row-reverse" id="cerDel">
-                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                            <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
                         </div>
                         <table style="width: 70%; " >
                         <tr>
@@ -285,8 +284,8 @@
             <!-- 수상경력 -->
 
             <h4 class="mt-5">수상경력</h4>
-            <div class="d-flex flex-row-reverse mx-5">
-                <button type="button" class="btn btn-secondary " id="addAward">수상 내역 +</button>
+            <div class="d-flex flex-row-reverse mt-4">
+                <button type="button" class="btn btn-primary" id="addAward">수상 내역 +</button>
             </div>
             <hr style="margin-bottom: 0px">
 
@@ -297,7 +296,7 @@
                     
                     <div>
                         <div class="d-flex flex-row-reverse" id="awaDel">
-                            <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                            <button type="button" class="btn btn-dnager btn-sm mt-3" id="del">삭제</button>
                         </div>
                         <table style="width: 70%; " >
                         <tr>
@@ -328,8 +327,8 @@
             <!-- 경력사항 -->
 
             <h4 class="mt-5">경력사항</h4>
-            <div class="d-flex flex-row-reverse mx-5">
-                <button type="button" class="btn btn-secondary " id="addCareer">경력 사항 +</button>
+            <div class="d-flex flex-row-reverse mt-4">
+                <button type="button" class="btn btn-primary" id="addCareer">경력 사항 +</button>
             </div>
             <hr style="margin-bottom: 0px">
 
@@ -340,7 +339,7 @@
                     
                     <div>
                         <div class="d-flex flex-row-reverse" id="careerDel">
-                        <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+                        <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
                         </div>                
                         <table style="width: 70%; " >
                         <tr>

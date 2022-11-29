@@ -2,18 +2,20 @@ package kitri.dagachi.controller;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+@Component
 @Getter @Setter
 public class ResumeForm {
 
     // personal_info
-    private Long id; // member_id <- join으로 가져오기
+    private Long id;
 
     private String addr;
 
     private String addrDetail;
 
-    private String image;
+    private String profile;
 
     private Character gender;
 

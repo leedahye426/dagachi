@@ -40,3 +40,8 @@ hr {
     border-top: 2px dotted #8c8c8c;
     margin-top: 9px;
 }
+
+.add {
+    display: flex;
+    justify-content: space-between;
+}

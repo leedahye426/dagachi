@@ -4,6 +4,7 @@ import kitri.dagachi.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+
 import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -36,11 +37,22 @@ public class MemberRepository {
                 .getResultList();
     }
 
-
     public List<Member> findByProjectId(Long project_id) {
         return em.createQuery("select m from Member m where m.id in (select p.member_id from project_members p where p.project_id= :project_id)")
                 .setParameter("project_id", project_id)
                 .getResultList();
     }
+
+    public Member findById(Long id) {
+        return em.find(Member.class, id);
+    }
+
+//    public void updateById(Long id, String addr, String addrDetail) {
+//        em.createQuery("UPDATE Member m SET m.addr = :addr, m.addrDetail = :addrDetail WHERE m.id = :id")
+//                .setParameter("addr", addr)
+//                .setParameter("addrDetail", addrDetail)
+//                .setParameter("id", id);
+//        em.clear();
+//    }
 
 }

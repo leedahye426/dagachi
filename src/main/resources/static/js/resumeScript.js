@@ -2812,7 +2812,7 @@ $("#addHigh").on('click', function() {
     `
     <div>
     <div class="d-flex flex-row-reverse" id="highDel">
-    <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+    <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
     </div>
   <table style="width: 70%; " >
     <tr>
@@ -2867,7 +2867,7 @@ $("#addUniv").on('click', function() {
     `
     <div>
     <div class="d-flex flex-row-reverse" id="UnivDel">
-    <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+    <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
     </div>  
     <table style="width: 70%;">
         <tr>
@@ -2892,7 +2892,7 @@ $("#addUniv").on('click', function() {
         <tr>
         <td class="title"><label for="univGrad">졸업여부<span class="essential"> * </span></label></td>
         <td>
-            <select class="form-select univGrade" style="width: 60%;" name="univGradChk" id="univGradChk">
+            <select class="form-select univGrade" style="width: 60%;" name="gradChk" id="gradChk">
             ${gradeList}
             </select>
         </tr>
@@ -2917,7 +2917,7 @@ $("#addCertificate").on('click', function() {
     `
     <div>
     <div class="d-flex flex-row-reverse" id="cerDel">
-        <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+        <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
     </div>
     <table style="width: 70%; " >
     <tr>
@@ -2947,7 +2947,7 @@ $("#addAward").on('click', function() {
     `
     <div>
     <div class="d-flex flex-row-reverse" id="awaDel">
-        <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+        <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
     </div>
     <table style="width: 70%; " >
     <tr>
@@ -2984,7 +2984,7 @@ $("#addCareer").on('click', function() {
         `
     <div>
     <div class="d-flex flex-row-reverse" id="careerDel">
-    <button type="button" class="btn btn-secondary btn-sm mt-3" id="del">삭제</button>
+    <button type="button" class="btn btn-danger btn-sm mt-3" id="del">삭제</button>
     </div>                
     <table style="width: 70%; " >
     <tr>
