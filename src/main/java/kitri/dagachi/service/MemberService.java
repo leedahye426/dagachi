@@ -1,6 +1,7 @@
 package kitri.dagachi.service;
 
 //import kitri.dagachi.SecurityConfig;
+import kitri.dagachi.controller.ResumeForm;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
@@ -25,6 +26,7 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final AuthRepository authRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ResumeForm resumeForm;
 
 
     @Transactional
@@ -80,6 +82,12 @@ public class MemberService implements UserDetailsService {
 
     public Member findOneByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    public void updateEmailById(Long id, String addr, String addrDetail) {
+        Member member = memberRepository.findById(id);
+        member.setAddr(addr);
+        member.setAddrDetail(addrDetail);
     }
 
 

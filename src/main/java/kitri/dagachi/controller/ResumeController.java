@@ -1,6 +1,7 @@
 package kitri.dagachi.controller;
 
 import kitri.dagachi.model.*;
+import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.ResumeRepository;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ResumeService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -28,6 +31,10 @@ public class ResumeController {
     private final EntityManager em;
     private final ResumeRepository resumeRepository;
     private final MemberService memberService;
+<<<<<<< HEAD
+=======
+    private final MemberRepository memberRepository;
+>>>>>>> 36b47858195e476c9622e5a7f769c18943d407ee
 
 
     @GetMapping("resumeChk")
@@ -41,7 +48,11 @@ public class ResumeController {
         List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
         List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
 
-        model.addAttribute("member", member);
+        Member modelMember = memberRepository.findById(member.getId());
+        System.out.println("modelMember.getAddr() : " + modelMember.getAddr());
+        System.out.println("modelMember.getAddrDetail() : " + modelMember.getAddrDetail());
+
+        model.addAttribute("member", modelMember);
         model.addAttribute("personalInfo", personalInfo);
         model.addAttribute("educations", memberEducations);
         model.addAttribute("certificates", memberCertificates);
@@ -81,7 +92,11 @@ public class ResumeController {
         List<MemberAwards> memberAwards = resumeService.findAllAward(member.getId());
         List<MemberCareers> memberCareers = resumeService.findAllCareer(member.getId());
 
-        model.addAttribute("member", member);
+        Member modelMember = memberRepository.findById(member.getId());
+        System.out.println("modelMember.getAddr() : " + modelMember.getAddr());
+        System.out.println("modelMember.getAddrDetail() : " + modelMember.getAddrDetail());
+
+        model.addAttribute("member", modelMember);
         model.addAttribute("personalInfo", personalInfo);
         model.addAttribute("educations", memberEducations);
         model.addAttribute("certificates", memberCertificates);
@@ -94,15 +109,17 @@ public class ResumeController {
     @PostMapping("resumeEdit")
     public String resumeSet(@Valid ResumeForm form,
                             BindingResult bindingResult,
-                            @AuthenticationPrincipal Member member) {
+                            @AuthenticationPrincipal Member member,
+                            HttpServletRequest request) {
 
         System.out.println("member.getId() : " + member.getId());
         System.out.println("form.getImage() : " + form.getImage());
         System.out.println("form.getGender() : " + form.getGender());
-        System.out.println("form.getStack() : " + form.getPhoneNum());
+        System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
         System.out.println("form.getCertificateIssuer() : " + form.getCertificateIssuer());
         System.out.println("form.getIssuedDate() : " + form.getIssuedDate());
+        System.out.println("form.getGradChk() : " + form.getGradChk());
         System.out.println("form.getSchoolName() : " + form.getSchoolName());
         System.out.println("form.getMajorName() : " + form.getMajorName());
         System.out.println("form.getMajorDetail() : " + form.getMajorDetail());
@@ -118,19 +135,39 @@ public class ResumeController {
         System.out.println("form.getAwardName() : " + form.getAwardName());
         System.out.println("form.getCompetitionName() : " + form.getCompetitionName());
         System.out.println("form.getAwardDate() : " + form.getAwardDate());
+        System.out.println("form.getAddr() : " + form.getAddr());
+        System.out.println("form.getAddrDetail() : " + form.getAddrDetail());
 
         try {
             if (resumeRepository.findById(member.getId()).getId() > 0L) {
+                System.out.println("resumeRepository.findById(member.getId()).getId() : " + resumeRepository.findById(member.getId()).getId());
                 System.out.println("멤버 데이터가 있음");
                 resumeService.deleteInfo(member.getId());
+
+                System.out.println("업데이트 시작");
+                memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
+                System.out.println("업데이트 끝");
+
+                PersonalInfo personalInfo = PersonalInfo.builder()
+                        .id(member.getId())
+                        .image(form.getProfile())
+//                    .gender(form.getGender()
+                        .stack(form.getStack())
+                        .build();
+                resumeService.saveInfo(personalInfo);
             }
         }
         catch (NullPointerException e) {
+            System.out.println("멤버 데이터가 없음");
+            System.out.println("업데이트 시작");
+            memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
+            System.out.println("업데이트 끝");
+
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
                     .image(form.getImage())
-                    .gender(form.getGender())
-                    .stack(form.getPhoneNum())
+//                    .gender(form.getGender()
+                    .stack(form.getStack())
                     .build();
             resumeService.saveInfo(personalInfo);
         }

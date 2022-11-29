@@ -2,25 +2,24 @@ package kitri.dagachi.controller;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
-import java.util.Date;
-
+@Component
 @Getter @Setter
 public class ResumeForm {
 
     // personal_info
-    private Long id; // member_id <- join으로 가져오기
+    private Long id;
 
-    private String resumeName;
+    private String addr;
 
-    private String image;
+    private String addrDetail;
+
+    private String profile;
 
     private Character gender;
 
-    private String phoneNum;
+    private String stack;
 
     // member_education
     private String gradChk;

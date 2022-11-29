@@ -44,34 +44,6 @@ $("#addrSearch").on('click', function() {
 
 });
 
-// $("#business_number").on('keyup', function() {
-
-//     $businessNum = $("#business_number").val();
-//     $("#business_number").val($businessNum.trim());
-    
-//     let length = $("#business_number").val().length;
-//     if(length == 10) {
-//         // $("#business_number").attr("maxlength", 12);
-//         $("#bnChk").attr("class", "btn btn-light border btn-sm");
-//         console.log('replace');
-//         $("#business_number").val(
-//             $businessNum.substr(0,3) + "-" + 
-//             $businessNum.substr(3,2) + "-" +
-//             $businessNum.substr(5)
-//         )
-//     }
-//     else {
-//         $("#bnChk").attr("class", "btn btn-light border btn-sm disabled");
-//     }
-
-//     console.log('입력중')
-//     console.log($businessNum);
-    
-//     console.log(length)
-
-// });
-
-
 const KEY = "DDM1M0oGjpl94oiXL%2FNHmtj26ELA91e0M607dz%2Fvdy7MVnrTgp6xZBsx89oKchH1iqCq7qFiEGITLEC0ECsAjA%3D%3D";
 $("#bnChk").on('click', function() {
     console.log('bnChk click');
