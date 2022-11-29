@@ -55,7 +55,7 @@
                         <td style="text-align:center;">
                             <a th:href="'/competition/detail/' + ${competition.id}" th:text="${competition.title}"></a>
                         </td>
-                        <td th:text="${competition.startDate}+'~'+${competition.endDate}"></td>
+                        <td th:text="${#temporals.format(competition.startDate, 'yy-MM-dd')}+' ~ '+${#temporals.format(competition.endDate, 'yy-MM-dd')}"></td>
                         <td th:text="${competition.writer}"></td>
                     </tr>
                     </tbody>

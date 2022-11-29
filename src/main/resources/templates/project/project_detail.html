@@ -8,17 +8,19 @@
 <!--content-->
 <!--modal-->
 <div class="modal" tabindex="-1" id="exampleModal" th:each="project_member:${project_members}">
-    <div class="modal-dialog">
+    <div class="modal-dialog" th:each="info:${personalInfo}" th:if="${project_member.id == info.id}">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" th:text="${project_member.name} + '님의 프로필'"></h5>
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                <h5 class="modal-title fw-bold" th:text="${project_member.name} + '님의 프로필'"></h5>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <tr>
-                    <img src ="">
-                </tr>
                 <table>
+                    <tr>
+                        <th>
+                            <img src="" width="130px" height="180px" onerror="this.src='/images/member-default-image.jpg'">
+                        </th>
+                    </tr>
                     <tr>
                         <th>이름</th>
                         <td th:text="${project_member.name}"></td>
@@ -28,18 +30,13 @@
                         <td th:text="${project_member.email}"></td>
                     </tr>
                     <tr>
-                        <th>학력</th>
-                        <td ></td>
-                    </tr>
-                    <tr>
-                        <th>경력</th>
-                        <td></td>
+                        <th>보유기술</th>
+                        <td th:text="${info.stack}"></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">닫기</button>
-
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="|location.href='@{|/members/resumeChk/${project_member.id}|}'|">이력서 조회</button>
             </div>
         </div>
     </div>
@@ -81,7 +78,7 @@
             </tr>
             <tr>
                 <th>등록날짜</th>
-                <td scope="row" th:text="${project.upload_date}"></td>
+                <td scope="row" th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
             <tr>
                 <th>프로젝트 개요</th>
@@ -114,7 +111,7 @@
             </tr>
             <tr>
                 <th>포트폴리오</th>
-                <td scope="row"><iframe class="mx-auto " th:src="${project.saved_path}" width="100%" height="700" align="center" title="포트폴리오"></iframe></td>
+                <td scope="row"><iframe class="mx-auto " th:src="'/upload/' + ${project.saved_name}" width="100%" height="950" align="center" title="포트폴리오"></iframe></td>
             </tr>
         </tbody>
     </table>
