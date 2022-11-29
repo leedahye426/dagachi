@@ -50,21 +50,40 @@ public class PersonalPostingController {
     private final PostLikeRepository postlikerepository;
 
     //select
-    @GetMapping("/post/personal/post_list")
-    public String enterPosting(Model model, @AuthenticationPrincipal Member member) {
+//    @GetMapping("/post/personal/post_list")
+//    public String enterPosting(Model model, @AuthenticationPrincipal Member member) {
+//
+//        List<Post> post = postservice.posting();
+//        Long memberId = member.getId();
+//
+//        model.addAttribute("memberId", memberId);
+//        model.addAttribute("post", post);
+//
+//
+//        System.out.println(post);
+//
+//        return "/post/post_list";
+//    }
 
-        List<Post> post = postservice.posting();
+    //approve 된 게시글만 보이게
+    @GetMapping("/post/personal/post_list")
+      public String posting(Model model, @AuthenticationPrincipal Member member)
+    {
+
+        List<Post> post = postservice.approveList();
         Long memberId = member.getId();
+
+//        System.out.println();
+
 
         model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
 
 
-        System.out.println(post);
 
         return "/post/post_list";
-    }
 
+    }
 
     //    공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/personal/{postingId}/post_detail")
@@ -160,7 +179,7 @@ public class PersonalPostingController {
 
     //찜목록
     @GetMapping("/post/personal/like_list")
-    public String likelist(Model model, @AuthenticationPrincipal Member member)
+    public String likeList(Model model, @AuthenticationPrincipal Member member)
     {
         Long memberId= member.getId();
         List<PostingLike> postingLikes = postservice.likeall(memberId);

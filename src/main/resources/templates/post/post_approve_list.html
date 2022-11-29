@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: header"/>
+
+<body>
+<!-- Responsive navbar-->
+
+
+<head th:replace="fragments/nav :: nav"/>
+
+
+<div class="card-body b">
+
+<form method="get" th:each="post : ${post}" action="/post/admin/approve_list">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">회사명</th>
+          <th scope="col">공고제목</th>
+          <th scope="col">내용</th>
+          <th scope="col">등록날짜</th>
+          <th scope="col">승인여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row" th:text="${post.postingId}"></th>
+          <td th:text="${post.companyName}"></td>
+          <td th:text="${post.postingTitle}"></td>
+          <td th:text="${post.postingContent}"></td>
+          <td th:text="${post.uploadDate}"></td>
+<!--    -->
+<td> <button type="button" class="btn btn-primary" id="approve" th:onclick="|if(confirm('승인하시겠습니까?')) location.href='@{|/post/admin/approve/${post.postingId}|}'|">승인</button></div></td>
+        </tr>
+        </tbody>
+      </table>
+</form>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script th:inline="javascript">
+
+
+
+
+</script>
+
+</body>
+</html>

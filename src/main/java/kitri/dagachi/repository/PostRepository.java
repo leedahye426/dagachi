@@ -1,8 +1,8 @@
 package kitri.dagachi.repository;
 
 import io.lettuce.core.dynamic.annotation.Param;
-import kitri.dagachi.dto.PostDto;
-import kitri.dagachi.dto.PostFileDto;
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
@@ -54,6 +54,8 @@ public class PostRepository {
         em.persist(postinglike);
         em.flush();
     }
+
+
 
 
 
@@ -153,6 +155,34 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<Post> findApprove()
+    {
+        return em.createQuery("select p from posting_board p where p.approve ='Y'")
+                .getResultList();
+    }
+
+    public  void updateApprove(Long postingId)
+    {
+        Post post = findOne(postingId);
+        post.setApprove("Y");
+
+        LocalDateTime uploadDate = LocalDateTime.now();
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        post.setUploadDate(formatedNow);
+
+//                em.createQuery("update posting_board p set p.approve='Y' where p.postingId =:postingId")
+//                                .getResultList();
+        em.persist(post);
+        em.flush();
+
+
+
+//        Post post = findOne(postingId);
+//        post.setApprove("Y");
+//        em.persist(post);
+//        System.out.println();
+//        em.flush();
+    }
 
 
 //    public Post findById(Long id)

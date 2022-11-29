@@ -1,7 +1,7 @@
 package kitri.dagachi.service;
 
-import kitri.dagachi.dto.PostDto;
-import kitri.dagachi.dto.PostFileDto;
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.*;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.repository.PostLikeRepository;
@@ -16,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -33,7 +36,7 @@ public class postService {
     private final PostRepository postRepository;
     private final PostLikeRepository postlikerepository;
 
-
+    private final EntityManager em;
 
 
     //글 작성 처리(insert)
@@ -78,6 +81,25 @@ public class postService {
 
     }
 
+    //승인 후 게시글 보여주기
+    public List<Post> approveList()
+    {
+        return postRepository.findApprove();
+    }
+
+
+    //승인버튼 클릭시 Y로 변경
+
+    public void approve(Long postingId){
+
+
+       postRepository.updateApprove(postingId);
+
+
+
+    }
+
+
     //삭제
     public void delete(Long postingId) {
 
@@ -116,6 +138,19 @@ public class postService {
     {
         return postRepository.findById(memberId);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //파일

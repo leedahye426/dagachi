@@ -1,6 +1,7 @@
 package kitri.dagachi.model;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 //@RequiredArgsConstructor
-
+//@DynamicUpdate
 public class Post {
 
     @Id
@@ -34,6 +35,8 @@ public class Post {
     @Column(name = "member_id")
     private Long memberId;
 
+    @Column(name = "approve")
+    private String approve;
 
 
 //    private Long fileId;

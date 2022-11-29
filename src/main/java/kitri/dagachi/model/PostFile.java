@@ -15,7 +15,7 @@ public class PostFile {
 
     @Id
     @Column(name = "posting_id")
-    private Long id;
+    private Long postingId;
 
 
     @Column(name="orig_file_name")
@@ -29,10 +29,10 @@ public class PostFile {
     private  String filePath;
 
     @Builder
-    public PostFile(Long id, String origFileName, String fileName, String filePath) {
+    public PostFile(Long postingId, String origFileName, String fileName, String filePath) {
 
 
-        this.id = id;
+        this.postingId = postingId;
         this.origFileName = origFileName;
         this.fileName = fileName;
         this.filePath = filePath;

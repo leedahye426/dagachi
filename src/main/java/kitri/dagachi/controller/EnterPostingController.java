@@ -1,20 +1,22 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
-import kitri.dagachi.dto.PostDto;
-import kitri.dagachi.dto.PostFileDto;
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostFile;
 import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 
-import kitri.dagachi.service.PostFileService;
+//import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
-import kitri.dagachi.util.MD5Generator;
+//import kitri.dagachi.util.MD5Generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
@@ -44,17 +46,38 @@ public class EnterPostingController {
 //    private final PostFileService postfileservice;
 
 
-    //select
+//    //select
+//    @GetMapping("/post/enterprise/post_list")
+//   // @EnableGlobalMethodSecurity
+//    public String enterPosting(Model model) {
+//
+//        List<Post> post = postservice.posting();
+//
+//        model.addAttribute("post", post);
+//
+//        System.out.println(post);
+//
+//        return "/post/post_list";
+//    }
+
+    //approve 된 게시글만 보이게
     @GetMapping("/post/enterprise/post_list")
-    public String enterPosting(Model model) {
+    public String posting(Model model, @AuthenticationPrincipal Member member)
+    {
 
-        List<Post> post = postservice.posting();
+        List<Post> post = postservice.approveList();
+        Long memberId = member.getId();
 
+//        System.out.println();
+
+
+        model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
 
-        System.out.println(post);
+
 
         return "/post/post_list";
+
     }
 
 
@@ -122,17 +145,18 @@ public class EnterPostingController {
 
             Long memberId = member.getId();
             List<Post> list = postservice.findlist(memberId);
-            List<Post> post = new ArrayList<>();
+            List<Post> postList = new ArrayList<>();
 
             for (Post p : list){
-                post.add(postservice.findById(p.getPostingId()));
+                postList.add(postservice.findById(p.getPostingId()));
             }
 
 
-            model.addAttribute("post",post);
+            model.addAttribute("post",postList);
 
             return "/post/post_write_list";
         }
+
 
     //파일업로드해보자!
 
