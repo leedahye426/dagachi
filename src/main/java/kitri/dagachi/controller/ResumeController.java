@@ -89,7 +89,7 @@ public class ResumeController {
                             HttpServletRequest request) {
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("form.getImage() : " + form.getImage());
+        System.out.println("form.getImage() : " + form.getProfile());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -141,7 +141,7 @@ public class ResumeController {
 
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
-                    .image(form.getImage())
+                    .image(form.getProfile())
 //                    .gender(form.getGender()
                     .stack(form.getStack())
                     .build();
