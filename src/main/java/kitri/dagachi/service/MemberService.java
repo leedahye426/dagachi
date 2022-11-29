@@ -1,13 +1,11 @@
 package kitri.dagachi.service;
 
 //import kitri.dagachi.SecurityConfig;
-import kitri.dagachi.controller.ResumeForm;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 @Service
 @Transactional(readOnly = true)
@@ -26,7 +23,6 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final AuthRepository authRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ResumeForm resumeForm;
 
 
     @Transactional
@@ -74,15 +70,21 @@ public class MemberService implements UserDetailsService {
 //    }
 
     public Member findOne(Long id) {
-        return memberRepository.findOne(id);
+        return memberRepository.findById(id);
     }
-    public List<Member> findmembers(Long project_id) {
+    public List<Member> findMembers(Long project_id) {
         return memberRepository.findByProjectId(project_id);
     }
 
     public Member findOneByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
+
+    public Member findMemberByEamil(String email) {
+        return memberRepository.findByLoginInfo(email)
+                .orElse(null);
+    }
+
 
     public void updateEmailById(Long id, String addr, String addrDetail) {
         Member member = memberRepository.findById(id);
@@ -129,6 +131,9 @@ public class MemberService implements UserDetailsService {
 
             return authUser;
         }
+//        else if(!member.isPresent()) {
+//            throw new UsernameNotFoundException();
+//        }
         return null;
     }
 

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +63,7 @@ public class PersonalProjectController {
     @GetMapping("/project/personal/{project_id}/detail")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model,  @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);
-        List<Member> project_members = memberService.findmembers(project_id);
+        List<Member> project_members = memberService.findMembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long loginId = member.getId();
         model.addAttribute("loginId", loginId);
@@ -90,7 +89,7 @@ public class PersonalProjectController {
     @GetMapping("/project/personal/{project_id}/update")
     public String update(@PathVariable Long project_id,Model model) {
         Project project = projectService.findProject(project_id);
-        List<Member> members = memberService.findmembers(project_id);
+        List<Member> members = memberService.findMembers(project_id);
         List<ProjectTag> tags = projectService.findTags(project_id);
 
         List<String> projectTags = new ArrayList<>();
