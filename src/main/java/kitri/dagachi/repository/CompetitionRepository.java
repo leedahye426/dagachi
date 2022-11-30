@@ -40,4 +40,6 @@ public class CompetitionRepository {
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
+
+    
 }

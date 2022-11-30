@@ -31,11 +31,7 @@ public class ResumeController {
     private final EntityManager em;
     private final ResumeRepository resumeRepository;
     private final MemberService memberService;
-<<<<<<< HEAD
-=======
     private final MemberRepository memberRepository;
->>>>>>> 36b47858195e476c9622e5a7f769c18943d407ee
-
 
     @GetMapping("resumeChk")
     public String resumeView(@AuthenticationPrincipal Member member,
@@ -113,7 +109,7 @@ public class ResumeController {
                             HttpServletRequest request) {
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("form.getImage() : " + form.getImage());
+//        System.out.println("form.getImage() : " + form.getImage());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -165,7 +161,7 @@ public class ResumeController {
 
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
-                    .image(form.getImage())
+//                    .image(form.getImage())
 //                    .gender(form.getGender()
                     .stack(form.getStack())
                     .build();

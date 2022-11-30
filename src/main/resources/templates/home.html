@@ -34,18 +34,17 @@
 <div class="row mx-0 my-0" style="height:425px;">
     <div class="col-6  mx-5 my-5 px-5 py-2 ">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-<!--            <div class="carousel-indicators">-->
-<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"-->
-<!--                        aria-current="true" aria-label="Slide 1"></button>-->
-<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"-->
-<!--                        aria-label="Slide 2"></button>-->
-<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"-->
-<!--                        aria-label="Slide 3"></button>-->
-<!--            </div>-->
-            <div class="carousel-inner rounded-3" style="height:30%">
+            <div class="carousel-inner rounded-3" >
                 <div th:each="c:${competitions}" class="carousel-item active " data-bs-interval="3000">
-                    <a target="_blank" th:href="${c.url}">
-                        <img th:src="'/upload/' + ${c.savedName}" class="d-block w-100 " alt="...">
+                    <a th:href="${c.url}">
+                        <img th:src="'/upload/' + ${c.savedName}" class="d-block w-100 " alt="..." style="min-height:300px">
+                    </a>
+                </div>
+            </div>
+            <div class="carousel-inner rounded-3" >
+                <div th:each="c:${competitions}" class="carousel-item " data-bs-interval="3000">
+                    <a th:href="${c.url}">
+                        <img th:src="'/upload/' + ${c.savedName}" class="d-block w-100 " alt="..." style="min-height:300px">
                     </a>
                 </div>
             </div>

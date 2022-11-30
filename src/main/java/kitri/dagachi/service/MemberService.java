@@ -7,7 +7,6 @@ import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 @Service
 @Transactional(readOnly = true)
@@ -74,7 +72,7 @@ public class MemberService implements UserDetailsService {
 //    }
 
     public Member findOne(Long id) {
-        return memberRepository.findOne(id);
+        return memberRepository.findById(id);
     }
     public List<Member> findmembers(Long project_id) {
         return memberRepository.findByProjectId(project_id);

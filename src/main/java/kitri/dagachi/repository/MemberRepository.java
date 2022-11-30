@@ -1,15 +1,12 @@
 package kitri.dagachi.repository;
 
-import jdk.jfr.Percentage;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,17 +42,12 @@ public class MemberRepository {
                 .getResultList();
     }
 
-<<<<<<< HEAD
     public PersonalInfo findInfo(Long memberId) {
         return (PersonalInfo) em.createQuery("select pi from PersonalInfo pi where pi.id = :memberId")
                 .setParameter("memberId", memberId)
                 .getSingleResult();
     }
 
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
-=======
     public Member findById(Long id) {
         return em.find(Member.class, id);
     }
@@ -68,5 +60,4 @@ public class MemberRepository {
 //        em.clear();
 //    }
 
->>>>>>> 36b47858195e476c9622e5a7f769c18943d407ee
 }

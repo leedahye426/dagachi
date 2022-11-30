@@ -69,4 +69,6 @@ public class CompetitionService {
     public List<Competition> findCompetitions(String keyword) {
         return competitionRepository.findByKeyword(keyword);
     }
+
+
 }
