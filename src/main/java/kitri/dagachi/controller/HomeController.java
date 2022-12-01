@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
@@ -49,20 +50,33 @@ public class HomeController {
 
     // 세션 세팅 V2
     @GetMapping("/")
-    public String home(@AuthenticationPrincipal Member member, Model model, HttpSession httpSession) {
-                        // 인증된 사용자 정보를 멤버 매핑
+    public String home(@AuthenticationPrincipal Member member,
+                       Model model,
+                       HttpSession httpSession,
+                       HttpServletRequest request) {
+        // 인증된 사용자 정보를 멤버 매핑
 //        HttpSession hp = httpSession.setAttribute("log", member);
 
-        if(member != null)  model.addAttribute("loginMember", member);
+//        String referer = request.getHeader("referer");
+//
+//        System.out.println("referer : " + referer);
+
+        if (member != null) model.addAttribute("loginMember", member);
 
         List<Competition> competitions = competitionService.findAllCompetition();
         System.out.println("________________________");
-        for(Competition c : competitions) System.out.println(c.getOrgName());
+        for (Competition c : competitions) System.out.println(c.getOrgName());
         model.addAttribute("competitions", competitions);
         return "home";
     }
 
+    @GetMapping("/denied")
+    public String denined() {
 
+        System.out.println("deniedError");
+
+        return "errorPage";
+    }
 
 
 }

@@ -2,7 +2,6 @@ package kitri.dagachi.controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Getter @Setter
 public class ResumeForm {
@@ -14,7 +13,7 @@ public class ResumeForm {
 
     private String addrDetail;
 
-    private String profile;
+    private String fileName;
 
     private Character gender;
 

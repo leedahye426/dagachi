@@ -10,15 +10,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -107,10 +107,17 @@ public class ResumeController {
     public String resumeSet(@Valid ResumeForm form,
                             BindingResult bindingResult,
                             @AuthenticationPrincipal Member member,
-                            HttpServletRequest request) {
+                            @RequestParam("file") MultipartFile file) throws IOException {
+
+        String fileName = file.getOriginalFilename();
+        String name = file.getName();
+        file.transferTo(new File("D://test/portfolio/"+fileName));
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("form.getImage() : " + form.getProfile());
+        System.out.println("fileName : " + fileName);
+        System.out.println("name : " + name);
+        System.out.println("form.getFileName() : " + form.getFileName());
+        System.out.println("form.getFileName() : " + form.getFileName());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -147,7 +154,7 @@ public class ResumeController {
 
                 PersonalInfo personalInfo = PersonalInfo.builder()
                         .id(member.getId())
-                        .image(form.getProfile())
+                        .image(form.getFileName())
 //                    .gender(form.getGender()
                         .stack(form.getStack())
                         .build();
@@ -162,7 +169,7 @@ public class ResumeController {
 
             PersonalInfo personalInfo = PersonalInfo.builder()
                     .id(member.getId())
-                    .image(form.getProfile())
+                    .image(form.getFileName())
 //                    .gender(form.getGender()
                     .stack(form.getStack())
                     .build();
@@ -229,7 +236,8 @@ public class ResumeController {
                 resumeService.saveCareer(memberCareers);
             }
         }
-        return "redirect:/";
+        return "/members/resumeChk";
+//        return "redirect:/";
     }
 
 

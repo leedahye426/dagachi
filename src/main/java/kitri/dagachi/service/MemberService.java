@@ -1,11 +1,13 @@
 package kitri.dagachi.service;
 
 //import kitri.dagachi.SecurityConfig;
+import groovy.transform.Internal;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -102,6 +104,8 @@ public class MemberService implements UserDetailsService {
         // email을 통한 멤버 정보 조회
         Optional<Member> member = authRepository.findByEmail(email);
 
+        Member authUser = new Member();
+
         // isPresent() 객체를 사용하여 객체 존재여부를 확인 후에 가져오도록 함
         if(member.isPresent()) {
             // 있다면 user 정보를 가져옴
@@ -109,7 +113,7 @@ public class MemberService implements UserDetailsService {
 
             System.out.println("=========start=========");
             // 인증된 유저 정보 빌드
-            Member authUser = Member.builder()
+            authUser = Member.builder()
                     .id(user.getId())
                     .name(user.getName())
                     .email(user.getEmail())
@@ -129,12 +133,10 @@ public class MemberService implements UserDetailsService {
             System.out.println("authUser addr: " + authUser.getAddr());
             System.out.println("authUser date: " + authUser.getJoinDate());
 
-            return authUser;
+//            return authUser;
         }
-//        else if(!member.isPresent()) {
-//            throw new UsernameNotFoundException();
-//        }
-        return null;
+
+        return authUser;
     }
 
     public PersonalInfo findInfo(Long memberId) {
