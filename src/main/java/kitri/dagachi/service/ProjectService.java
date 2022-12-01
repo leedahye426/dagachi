@@ -157,6 +157,10 @@ public class ProjectService {
         return projectRepository.findProjectsById(member_id);
     }
 
+    public List<Project> findProjectsByMid(Long member_id) {
+        return projectRepository.findProjectsByMid(member_id);
+    }
+
     public void updateApproveYtoN(Long project_id) {
         projectRepository.updateApproveYtoN(project_id);
     }

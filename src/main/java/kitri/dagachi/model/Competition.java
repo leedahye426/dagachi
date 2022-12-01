@@ -24,12 +24,18 @@ public class Competition {
     private String url;
     private String content;
     private String host;
-    @Column(name = "org_name")
-    private String orgName;
-    @Column(name = "saved_name")
-    private String savedName;
-    @Column(name = "saved_path")
-    private String savedPath;
+    @Column(name = "poster_org_name")
+    private String posterOrgName;
+    @Column(name = "poster_saved_name")
+    private String posterSavedName;
+    @Column(name = "poster_saved_path")
+    private String posterSavedPath;
+    @Column(name = "banner_org_name")
+    private String bannerOrgName;
+    @Column(name = "banner_saved_name")
+    private String bannerSavedName;
+    @Column(name = "banner_saved_path")
+    private String bannerSavedPath;
     private String writer;
     @Column(name = "member_id")
     private Long memberId;

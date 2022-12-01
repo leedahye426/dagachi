@@ -69,9 +69,10 @@ public class CompetitionController {
         competition.setEndDate(endDate);
         competition.setMemberId(memberId
         );
-        MultipartFile file = multiReq.getFile("file");
+        MultipartFile poster = multiReq.getFile("poster");
+        MultipartFile banner = multiReq.getFile("banner");
 
-        competitionService.register(competition, file);
+        competitionService.register(competition, poster, banner);
 
         Long id = competition.getId();
         model.addAttribute("id", id);
