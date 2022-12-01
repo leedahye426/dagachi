@@ -40,24 +40,22 @@
                         <img th:src="'/upload/' + ${firstOne.savedName}" class="d-block w-100 " alt="..." style="min-height:300px">
                     </a>
                 </div>
-            </div>
-            <div class="carousel-inner rounded-3" >
-                <div th:each="c:${competitions}" th:if="${c != firstOne}" class="carousel-item " data-bs-interval="3000">
+                <div th:each="c:${competitions}" th:if="${c.id != firstOne.id}" class="carousel-item " data-bs-interval="3000">
                     <a th:href="${c.url}">
                         <img th:src="'/upload/' + ${c.savedName}" class="d-block w-100 " alt="..." style="min-height:300px">
                     </a>
                 </div>
             </div>
-<!--            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"-->
-<!--                    data-bs-slide="prev">-->
-<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                <span class="visually-hidden">Previous</span>-->
-<!--            </button>-->
-<!--            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"-->
-<!--                    data-bs-slide="next">-->
-<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                <span class="visually-hidden">Next</span>-->
-<!--            </button>-->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 

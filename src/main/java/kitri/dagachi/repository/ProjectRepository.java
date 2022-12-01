@@ -91,6 +91,12 @@ public class ProjectRepository {
                 .getResultList();
     }
 
+    public List<Project> findProjectsByMid(Long member_id) {
+        return em.createQuery("select p from project_board p where p.member_id = :member_id")
+                .setParameter("member_id", member_id)
+                .getResultList();
+    }
+
     public List<Project> findByTag(String[] tags) {
         return em.createQuery("select p from project_tag p where p.project_tag in :tags")
                 .setParameter("tags", tags)

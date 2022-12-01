@@ -136,4 +136,11 @@ public class PersonalProjectController {
         else return new ResponseEntity<>("등록된 이메일이 아닙니다.", HttpStatus.SERVICE_UNAVAILABLE);
     }
 
+    @GetMapping("/project/personal/my_project")
+    public String myProject(@AuthenticationPrincipal Member member, Model model) {
+        List<Project> projects = projectService.findProjectsByMid(member.getId());
+        model.addAttribute("projects", projects);
+        return "project/project_list";
+    }
+
 }
