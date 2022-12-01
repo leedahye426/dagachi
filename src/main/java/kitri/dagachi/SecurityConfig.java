@@ -94,8 +94,7 @@ public class SecurityConfig {
                                                         HttpServletResponse response,
                                                         Authentication authentication) throws IOException, ServletException {
 
-
-
+                        response.sendRedirect("/");
 
                     }
                 })
