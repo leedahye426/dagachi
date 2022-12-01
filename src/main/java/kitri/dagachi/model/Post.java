@@ -37,5 +37,19 @@ public class Post {
     @Column(name = "approve")
     private String approve = "N";
 
+    private String origName;
+
+    private String savedNm;
+
+    private String savedPath;
+
+
+    @Builder
+    public Post(Long PostingId, String origName, String savedNm, String savedPath) {
+        this.postingId = postingId;
+        this.origName = origName;
+        this.savedNm = savedNm;
+        this.savedPath = savedPath;
+    }
 }
 

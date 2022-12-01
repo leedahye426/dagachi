@@ -17,8 +17,8 @@ public class SecurityMessageConfig {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasenames("classpath:/resources/message");
-
+        messageSource.setBasenames("classpath:messages/message", "classpath:org/springframework/security/messages");
+        messageSource.setCacheSeconds(600);
 
         return messageSource;
     }

@@ -24,8 +24,6 @@ public class MemberService implements UserDetailsService {
     private final AuthRepository authRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
     @Transactional
     public Long join(Member member) {
 
@@ -73,13 +71,19 @@ public class MemberService implements UserDetailsService {
     public Member findOne(Long id) {
         return memberRepository.findById(id);
     }
-    public List<Member> findmembers(Long project_id) {
+    public List<Member> findMembers(Long project_id) {
         return memberRepository.findByProjectId(project_id);
     }
 
     public Member findOneByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
+
+    public Member findMemberByEamil(String email) {
+        return memberRepository.findByLoginInfo(email)
+                .orElse(null);
+    }
+
 
     public void updateEmailById(Long id, String addr, String addrDetail) {
         Member member = memberRepository.findById(id);
@@ -126,6 +130,9 @@ public class MemberService implements UserDetailsService {
 
             return authUser;
         }
+//        else if(!member.isPresent()) {
+//            throw new UsernameNotFoundException();
+//        }
         return null;
     }
 

@@ -1,28 +1,18 @@
 package kitri.dagachi.controller;
 
-import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.*;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectLikeService;
 import kitri.dagachi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.mail.Session;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static kitri.dagachi.SessionConstants.LOGIN_MEMBER;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,7 +34,7 @@ public class EnterpriseProjectController {
     public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session,
                              @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);
-        List<Member> project_members = memberService.findmembers(project_id);
+        List<Member> project_members = memberService.findMembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
         Long member_id = member.getId();
         Long cnt = projectLikeService.findLikeCnt(project_id, member_id);
