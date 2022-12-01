@@ -89,7 +89,7 @@ public class PersonalPostingController {
 
 
     //    공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/personal/{postingId}/post_detail")
+    @GetMapping("/post/personal/post_detail/{postingId}")
 
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model,@AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);

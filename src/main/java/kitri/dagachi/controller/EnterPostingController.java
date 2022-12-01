@@ -79,6 +79,8 @@ public class EnterPostingController {
     }
 
 
+
+
     //insert
 
     @PostMapping("/post/enterprise/post_list")
@@ -94,7 +96,7 @@ public class EnterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/post_list";
+        return "/post/post_approve_list";
     }
 
 
@@ -108,7 +110,7 @@ public class EnterPostingController {
 
 
     //공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/enterprise/{postingId}/post_detail")
+    @GetMapping("/post/enterprise/post_detail/{postingId}")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
@@ -125,7 +127,7 @@ public class EnterPostingController {
 
 
     //삭제버튼 클릭시
-    @GetMapping("/post/enterprise/{postingId}/delete")
+    @GetMapping("/post/enterprise/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId) {
         System.out.println("postingId: " + postingId);
         postservice.delete(postingId);
@@ -155,6 +157,25 @@ public class EnterPostingController {
             return "/post/post_write_list";
         }
 
+
+        //내 채용신청 글 보기
+        @GetMapping("/post/enterprise/post_approve_list")
+    public String myapprove(@AuthenticationPrincipal Member member, Model model)
+        {
+            Long memberId = member.getId();;
+            List<Post> list = postservice.findlist(memberId);
+            List<Post> approvelist = new ArrayList<>();
+
+            for(Post p : list)
+            {
+                approvelist.add(postservice.findById(p.getPostingId()));
+            }
+
+            model.addAttribute("post",approvelist);
+
+            return "/post/post_approve_list";
+
+        }
 
 
 }

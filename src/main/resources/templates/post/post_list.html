@@ -37,8 +37,8 @@
     </form>
 
     <div class="container justify-content:space-around " >
-        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/${post.postingId}/post_detail|}'|" >
-            <div class="card-body b" style="width: 14rem; height: 10rem;" >
+        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" >
+            <div class="card-body b" style="width: 14rem; height: 10rem;  " >
 
                 <h5 class="card-title fw-bold py-5" name="postingContent" th:text=" ${post?.postingContent}"></h5>
                 <p class="card-text" name="posting"></p>
@@ -50,6 +50,7 @@
         </div>
     </div>
 </div>
+</div>
 
 
 
@@ -59,7 +60,7 @@
 
 <div sec:authorize="hasRole('ROLE_ENT')">
     <div class="container justify-content:space-around; " >
-                <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|" >
+                <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/enterprise/post_detail/${post.postingId}|}'|" >
 
                     <div class="card-body b" style="width: 14rem; height: 10rem;" >
                         <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>

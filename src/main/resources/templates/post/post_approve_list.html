@@ -10,22 +10,23 @@
 <head th:replace="fragments/nav :: nav"/>
 
 <div class="bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg'); padding:50px;">
-  <h1 style="text-align: center; color: white;">채용공고</h1>
+  <h1 style="text-align: center; color: white;">채용공고 신청내역</h1>
 </div>
 
 
-<div class="card-body b">
+<div class="card-body b" th:each="post : ${post}" action="/post/admin/approve_list">
 
-<form th:each="post : ${post}" action="/post/admin/approve_list">
+<!--<form >-->
       <table class="table table-hover">
         <thead>
         <tr>
-          <th scope="col">번호</th>
+          <th scope="col" >번호</th>
           <th scope="col">회사명</th>
           <th scope="col">공고제목</th>
           <th scope="col">내용</th>
           <th scope="col">등록날짜</th>
           <th scope="col">승인여부</th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -35,24 +36,22 @@
           <td><a th:href="@{|/post/admin/post_approve_detail/${post?.postingId}|}" th:text="${post?.postingTitle}"></a></td>
           <td th:text="${post?.postingContent}"></td>
           <td th:text="${post?.uploadDate}"></td>
+          <td th:text="${post?.approve}"></td>
           <td>
-     <span th:if="${post.approve == 'N'}">
-        <button type="button" class="btn btn-primary"
-                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인
-        </button>
-    </span>
-            <span th:if="${post.approve == 'Y'}">
-        <button type="button" class="btn btn-primary"
-                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소
-        </button>
-    </span>
+            <button type="button" class="btn btn-secondary"
+               th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/admin/delete/${post.postingId}|}'|">
+              삭제
+            </button>
+            </span>
+            </th:block>
+
           </td>
 
 
         </tr>
         </tbody>
       </table>
-</form>
+<!--</form>-->
 
 
 

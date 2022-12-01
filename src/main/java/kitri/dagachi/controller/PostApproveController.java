@@ -28,7 +28,7 @@ public class PostApproveController {
 
 
     //채용공고 리스트
-    @GetMapping("/post/admin/approve_list")
+    @GetMapping("/post/admin/post_approve_list")
     public String application(Model model)
     {
 
@@ -107,10 +107,20 @@ public class PostApproveController {
 
 
 
-        return "redirect:/post/admin/approve_list";
+        return "redirect:/post/admin/post_approve_list";
 
 
 
+    }
+
+    //삭제버튼 클릭 시
+    @GetMapping("/post/admin/enterprise/delete/{postingId}")
+    public String postDelete(@PathVariable Long postingId) {
+        System.out.println("postingId: " + postingId);
+        postservice.delete(postingId);
+
+
+        return "redirect:/post/admin/post_approve_list";
     }
 
 
