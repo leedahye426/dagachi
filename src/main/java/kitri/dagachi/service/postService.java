@@ -1,5 +1,7 @@
 package kitri.dagachi.service;
 
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.*;
 //import kitri.dagachi.repository.FileRepository;
 import kitri.dagachi.repository.PostLikeRepository;
@@ -14,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +36,7 @@ public class postService {
     private final PostRepository postRepository;
     private final PostLikeRepository postlikerepository;
 
-
+    private final EntityManager em;
 
 
     //글 작성 처리(insert)
@@ -50,8 +55,6 @@ public class postService {
 
         }
 
-
-//        postRepository.LOGO(path,filename);
     }
 
     //좋아요 저장(insert)
@@ -61,6 +64,15 @@ public class postService {
     }
 
 
+    //좋아요 취소
+    @Transactional
+    public void likeedel(PostingLike postinglike) {
+
+        postlikerepository.del(postinglike);
+        System.out.println("삭제되라");
+
+    }
+
     //리스트처리
     public List<Post> posting() {
 
@@ -68,6 +80,14 @@ public class postService {
         return postRepository.findAll();
 
     }
+
+    //승인 후 게시글 보여주기
+    public List<Post> approveList()
+    {
+        return postRepository.findApprove();
+    }
+
+
 
     //삭제
     public void delete(Long postingId) {
@@ -77,7 +97,7 @@ public class postService {
     }
 
 
-
+    //detail 처리 시
     public Post findOne(Long postingId) {
         return postRepository.findOne(postingId);
     }
@@ -89,6 +109,11 @@ public class postService {
 
     }
 
+    //작성 글 보여주기
+    public List<Post> findlist(Long memberId)
+    {
+        return postRepository.findById(memberId);
+    }
 
 
     // 여기서부터는 like
@@ -105,14 +130,7 @@ public class postService {
 
 
 
-    //좋아요 취소
-    @Transactional
-    public void likeedel(PostingLike postinglike) {
 
-        postlikerepository.del(postinglike);
-        System.out.println("삭제되라");
-
-    }
 
     //새로고침 시 하트 유지 하기 위한 cnt
 
@@ -130,6 +148,30 @@ public class postService {
     {
         return postlikerepository.findById(postingId);
     }
+
+
+    @Transactional
+    //approve
+//    public void updateApprove(Post post)
+//    {
+//        postRepository.approve(post);
+//
+//
+//    }
+
+
+    public void saveApprove(Long postingId) {
+
+       postRepository.approve(postingId);
+
+    }
+
+    public void cancelApprove(Long postingId) {
+
+        postRepository.approveCancel(postingId);
+
+    }
+
 
 }
 

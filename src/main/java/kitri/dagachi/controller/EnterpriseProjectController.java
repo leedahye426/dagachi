@@ -30,7 +30,7 @@ public class EnterpriseProjectController {
         return "project/project_list";
     }
 
-    @GetMapping("/project/enterprise/{project_id}/detail")
+    @GetMapping("/project/enterprise/detail/{project_id}")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model, HttpSession session,
                              @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);

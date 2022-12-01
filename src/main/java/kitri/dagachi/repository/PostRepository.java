@@ -1,12 +1,15 @@
 package kitri.dagachi.repository;
 
 import io.lettuce.core.dynamic.annotation.Param;
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
@@ -29,14 +32,6 @@ public class PostRepository {
         post.setUploadDate(formatedNow);
 
 
-        System.out.println("post.getPostingId() : " + post.getPostingId());
-        System.out.println("post.getCompanyName() : " + post.getCompanyName());
-        System.out.println("post.getPostingTitle() : " + post.getPostingTitle());
-        System.out.println("post.getPostingContent() : " + post.getPostingContent());
-//        System.out.println("post.getUpload_date() : " + post.getUploadDate());
-//        System.out.println("post.path : " + post.getPath());
-//        System.out.println("post.filename : " + post.getFileName());
-
         em.persist(post);
         em.flush();
         System.out.println("insert 동작");
@@ -52,6 +47,48 @@ public class PostRepository {
         em.persist(postinglike);
         em.flush();
     }
+
+    public void approve(Long postingId) {
+
+        Post post = findOne(postingId);
+        post.setApprove("Y");
+
+        LocalDateTime uploadDate = LocalDateTime.now();
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        post.setUploadDate(formatedNow);
+
+
+        em.persist(post);
+        em.flush();
+    }
+
+    public void approveCancel(Long postingId) {
+
+        Post post = findOne(postingId);
+        post.setApprove("N");
+
+        LocalDateTime uploadDate = LocalDateTime.now();
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        post.setUploadDate(formatedNow);
+
+
+        em.persist(post);
+        em.flush();
+    }
+
+//    public void approve(Post post)
+//    {
+//        if(post.getApprove() =="N")
+//        {
+//            post.setApprove("Y");
+//        }
+//        else
+//        {
+//            post.setApprove("N");
+//        }
+//
+//
+//    }
 
     public Post findOne(Long postingId) {
         return em.find(Post.class, postingId);
@@ -81,19 +118,6 @@ public class PostRepository {
 
 
 
-
-    public Post find0ne(Long id) {
-        return em.find(Post.class, id);
-    }
-
-//            LocalDateTime localdate=LocalDateTime.now();
-//            DateTimeFormatter  Date = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
-
-
-//    DateTimeFormatter DateTumeFormatter ;
-//    String formatedNow= now.format(DateTumeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss"));
-
-
     public List<Post> findAll() {
         return em.createQuery("select p from posting_board p", Post.class)
                 .getResultList();
@@ -110,19 +134,13 @@ public class PostRepository {
 
     }
 
+    public List<Post> findById(Long memberId) {
+        return em.createQuery("select p from posting_board p where p.memberId =:memberId")
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
 
 
-
-//    public String LOGO(String path, String filename)
-//    {
-//
-//        return (String) em.createQuery("insert into posting_board (path, filename) value('path','filename')")
-//                .setParameter("path", path)
-//                .setParameter("filename", filename)
-//                .getSingleResult();
-//
-//
-//    }
 
 
     public List<Post> findByTitleContaining(String keyword)
@@ -131,6 +149,13 @@ public class PostRepository {
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<Post> findApprove()
+    {
+        return em.createQuery("select p from posting_board p where p.approve ='Y'")
+                .getResultList();
+    }
+
 
 
 

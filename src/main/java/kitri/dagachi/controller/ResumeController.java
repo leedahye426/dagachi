@@ -34,6 +34,7 @@ public class ResumeController {
     private final MemberRepository memberRepository;
 
 
+
     @GetMapping("resumeChk")
     public String resumeView(@AuthenticationPrincipal Member member,
                              Model model) {
@@ -109,9 +110,9 @@ public class ResumeController {
                             @AuthenticationPrincipal Member member,
                             @RequestParam("file") MultipartFile file) throws IOException {
 
-        String fileName = file.getOriginalFilename();
-        String name = file.getName();
-        file.transferTo(new File("D://test/portfolio/"+fileName));
+//        String fileName = file.getOriginalFilename();
+//        String name = file.getName();
+//        file.transferTo(new File("D://test/portfolio/"+fileName));
 
         System.out.println("member.getId() : " + member.getId());
         System.out.println("fileName : " + fileName);

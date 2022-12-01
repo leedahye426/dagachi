@@ -60,7 +60,7 @@ public class PersonalProjectController {
 
     }
 
-    @GetMapping("/project/personal/{project_id}/detail")
+    @GetMapping("/project/personal/detail/{project_id}")
     public String detailPage(@PathVariable("project_id") Long project_id, Model model,  @AuthenticationPrincipal Member member){
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findMembers(project_id);
@@ -80,13 +80,13 @@ public class PersonalProjectController {
         return "project/project_list";
     }
 
-    @GetMapping("/project/personal/{project_id}/delete")
+    @GetMapping("/project/personal/delete/{project_id}")
     public String delete(@PathVariable Long project_id) {
         projectService.deleteProject(project_id);
         return "redirect:/project/personal/project_list";
     }
 
-    @GetMapping("/project/personal/{project_id}/update")
+    @GetMapping("/project/personal/update/{project_id}")
     public String update(@PathVariable Long project_id,Model model) {
         Project project = projectService.findProject(project_id);
         List<Member> members = memberService.findMembers(project_id);
@@ -104,7 +104,7 @@ public class PersonalProjectController {
         return "project/project_update_form";
     }
 
-    @PostMapping("project/personal/{project_id}/update")
+    @PostMapping("project/personal/update/{project_id}")
     public String updateRegister(@PathVariable Long project_id, MultipartHttpServletRequest multiReq) throws Exception{
         String team_name = multiReq.getParameter("team_name");
         String project_title = multiReq.getParameter("project_title");
@@ -134,6 +134,13 @@ public class PersonalProjectController {
         String checkedEmail = memberService.findOneByEmail(email).getEmail();
         if(checkedEmail.equals(email)) return new ResponseEntity<>(checkedEmail, HttpStatus.OK);
         else return new ResponseEntity<>("등록된 이메일이 아닙니다.", HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @GetMapping("/project/personal/my_project")
+    public String myProject(@AuthenticationPrincipal Member member, Model model) {
+        List<Project> projects = projectService.findProjectsByMid(member.getId());
+        model.addAttribute("projects", projects);
+        return "project/project_list";
     }
 
 }

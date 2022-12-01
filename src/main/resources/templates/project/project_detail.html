@@ -57,11 +57,11 @@
     <th:block th:switch="${loginId}">
         <span th:case="${project.member_id}">
             <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
-                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/${project.project_id}/delete|}'|">
+                    th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/delete/${project.project_id}|}'|">
                     삭제
             </button>
             <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"
-                    th:onclick="|location.href='@{|/project/personal/${project.project_id}/update|}'|">수정
+                    th:onclick="|location.href='@{|/project/personal/update/${project.project_id}|}'|">수정
             </button>
 	    </span>
     </th:block>

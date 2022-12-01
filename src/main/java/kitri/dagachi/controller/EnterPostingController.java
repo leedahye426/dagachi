@@ -1,16 +1,22 @@
 package kitri.dagachi.controller;
 
 //import kitri.dagachi.service.FileService;
+//import kitri.dagachi.dto.PostDto;
+//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
-import kitri.dagachi.model.PostFile;
+//import kitri.dagachi.model.PostFile;
+import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 
-import kitri.dagachi.service.PostFileService;
+//import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
+//import kitri.dagachi.util.MD5Generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
@@ -36,30 +42,51 @@ public class EnterPostingController {
 
     @Autowired
     private final postService postservice;
-    private final PostRepository postRepository;
-    private final PostFileService postfileservice;
 
 
-    //select
+//    //select
+//    @GetMapping("/post/enterprise/post_list")
+//   // @EnableGlobalMethodSecurity
+//    public String enterPosting(Model model) {
+//
+//        List<Post> post = postservice.posting();
+//
+//        model.addAttribute("post", post);
+//
+//        System.out.println(post);
+//
+//        return "/post/post_list";
+//    }
+
+
+
+    //approve 된 게시글만 보이게
     @GetMapping("/post/enterprise/post_list")
-    public String enterPosting(Model model) {
+    public String posting(Model model, @AuthenticationPrincipal Member member)
+    {
 
-        List<Post> post = postservice.posting();
+        List<Post> post = postservice.approveList();
+        Long memberId = member.getId();
 
+
+        model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
 
-        System.out.println(post);
+
 
         return "/post/post_list";
+
     }
 
 
     //insert
 
     @PostMapping("/post/enterprise/post_list")
-    public String postingRegister(Post post, String[] tag) {
+    public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member) {
 
-        //        System.out.println("===================="+postTags);
+
+        Long memberId = member.getId();
+        post.setMemberId(memberId);
 
         System.out.println(tag[0]);
         System.out.println(tag[1]);
@@ -78,6 +105,8 @@ public class EnterPostingController {
     }
 
 
+
+
     //공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/enterprise/{postingId}/post_detail")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
@@ -85,10 +114,10 @@ public class EnterPostingController {
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
-        Long memberId = member.getId();
+        Long loginId = member.getId();
 
-        System.out.println(postingId+memberId);
 
+        model.addAttribute("memberId", loginId);
         model.addAttribute("post", post);
 
         return "/post/post_detail";
@@ -102,98 +131,32 @@ public class EnterPostingController {
         postservice.delete(postingId);
 
 
-        return "redirect:/post/post_list";
+        return "redirect:/post/enterprise/post_list";
     }
 
 
-    //파일업로드해보자!
-//    @PostMapping("/post/enterprise/logo")
-//    public String logo(@RequestParam("uploadfile") MultipartFile[] uploadFile,
-//                       Post post, RedirectAttributes redirectAttributes) throws IOException
-//    {
-//        Post logopost = postfileservice.createPost(post);
-//
-//        List<PostFile> filepost = new ArrayList<>();
-//
-//        for(MultipartFile mf: uploadFile)
-//        {
-//            PostFile postfile = postfileservice.savefile(mf,post.getPostingId());
-//            filepost.add(postfile);
-//        }
-//
-//        redirectAttributes.addAttribute("filepost",filepost);
-//
-//        return "redirect:/post/post_list";
-//    }
-//
-//    @GetMapping("/post/enterprise/logo")
-//    public String getPost(@PathVariable Long postingId, Model model)
-//    {
-//        Post post = postfileservice.findById(postingId);
-//
-//        if(post == null)
-//        {
-//            return "/";
-//        }
-//
-//        List<PostFile> postFiles = postfileservice.findByFiles(postingId);
-//
-//        model.addAttribute("files", postFiles);
-//
-//        model.addAttribute("post",post);
-//
-//        return "/post/post_list";
-//    }
+    //작성글
+
+    @GetMapping("/post/enterprise/list")
+        public String list(Model model, @AuthenticationPrincipal Member member)
+        {
+
+            Long memberId = member.getId();
+            List<Post> list = postservice.findlist(memberId);
+            List<Post> postList = new ArrayList<>();
+
+            for (Post p : list){
+                postList.add(postservice.findById(p.getPostingId()));
+            }
+
+
+            model.addAttribute("post",postList);
+
+            return "/post/post_write_list";
+        }
 
 
 
-
-//    @PostMapping("/post/enterprise/logo")
-//    @RequestMapping
-//    public String logo(@RequestParam Map<String, Object> map, @RequestParam MultipartFile img, HttpServletRequest request) {
-//
-//        String filename = "-";
-//
-//        if (img != null && !img.isEmpty()) {
-//
-//            filename = img.getOriginalFilename();
-//            String path = null;
-//
-//            try {
-//                ServletContext application = request.getSession().getServletContext();
-//                path = application.getRealPath("/resources/images/");
-//                img.transferTo(new File(path + filename));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//
-//
-//            }
-//            map.put("filename", filename);
-//
-////            return "redirect:/";
-//        }
-//
-//    }
-
-
-//파일 클릭시 이미지업로드 구상해볼께여
-
-
-//    @PostMapping("/post/enterprise/post_list")
-//    public String postingRegister(Post post, String[] tag) {
-//
-//        //        System.out.println("===================="+postTags);
-//
-//        System.out.println(tag[0]);
-//        System.out.println(tag[1]);
-//
-//
-//
-//
-//        postservice.register(post, tag);
-//
-//        return "/post/post_list";
-//    }
 }
 
 

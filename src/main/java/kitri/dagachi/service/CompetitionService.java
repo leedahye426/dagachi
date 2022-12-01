@@ -30,21 +30,28 @@ public class CompetitionService {
     public List<Competition> findByLoginId(Long memberId) {
         return competitionRepository.findByMid(memberId);
     }
-    private String fileDir="D:/test/poster/";
+    private String fileDir="D:/test/";
 
-    public void register(Competition competition, MultipartFile file) throws IOException {
+    public void register(Competition competition, MultipartFile poster, MultipartFile banner) throws IOException {
 
-        String orgName = file.getOriginalFilename();
+        String posterOrgName = poster.getOriginalFilename();
         String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
-        String savedName = uuid + orgName;
-        String savedPath = fileDir + savedName;
+        String posterSavedName = uuid + posterOrgName;
+        String posterSavedPath = fileDir + "poster/" + posterSavedName;
 
-        competition.setOrgName(orgName);
-        competition.setSavedName(savedName);
-        competition.setSavedPath(savedPath);
+        String bannerOrgName = banner.getOriginalFilename();
+        String bannerSavedName = uuid + bannerOrgName;
+        String bannerSavePath = fileDir + "banner/" + bannerSavedName;
 
-        file.transferTo(new File(savedPath));
+        competition.setPosterOrgName(posterOrgName);
+        competition.setPosterSavedPath(posterSavedName);
+        competition.setPosterSavedPath(posterSavedPath);
+        competition.setBannerOrgName(bannerOrgName);
+        competition.setBannerSavedName(bannerSavedName);
+        competition.setBannerSavedPath(bannerSavePath);
 
+        poster.transferTo(new File(posterSavedPath));
+        banner.transferTo(new File(bannerSavePath));
         competitionRepository.save(competition);
     }
 
@@ -55,9 +62,9 @@ public class CompetitionService {
         String savedName = uuid + orgName;
         String savedPath = fileDir + savedName;
 
-        competition.setOrgName(orgName);
-        competition.setSavedName(savedName);
-        competition.setSavedPath(savedPath);
+        competition.setPosterOrgName(orgName);
+        competition.setPosterSavedName(savedName);
+        competition.setPosterSavedPath(savedPath);
 
         file.transferTo(new File(savedPath));
     }
@@ -68,5 +75,9 @@ public class CompetitionService {
 
     public List<Competition> findCompetitions(String keyword) {
         return competitionRepository.findByKeyword(keyword);
+    }
+
+    public Competition findFirst() {
+        return competitionRepository.findFirst();
     }
 }
