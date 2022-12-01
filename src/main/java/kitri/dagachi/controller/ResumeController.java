@@ -31,10 +31,8 @@ public class ResumeController {
     private final EntityManager em;
     private final ResumeRepository resumeRepository;
     private final MemberService memberService;
-<<<<<<< HEAD
-=======
     private final MemberRepository memberRepository;
->>>>>>> 36b47858195e476c9622e5a7f769c18943d407ee
+
 
 
     @GetMapping("resumeChk")

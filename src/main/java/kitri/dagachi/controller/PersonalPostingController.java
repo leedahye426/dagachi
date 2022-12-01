@@ -65,6 +65,9 @@ public class PersonalPostingController {
 //        return "/post/post_list";
 //    }
 
+
+
+
     //approve 된 게시글만 보이게
     @GetMapping("/post/personal/post_list")
       public String posting(Model model, @AuthenticationPrincipal Member member)
@@ -72,8 +75,6 @@ public class PersonalPostingController {
 
         List<Post> post = postservice.approveList();
         Long memberId = member.getId();
-
-//        System.out.println();
 
 
         model.addAttribute("memberId", memberId);
@@ -84,6 +85,8 @@ public class PersonalPostingController {
         return "/post/post_list";
 
     }
+
+
 
     //    공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/personal/{postingId}/post_detail")
@@ -156,6 +159,8 @@ public class PersonalPostingController {
 
         return "";
     }
+
+
 
     //좋아요 취소
     @PostMapping("/post/personal/empty_like")

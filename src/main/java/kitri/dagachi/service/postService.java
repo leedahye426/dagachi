@@ -55,8 +55,6 @@ public class postService {
 
         }
 
-
-//        postRepository.LOGO(path,filename);
     }
 
     //좋아요 저장(insert)
@@ -65,13 +63,15 @@ public class postService {
         postRepository.savaLike(postinglike);
     }
 
-    //파일
 
-//    public void savaPost(PostDto postDto)
-//    {
-//        postRepository.savaPost(postDto);
-//    }
+    //좋아요 취소
+    @Transactional
+    public void likeedel(PostingLike postinglike) {
 
+        postlikerepository.del(postinglike);
+        System.out.println("삭제되라");
+
+    }
 
     //리스트처리
     public List<Post> posting() {
@@ -88,17 +88,6 @@ public class postService {
     }
 
 
-    //승인버튼 클릭시 Y로 변경
-
-    public void approve(Long postingId){
-
-
-       postRepository.updateApprove(postingId);
-
-
-
-    }
-
 
     //삭제
     public void delete(Long postingId) {
@@ -108,7 +97,7 @@ public class postService {
     }
 
 
-
+    //detail 처리 시
     public Post findOne(Long postingId) {
         return postRepository.findOne(postingId);
     }
@@ -120,6 +109,11 @@ public class postService {
 
     }
 
+    //작성 글 보여주기
+    public List<Post> findlist(Long memberId)
+    {
+        return postRepository.findById(memberId);
+    }
 
 
     // 여기서부터는 like
@@ -133,53 +127,10 @@ public class postService {
         return postlikerepository.findLike(postingId, memberId);
     }
 
-    //작성 글 보여주기
-    public List<Post> findlist(Long memberId)
-    {
-        return postRepository.findById(memberId);
-    }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    //파일
-//    @Transactional
-//    public PostDto getPost(Long id){
-//
-//        Post post = postRepository.findById(id); //fileId불러오기
-//
-//        PostDto postdto = PostDto.builder()
-//                        .id(post.getPostingId())
-//                        .companyName(post.getCompanyName())
-//                        .postingTitle(post.getPostingTitle())
-//                        .postingContent(post.getPostingContent())
-//                        .uploadDate(post.getUploadDate())
-//                        .fileId(post.getFileId())
-//                        .build();
-//
-//        return postdto;
-//    }
-
-
-    //좋아요 취소
-    @Transactional
-    public void likeedel(PostingLike postinglike) {
-
-        postlikerepository.del(postinglike);
-        System.out.println("삭제되라");
-
-    }
 
     //새로고침 시 하트 유지 하기 위한 cnt
 
@@ -196,6 +147,29 @@ public class postService {
     public Post findById(Long postingId)
     {
         return postlikerepository.findById(postingId);
+    }
+
+
+    @Transactional
+    //approve
+//    public void updateApprove(Post post)
+//    {
+//        postRepository.approve(post);
+//
+//
+//    }
+
+
+    public void saveApprove(Long postingId) {
+
+       postRepository.approve(postingId);
+
+    }
+
+    public void cancelApprove(Long postingId) {
+
+        postRepository.approveCancel(postingId);
+
     }
 
 

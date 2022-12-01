@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 @Entity(name="posting_board")
 @Getter @Setter
 @NoArgsConstructor
-//@RequiredArgsConstructor
-//@DynamicUpdate
+
 public class Post {
 
     @Id
@@ -30,61 +29,13 @@ public class Post {
 
     @Column(name = "upload_date")
     private String uploadDate;
-//    public LocalDateTime Upload_Date;
+
 
     @Column(name = "member_id")
     private Long memberId;
 
     @Column(name = "approve")
-    private String approve;
-
-
-//    private Long fileId;
-
-
-
-
-//    public void setFileId(Long fileId) {
-//        this.fileId = fileId;
-//    }
-//
-//    public Long getFileId() {
-//        return fileId;
-//    }
-
-//    @Column(name="file_path")
-//    private String filePath;
-//
-//    @Column(name="file_name")
-//    private String fileName;
-
-//    @Builder
-//    public Post(Long postingId, String companyName, String postingTitle, String postingContent, String uploadDate, Long fileId) {
-//        this.postingId = postingId;
-//        this.companyName = companyName;
-//        this.postingTitle = postingTitle;
-//        this.postingContent = postingContent;
-//        this.uploadDate = uploadDate;
-//        this.fileId = fileId;
-//
-////
-//    }
-
-
-
-
-//    @Column(name = "posting_tag")
-//    private String tag;
-
-//    public PostForm get() {
-//        return "";
-//    }
-
-
-//    LocalDateTime now=LocalDateTime.now();
-//    public DateTimeFormatter DateTumeFormatter;
-//    String formatedNow= now.format(DateTumeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss"));
-
-
+    private String approve = "N";
 
 }
+

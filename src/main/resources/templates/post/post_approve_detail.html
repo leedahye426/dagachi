@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header"/>
+<body>
+<!-- Responsive navbar-->
+<head th:replace="fragments/nav :: nav"/>
+
+
+<div class="container py-5">
+    <div class="card-body" method="post" th:each="post : ${post}">
+<!--        <input type="hideen" id="postingId" th:value="${post?.postingId}">-->
+<!--        <input id="approve" type="hidden" th:value="${post.approve}">-->
+            <h1>채용공고</h1>
+
+
+
+
+<!--        <button class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
+<!--                th:onclick="approve(this.getAttribute('id'))" id="approve" th:data-parameter="${post.approve}" value="승인">-->
+<!--        </button>-->
+
+
+<!--    <span th:if="${post.approve == 'N'}">-->
+<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
+<!--                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인-->
+<!--        </button>-->
+<!--    </span>-->
+<!--     <span th:if="${post.approve == 'Y'}">-->
+<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
+<!--                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소-->
+<!--        </button>-->
+<!--    </span>-->
+
+
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">회사이름</label>
+                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">공고제목</label>
+                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">공고내용</label>
+                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"
+                          th:text="${post?.postingContent}" disabled></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">등록날짜</label>
+                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
+            </div>
+
+<!--            <div sec:authorize="hasRole('ROLE_ENT')">-->
+<!--                <th:block th:switch="${memberId}">-->
+<!--                     <span th:case="${post.memberId}">-->
+<!--                        <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"-->
+<!--                            th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/${post.postingId}/delete|}'|">-->
+<!--                            삭제-->
+<!--                        </button>-->
+<!--                    </span>-->
+<!--                </th:block>-->
+
+<!--            </div>-->
+
+        </form>
+    </div>
+</div>
+
+
+<!-- Image element - set the background image for the header in the line below-->
+
+<!-- Content section-->
+
+<!-- Footer-->
+
+<div th:replace="fragments/footer :: footer"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="/js/approve.js"></script>-->
+<!--<script src="/js/heart.js"></script>-->
+<!--<script th:inline="javascript">-->
+<!--            $(document).ready(function(){-->
+
+<!--                const heart = document.getElementById("heart");-->
+<!--                const likeCheck = [[${cnt}]];-->
+
+
+<!--                console.log('cnt : ' + likeCheck);-->
+
+<!--                if(likeCheck == 1) {-->
+
+<!--                    heart.classList.add("heart");-->
+<!--                    heart.setAttribute('fill', 'red');-->
+<!--                }else{-->
+<!--                    heart.classList.add("empty_heart");-->
+<!--                    heart.setAttribute('fill','grey');-->
+<!--                }-->
+<!--            });-->
+
+
+
+
+
+<!--</script>-->
+
+</body>
+</html>
+
+
+<!--<script>-->
+<!--  function readURL(input){-->
+<!--      if(input.files && input.files[0]){-->
+<!--          var reader = new FileReader();-->
+<!--          reader.onload = function(e){-->
+<!--              document.getElementById('preview').src = e.target.result;-->
+<!--          }-->
+<!--          reader.readAsDataURL(input.files[0]);-->
+<!--      }-->
+<!--      else{-->
+<!--          document.getElementById('preview').src="";-->
+<!--      }-->
+<!--  }-->
+<!--</script>-->

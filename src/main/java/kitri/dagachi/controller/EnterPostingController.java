@@ -5,7 +5,7 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
-import kitri.dagachi.model.PostFile;
+//import kitri.dagachi.model.PostFile;
 import kitri.dagachi.model.PostingLike;
 import kitri.dagachi.repository.PostRepository;
 
@@ -43,8 +43,6 @@ public class EnterPostingController {
     @Autowired
     private final postService postservice;
 
-//    private final PostFileService postfileservice;
-
 
 //    //select
 //    @GetMapping("/post/enterprise/post_list")
@@ -60,6 +58,8 @@ public class EnterPostingController {
 //        return "/post/post_list";
 //    }
 
+
+
     //approve 된 게시글만 보이게
     @GetMapping("/post/enterprise/post_list")
     public String posting(Model model, @AuthenticationPrincipal Member member)
@@ -67,8 +67,6 @@ public class EnterPostingController {
 
         List<Post> post = postservice.approveList();
         Long memberId = member.getId();
-
-//        System.out.println();
 
 
         model.addAttribute("memberId", memberId);
@@ -86,7 +84,6 @@ public class EnterPostingController {
     @PostMapping("/post/enterprise/post_list")
     public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member) {
 
-        //        System.out.println("===================="+postTags);
 
         Long memberId = member.getId();
         post.setMemberId(memberId);
@@ -108,6 +105,8 @@ public class EnterPostingController {
     }
 
 
+
+
     //공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/enterprise/{postingId}/post_detail")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
@@ -117,7 +116,6 @@ public class EnterPostingController {
         String postingContent = post.getPostingContent();
         Long loginId = member.getId();
 
-//        System.out.println(postingId+memberId);
 
         model.addAttribute("memberId", loginId);
         model.addAttribute("post", post);
@@ -158,139 +156,7 @@ public class EnterPostingController {
         }
 
 
-    //파일업로드해보자!
 
-//    public EnterPostingController(postService postservice, PostFileService postfileservice)
-//    {
-//        this.postservice = postservice;
-//        this.postfileservice = postfileservice;
-//    }
-//    @PostMapping("/post/enterprise/logo")
-//    public String savelogo(@RequestParam("file") MultipartFile files, PostDto postDto)
-//    {
-//        try{
-//            String origFileName = files.getOriginalFilename();
-//            String fileName = new MD5Generator(origFileName).toString();
-//            //실행되는 위치의 files 폴더에 파일이 저장됩니다.
-//            String savePath = System.getProperty("user.dir")+ "\\files";
-//            //파일이 저장되는 폴더가 ㅇ벗으면 폴더를 생성합니다.
-//
-//            if(!new File(savePath).exists())
-//            {
-//                try{
-//                    new File(savePath).mkdir();
-//                }
-//                catch (Exception e)
-//                {
-//                    e.getStackTrace();
-//                }
-//            }
-//            String filePath = savePath+"\\"+fileName;
-//            files.transferTo(new File(filePath));
-//
-//            PostFileDto postfiledto = new PostFileDto();
-//            postfiledto.setOrigFileName(origFileName);
-//            postfiledto.setFileName(fileName);
-//            postfiledto.setFilePath(filePath);
-//
-//            Long fileId = postfileservice.saveFile(postfiledto);
-//            postDto.setFileId(fileId);
-//            postservice.savaPost(postDto);
-//        }catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/post/enterprise/post_list";
-//
-//    }
-
-
-//    public String logo(@RequestParam("uploadfile") MultipartFile[] uploadFile,
-//                       Post post, RedirectAttributes redirectAttributes) throws IOException
-//    {
-//        Post logopost = postfileservice.createPost(post);
-//
-//        List<PostFile> filepost = new ArrayList<>();
-//
-//        for(MultipartFile mf: uploadFile)
-//        {
-//            PostFile postfile = postfileservice.savefile(mf,post.getPostingId());
-//            filepost.add(postfile);
-//        }
-//
-//        redirectAttributes.addAttribute("filepost",filepost);
-//
-//        return "redirect:/post/post_list";
-//    }
-//
-//    @GetMapping("/post/enterprise/logo")
-//    public String getPost(@PathVariable Long postingId, Model model)
-//    {
-//        Post post = postfileservice.findById(postingId);
-//
-//        if(post == null)
-//        {
-//            return "/";
-//        }
-//
-//        List<PostFile> postFiles = postfileservice.findByFiles(postingId);
-//
-//        model.addAttribute("files", postFiles);
-//
-//        model.addAttribute("post",post);
-//
-//        return "/post/post_list";
-//    }
-
-
-
-
-//    @PostMapping("/post/enterprise/logo")
-//    @RequestMapping
-//    public String logo(@RequestParam Map<String, Object> map, @RequestParam MultipartFile img, HttpServletRequest request) {
-//
-//        String filename = "-";
-//
-//        if (img != null && !img.isEmpty()) {
-//
-//            filename = img.getOriginalFilename();
-//            String path = null;
-//
-//            try {
-//                ServletContext application = request.getSession().getServletContext();
-//                path = application.getRealPath("/resources/images/");
-//                img.transferTo(new File(path + filename));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//
-//
-//            }
-//            map.put("filename", filename);
-//
-////            return "redirect:/";
-//        }
-//
-//    }
-
-
-//파일 클릭시 이미지업로드 구상해볼께여
-
-
-//    @PostMapping("/post/enterprise/post_list")
-//    public String postingRegister(Post post, String[] tag) {
-//
-//        //        System.out.println("===================="+postTags);
-//
-//        System.out.println(tag[0]);
-//        System.out.println(tag[1]);
-//
-//
-//
-//
-//        postservice.register(post, tag);
-//
-//        return "/post/post_list";
-//    }
 }
 
 

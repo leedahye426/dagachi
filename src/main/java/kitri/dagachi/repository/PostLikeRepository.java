@@ -77,21 +77,16 @@ public class PostLikeRepository {
 
 
 
-
-
-    //    @Query
-//    public int likedel(Long memberId )
+//    public Post findApprove(Long postingId, String approve)
 //    {
-//
-//
-//        int result =  em.createQuery ("delete from posting_like pl where pl.member_id = :memberId")
-//                .setParameter("postingLike", memberId).executeUpdate();
-////                 .setParameter("memberId", memberId)
-//
-//        return  result;
-//
+//        return  (Post) em.createQuery("select p from posting_board p where p.postingId = : postingId and p.approve = : approve")
+//                .setParameter("postingId",postingId)
+//                .setParameter("approve",approve)
+//                .getSingleResult();
 //
 //    }
+
+
 
 
 
