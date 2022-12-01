@@ -34,6 +34,7 @@ public class ResumeController {
     private final MemberRepository memberRepository;
 
 
+
     @GetMapping("resumeChk")
     public String resumeView(@AuthenticationPrincipal Member member,
                              Model model) {

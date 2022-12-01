@@ -7,10 +7,15 @@
 
 
 <div class="container py-5">
+
+
     <div class="card-body" th:each="post : ${post}">
         <input type="hidden" id="postingId" th:value="${post?.postingId}">
-        <h1 class="mx-5">채용공고
+
+
+        <h1>채용공고
             <div sec:authorize="hasRole('ROLE_PER')">
+
                 <button type="button" class="btn btn-sm" th:onclick="|javascript:like(${post?.postingId})|">
                     <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray"
                          class="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -39,8 +44,11 @@
                 <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
             </div>
 
+
+
+
             <div sec:authorize="hasRole('ROLE_ENT')">
-                <th:block th:switch="${loginId}">
+                <th:block th:switch="${memberId}">
                      <span th:case="${post.memberId}">
                         <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
                             th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/${post.postingId}/delete|}'|">
@@ -48,6 +56,7 @@
                         </button>
                     </span>
                 </th:block>
+
             </div>
 
         </form>

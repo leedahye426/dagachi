@@ -24,7 +24,6 @@ public class MemberService implements UserDetailsService {
     private final AuthRepository authRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Transactional
     public Long join(Member member) {
 

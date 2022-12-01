@@ -42,6 +42,7 @@ public class MemberRepository {
                 .getResultList();
     }
 
+
     public PersonalInfo findInfo(Long memberId) {
         return (PersonalInfo) em.createQuery("select pi from PersonalInfo pi where pi.id = :memberId")
                 .setParameter("memberId", memberId)
