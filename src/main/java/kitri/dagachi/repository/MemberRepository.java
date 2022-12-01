@@ -52,6 +52,10 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 
+//    public Member findById(Long id) {
+//        return em.find(Member.class, id);
+//    }
+
 //    public void updateById(Long id, String addr, String addrDetail) {
 //        em.createQuery("UPDATE Member m SET m.addr = :addr, m.addrDetail = :addrDetail WHERE m.id = :id")
 //                .setParameter("addr", addr)

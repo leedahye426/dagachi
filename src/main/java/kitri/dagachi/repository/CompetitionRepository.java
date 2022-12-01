@@ -41,5 +41,8 @@ public class CompetitionRepository {
                 .getResultList();
     }
 
-    
+    public Competition findFirst() {
+        return (Competition) em.createQuery("select c from competition_board c where c.id = (select min(cb.id) from competition_board cb)")
+                .getSingleResult();
+    }
 }

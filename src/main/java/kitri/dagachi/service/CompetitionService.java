@@ -70,5 +70,7 @@ public class CompetitionService {
         return competitionRepository.findByKeyword(keyword);
     }
 
-
+    public Competition findFirst() {
+        return competitionRepository.findFirst();
+    }
 }

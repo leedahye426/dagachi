@@ -50,6 +50,14 @@
               <input type="password" class="form-control rounded-3" name="passwd" id="passwd" placeholder="Password">
               <label for="passwd">Password</label>
             </div>
+            <div th:if="${param.error != null}" class="mt-2 mb-3 text-center">
+              <span class="fw-bolder" style="color:red;" th:text="${session.failMsg}">이메일 또는 패스워드가 일치하지 않습니다.</span>
+              <!--
+              <span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}">
+                <span class="fw-bolder" style="color:red" th:text="${session [SPRING_SECURITY_LAST_EXCEPTION].message}">Invalid credentials</span>
+              </span>
+              -->
+            </div>
             <input class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" value="sign up" onclick="signUp()">
           </form>
             <!-- <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>

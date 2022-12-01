@@ -56,9 +56,11 @@ public class HomeController {
         if(member != null)  model.addAttribute("loginMember", member);
 
         List<Competition> competitions = competitionService.findAllCompetition();
+        Competition firstOne = competitionService.findFirst();
         System.out.println("________________________");
         for(Competition c : competitions) System.out.println(c.getOrgName());
         model.addAttribute("competitions", competitions);
+        model.addAttribute("firstOne", firstOne);
         return "home";
     }
 
