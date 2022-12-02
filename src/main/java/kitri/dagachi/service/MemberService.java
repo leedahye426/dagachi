@@ -136,7 +136,7 @@ public class MemberService implements UserDetailsService {
         return null;
     }
 
-    public PersonalInfo findInfo(Long memberId) {
+    public Optional<PersonalInfo> findInfo(Long memberId) {
         return memberRepository.findInfo(memberId);
     }
 

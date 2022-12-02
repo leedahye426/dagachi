@@ -43,8 +43,8 @@ public class MemberRepository {
     }
 
 
-    public PersonalInfo findInfo(Long memberId) {
-        return (PersonalInfo) em.createQuery("select pi from PersonalInfo pi where pi.id = :memberId")
+    public Optional<PersonalInfo> findInfo(Long memberId) {
+        return (Optional<PersonalInfo>) em.createQuery("select pi from PersonalInfo pi where pi.id = :memberId")
                 .setParameter("memberId", memberId)
                 .getSingleResult();
     }

@@ -42,7 +42,7 @@ public class EnterpriseProjectController {
 
         List<PersonalInfo> personalInfo = new ArrayList<>();
         for(Member m : project_members) {
-            personalInfo.add(memberService.findInfo(m.getId()));
+            personalInfo.add(memberService.findInfo(m.getId()).get());
         }
         System.out.println("______________________________________________________________");
         for(PersonalInfo p : personalInfo) System.out.println(p.getId());
