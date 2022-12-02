@@ -27,7 +27,7 @@
 
         <div class="container bg-light d-flex" style="padding-left:0px">
             <div class>
-                <img class="img-fulid" src="dagachi_logo.jpg" id="profileImg" width="130px" height="180px">
+                <img class="img-fulid" th:src="|/image/${personalInfo.image}|" id="profileImg" width="130px" height="180px">
                 <input type="hidden" name="fileName" value="">
             </div>
             <div class="mt-3 mx-3" style="width: 100%;">

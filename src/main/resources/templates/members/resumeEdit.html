@@ -22,7 +22,7 @@
 <!-- Responsive navbar-->
 <div th:replace="fragments/nav :: nav"></div>
 
-<div class="container row align-items-center  mx-auto mt-5 border">
+<div class="container row align-items-center  mx-auto mt-5">
 
     <form class="mx-auto px-4" style="width:70%;" role="form"
           action="resumeEdit" method="post" id="resumeForm" enctype="multipart/form-data">
@@ -106,7 +106,7 @@
         </div>
         <div>
             <label for="member_profile" class="border" style="cursor: pointer">프로필 선택</label>
-            <input type="file" id="member_profile" name="profile" accept="image/*" onchange="loadFile(this)"
+            <input type="file" id="member_profile" name="image" accept="image/*" onchange="loadFile(this)"
                    style="visibility: hidden;">
         </div>
 
