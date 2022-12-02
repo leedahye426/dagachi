@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -26,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -67,15 +69,16 @@ public class SecurityConfig {
         http.headers().frameOptions().sameOrigin(); // 동일 도메인 내 X-Frame-Options 활성화(PDF viewer)
 
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
+//                .antMatchers("/project/enterprise/**",
+//                        "/post/ent/enterDetail/**",
+//                        "/project/enterprise/**",
+//                        "/project/enterprise_project_list").hasAnyRole("ENT", "ADMIN")
+//                .antMatchers("/competition/detail/**").hasRole("ADMIN")
+//                .antMatchers("/project/personal/**",
+//                        "/post/person/**").hasAnyRole("PER", "ADMIN")
+//                .antMatchers("/post/enter/enter_post").permitAll()
                 .antMatchers("/members").anonymous()
-                .antMatchers("/project/enterprise/**",
-                        "/post/ent/enterDetail/**",
-                        "/project/enterprise/**",
-                        "/project/enterprise_project_list").hasAnyRole("ENT", "ADMIN")
-                .antMatchers("/project/personal/**",
-                        "/post/person/**").hasAnyRole("PER", "ADMIN")
-                .antMatchers("/post/enter/enter_post").permitAll()
-                .antMatchers("/members/login").anonymous() // 무한루프 방지(사용자 정의 로그인 페이지 권한 설정)
+                .antMatchers("/members/login", "/members/join").anonymous() // 무한루프 방지(사용자 정의 로그인, 회원가입 페이지 권한 설정)
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정
 //                .anyRequest().authenticated()
@@ -88,16 +91,16 @@ public class SecurityConfig {
 //                .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
                 .loginProcessingUrl("/members/login") // 로그인 Form Action url
 //                .failureForwardUrl("/members/login?error=true") // 로그인 실패 후 페이지 포워딩
-                .successHandler(new AuthenticationSuccessHandler() { // 로그인 성공 핸들러
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request,
-                                                        HttpServletResponse response,
-                                                        Authentication authentication) throws IOException, ServletException {
-
-                        response.sendRedirect("/");
-
-                    }
-                })
+//                .successHandler(new AuthenticationSuccessHandler() { // 로그인 성공 핸들러
+//                    @Override
+//                    public void onAuthenticationSuccess(HttpServletRequest request,
+//                                                        HttpServletResponse response,
+//                                                        Authentication authentication) throws IOException, ServletException {
+//
+//
+//
+//                    }
+//                })
                 .failureHandler(new AuthenticationFailureHandler() { // 로그인 실패 핸들러
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request,
@@ -111,12 +114,12 @@ public class SecurityConfig {
                         System.out.println("실패 핸들러 작동");
                         HttpSession session = request.getSession();
 
-                        if (user == null) {
-                            System.out.println("아이디 틀림");
-                            session.setAttribute("failMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
+                        if (exception instanceof InternalAuthenticationServiceException) {
+                            System.out.println("내부 시스템 문제");
+                            session.setAttribute("failMsg", "내부 시스템 문제로 로그인 요청을 처리할 수 없습니다.");
                         }
                         else if(exception instanceof BadCredentialsException) {
-                            System.out.println("비밀번호 틀림");
+                            System.out.println("아이디 또는 비밀번호 틀림");
                             session.setAttribute("failMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
                         }
 
@@ -129,10 +132,18 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
-//            .and()
-//                .exceptionHandling()
-//                .accessDeniedPage("/");
+                .deleteCookies("JSESSIONID")
+            .and()
+                .exceptionHandling()
+                .accessDeniedHandler(new AccessDeniedHandler() {
+                    @Override
+                    public void handle(HttpServletRequest request,
+                                       HttpServletResponse response,
+                                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+
+                        response.sendRedirect("/denied");
+                    }
+                });
 //            .and()
 //                .sessionManagement()
 //                .invalidSessionUrl("/")

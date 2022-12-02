@@ -87,7 +87,9 @@ public class ResumeRepository {
 
     public void deleteAllAwardById(Long id) {
         em.createQuery("DELETE FROM MemberAwards m WHERE m.id = :id")
-                .setParameter("id", id);
+                .setParameter("id", id)
+                .executeUpdate();
+        em.clear();
     }
 
     // 경력사항 DB 저장
@@ -105,6 +107,8 @@ public class ResumeRepository {
 
     public void deleteAllCareerById(Long id) {
         em.createQuery("DELETE FROM MemberCareers m WHERE m.id = :id")
-                .setParameter("id", id);
+                .setParameter("id", id)
+                .executeUpdate();
+        em.clear();
     }
 }
