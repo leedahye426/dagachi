@@ -13,7 +13,7 @@ public class ResumeForm {
 
     private String addrDetail;
 
-    private String fileName;
+    private String image;
 
     private Character gender;
 

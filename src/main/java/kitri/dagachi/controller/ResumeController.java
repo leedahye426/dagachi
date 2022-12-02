@@ -12,14 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/members/")
@@ -108,17 +110,36 @@ public class ResumeController {
     public String resumeSet(@Valid ResumeForm form,
                             BindingResult bindingResult,
                             @AuthenticationPrincipal Member member,
-                            @RequestParam("file") MultipartFile file) throws IOException {
+                            @RequestParam("image") MultipartFile file) throws IOException {
 
-//        String fileName = file.getOriginalFilename();
-//        String name = file.getName();
-//        file.transferTo(new File("D://test/portfolio/"+fileName));
+        String fileName = file.getOriginalFilename();
+        System.out.println("fileName : " + fileName);
+
+        String uploadDir = "D:/test/portfolio/";
+//        File uploadPath = new File(uploadDir);
+//        if(uploadPath.exists() == false) {
+//            uploadPath.mkdir();
+//        }
+        String uuid = UUID.randomUUID().toString();
+        System.out.println("uuid : " + uuid);
+
+        String savedName = uuid + fileName;
+        File savedFile = new File(uploadDir, savedName);
+        System.out.println("savedName : " + savedName);
+
+        try {
+            file.transferTo(savedFile);
+            form.setImage(savedName);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        file.transferTo(new File(uploadName));
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("fileName : " + fileName);
-        System.out.println("name : " + name);
-        System.out.println("form.getFileName() : " + form.getFileName());
-        System.out.println("form.getFileName() : " + form.getFileName());
+        System.out.println("form.getImage() : " + form.getImage());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -149,33 +170,24 @@ public class ResumeController {
                 System.out.println("멤버 데이터가 있음");
                 resumeService.deleteInfo(member.getId());
 
-                System.out.println("업데이트 시작");
-                memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
-                System.out.println("업데이트 끝");
-
-                PersonalInfo personalInfo = PersonalInfo.builder()
-                        .id(member.getId())
-                        .image(form.getFileName())
-//                    .gender(form.getGender()
-                        .stack(form.getStack())
-                        .build();
-                resumeService.saveInfo(personalInfo);
             }
         }
         catch (NullPointerException e) {
-            System.out.println("멤버 데이터가 없음");
-            System.out.println("업데이트 시작");
-            memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
-            System.out.println("업데이트 끝");
-
-            PersonalInfo personalInfo = PersonalInfo.builder()
-                    .id(member.getId())
-                    .image(form.getFileName())
-//                    .gender(form.getGender()
-                    .stack(form.getStack())
-                    .build();
-            resumeService.saveInfo(personalInfo);
+            e.printStackTrace();
         }
+
+        System.out.println("멤버 데이터가 없음");
+        System.out.println("업데이트 시작");
+        memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
+        System.out.println("업데이트 끝");
+
+        PersonalInfo personalInfo = PersonalInfo.builder()
+                .id(member.getId())
+                .image(form.getImage())
+//                    .gender(form.getGender()
+                .stack(form.getStack())
+                .build();
+        resumeService.saveInfo(personalInfo);
 
         resumeRepository.deleteAllEducationById(member.getId());
         if (form.getSchoolName() != null) {
@@ -237,8 +249,7 @@ public class ResumeController {
                 resumeService.saveCareer(memberCareers);
             }
         }
-        return "/members/resumeChk";
-//        return "redirect:/";
+        return "redirect:/";
     }
 
 
