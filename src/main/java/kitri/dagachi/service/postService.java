@@ -87,6 +87,11 @@ public class postService {
         return postRepository.findApprove();
     }
 
+    public List<PostTags> tags(Long postingId)
+    {
+        return postRepository.findtags(postingId);
+    }
+
 
 
     //삭제

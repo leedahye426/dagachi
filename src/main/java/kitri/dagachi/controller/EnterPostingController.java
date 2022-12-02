@@ -5,39 +5,20 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
-//import kitri.dagachi.model.PostFile;
-import kitri.dagachi.model.PostingLike;
-import kitri.dagachi.repository.PostRepository;
-
-//import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
-//import kitri.dagachi.util.MD5Generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-
-//import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class EnterPostingController {
 
     @Autowired

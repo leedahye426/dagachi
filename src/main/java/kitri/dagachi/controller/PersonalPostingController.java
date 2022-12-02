@@ -1,45 +1,27 @@
 package kitri.dagachi.controller;
-
-//import kitri.dagachi.service.FileService;
-
-//import jdk.internal.jimage.ImageReader;
-
-import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
-import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.CookieManager;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static java.awt.Color.gray;
-import static java.awt.Color.red;
+
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class PersonalPostingController {
 
 
@@ -74,12 +56,15 @@ public class PersonalPostingController {
     {
 
         List<Post> post = postservice.approveList();
+//        List<PostTags> tags = postservice.tags(postingId);
         Long memberId = member.getId();
+
+
 
 
         model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
-
+//        model.addAttribute("post",tags);
 
 
         return "/post/post_list";
@@ -121,13 +106,6 @@ public class PersonalPostingController {
 
         return "/post/post_list";
     }
-
-
-
-
-
-
-
 
 
     //좋아요
@@ -200,9 +178,6 @@ public class PersonalPostingController {
 
 
             return "/post/post_list";
-
-
-
 
     }
 

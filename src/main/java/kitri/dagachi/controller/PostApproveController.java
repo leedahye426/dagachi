@@ -20,14 +20,24 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class PostApproveController {
 
     @Autowired
     private final postService postservice;
 
 
-    //채용공고 리스트
+
+    //채용공고
+    @GetMapping("/post/admin/post_list")
+    public String posting(Model model)
+    {
+        List<Post> post = postservice.posting();
+        model.addAttribute("post",post);
+        return "/post/post_list";
+    }
+
+    //채용공고신청 리스트
     @GetMapping("/post/admin/post_approve_list")
     public String application(Model model)
     {
@@ -114,7 +124,7 @@ public class PostApproveController {
     }
 
     //삭제버튼 클릭 시
-    @GetMapping("/post/admin/enterprise/delete/{postingId}")
+    @GetMapping("/post/admin/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId) {
         System.out.println("postingId: " + postingId);
         postservice.delete(postingId);

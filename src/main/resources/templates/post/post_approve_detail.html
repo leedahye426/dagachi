@@ -10,7 +10,7 @@
     <div class="card-body" method="post" th:each="post : ${post}">
 <!--        <input type="hideen" id="postingId" th:value="${post?.postingId}">-->
 <!--        <input id="approve" type="hidden" th:value="${post.approve}">-->
-            <h1 th:text="'채용공고 ( ' + ${post.companyName} +' )'"></h1>
+            <hr th:text="'채용공고 ( ' + ${post.companyName} +' )'" style="height:50px; width:50%;"></hr>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <span th:if="${post.approve == 'N'}">
         <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
@@ -31,10 +31,6 @@
 <!--        </button>-->
 
 
-
-
-
-        <form>
 
 
 

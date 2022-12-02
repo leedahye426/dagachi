@@ -156,6 +156,13 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<PostTags> findtags(Long postingId)
+    {
+        return em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId") //in구문 where절에서 값이 여러개 일 때
+                .setParameter("postingId",postingId)
+                .getResultList();
+    }
+
 
 
 
