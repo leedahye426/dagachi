@@ -110,36 +110,72 @@ public class ResumeController {
     public String resumeSet(@Valid ResumeForm form,
                             BindingResult bindingResult,
                             @AuthenticationPrincipal Member member,
-                            @RequestParam("image") MultipartFile file) throws IOException {
+                            @RequestParam("image") MultipartFile file,
+                            @RequestParam("uploadFileName") String uploadFileName) throws IOException {
+
+
+        String prevImage = null;
+        // 기본정보 창
+        try {
+            if (resumeRepository.findById(member.getId()).getId() > 0L) {
+                System.out.println("resumeRepository.findById(member.getId()).getId() : " + resumeRepository.findById(member.getId()).getId());
+                System.out.println("멤버 데이터가 있음");
+                prevImage = resumeRepository.findById(member.getId()).getImage();
+                resumeService.deleteInfo(member.getId());
+            }
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("멤버 데이터가 없음");
+        System.out.println("업데이트 시작");
+        memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
+        System.out.println("업데이트 끝");
+
+        System.out.println("prevImage : " + prevImage);
+        PersonalInfo personalInfo = PersonalInfo.builder()
+                .id(member.getId())
+                .image(prevImage)
+                .stack(form.getStack())
+                .build();
 
         String fileName = file.getOriginalFilename();
         System.out.println("fileName : " + fileName);
 
-        String uploadDir = "D:/test/portfolio/";
-//        File uploadPath = new File(uploadDir);
-//        if(uploadPath.exists() == false) {
-//            uploadPath.mkdir();
-//        }
-        String uuid = UUID.randomUUID().toString();
-        System.out.println("uuid : " + uuid);
+        // 기본정보 창 내 파일여부
+        if(!fileName.equals("")) {
 
-        String savedName = uuid + fileName;
-        File savedFile = new File(uploadDir, savedName);
-        System.out.println("savedName : " + savedName);
+            String uploadDir = "D:/test/profile/";
 
-        try {
-            file.transferTo(savedFile);
-            form.setImage(savedName);
+            // 파일 수정 시 파일 삭제
+            File delFile = new File(uploadDir + prevImage);
+            delFile.delete();
 
+            System.out.println("fileName : " + fileName);
+
+            String uuid = UUID.randomUUID().toString();
+            System.out.println("uuid : " + uuid);
+
+            String savedName = uuid + "_" + fileName;
+            File savedFile = new File(uploadDir, savedName);
+            System.out.println("savedName : " + savedName);
+
+            try {
+                file.transferTo(savedFile);
+                personalInfo.setImage(savedName);
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
 
-//        file.transferTo(new File(uploadName));
+        resumeService.saveInfo(personalInfo);
+        System.out.println("personalInfo.getImage() : " + personalInfo.getImage());
 
         System.out.println("member.getId() : " + member.getId());
-        System.out.println("form.getImage() : " + form.getImage());
+//        System.out.println("form.getImage() : " + form.getImage());
         System.out.println("form.getGender() : " + form.getGender());
         System.out.println("form.getStack() : " + form.getStack());
         System.out.println("form.getCertificateName() : " + form.getCertificateName());
@@ -164,30 +200,9 @@ public class ResumeController {
         System.out.println("form.getAddr() : " + form.getAddr());
         System.out.println("form.getAddrDetail() : " + form.getAddrDetail());
 
-        try {
-            if (resumeRepository.findById(member.getId()).getId() > 0L) {
-                System.out.println("resumeRepository.findById(member.getId()).getId() : " + resumeRepository.findById(member.getId()).getId());
-                System.out.println("멤버 데이터가 있음");
-                resumeService.deleteInfo(member.getId());
 
-            }
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-        }
 
-        System.out.println("멤버 데이터가 없음");
-        System.out.println("업데이트 시작");
-        memberService.updateEmailById(member.getId(), form.getAddr(), form.getAddrDetail());
-        System.out.println("업데이트 끝");
 
-        PersonalInfo personalInfo = PersonalInfo.builder()
-                .id(member.getId())
-                .image(form.getImage())
-//                    .gender(form.getGender()
-                .stack(form.getStack())
-                .build();
-        resumeService.saveInfo(personalInfo);
 
         resumeRepository.deleteAllEducationById(member.getId());
         if (form.getSchoolName() != null) {
