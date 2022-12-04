@@ -6,6 +6,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
+import kitri.dagachi.model.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -156,14 +157,30 @@ public class PostRepository {
                 .getResultList();
     }
 
-    public List<PostTags> findtags(Long postingId)
+    public void findtags(Long postingId)
     {
-        return em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId") //in구문 where절에서 값이 여러개 일 때
-                .setParameter("postingId",postingId)
-                .getResultList();
+        em.createQuery("select pt.tag from posting_tags pt where pt.postingId =:postingId")  //in구문 where절에서 값이 여러개 일
+          .setParameter("postingId",postingId)
+          .getResultList();
     }
 
 
+    public void cnt(Long postingId, Long cnt) {
+
+        Post post = findOne(postingId);
+        Long like = (Long) em.createQuery("select p.cnt from posting_board p where p.postingId = :postingId")
+                .setParameter("postingId", postingId)
+                .getSingleResult();
+       post.setCnt(like+cnt);
+
+        LocalDateTime uploadDate = LocalDateTime.now();
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        post.setUploadDate(formatedNow);
+
+       em.persist(post);
+       em.flush();
+
+    }
 
 
 

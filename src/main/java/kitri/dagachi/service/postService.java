@@ -7,25 +7,12 @@ import kitri.dagachi.model.*;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.id.PostInsertIdentifierGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -85,11 +72,38 @@ public class postService {
     public List<Post> approveList()
     {
         return postRepository.findApprove();
+
     }
 
-    public List<PostTags> tags(Long postingId)
+    //tag검색
+    public void tags(Post post, String[] tag)
     {
-        return postRepository.findtags(postingId);
+        Long postingId = post.getPostingId();
+        for (int i = 0; i < tag.length; i++) {
+            PostTags postTags = new PostTags();
+            postTags.setTag(tag[i]);
+            postTags.setPostingId(postingId);
+
+            postRepository.findtags(postingId);
+
+        }
+
+
+    }
+
+    //like 수 보여주기
+    public void likeCnt(Long postingId, Long cnt)
+    {
+//        Post like = postRepository.findOne(postingId);
+////        Long n = postlikerepository.cnt(postingId);
+////        like.setCnt(n+cnt);
+
+        postRepository.cnt(postingId, cnt);
+
+        System.out.println("=============="+cnt);
+//        System.out.println("=============="+n);
+
+
     }
 
 
@@ -154,6 +168,11 @@ public class postService {
         return postlikerepository.findById(postingId);
     }
 
+
+    public PostTags findByOne(Long postingId)
+    {
+        return postlikerepository.findByOne(postingId);
+    }
 
     @Transactional
     //approve

@@ -52,19 +52,31 @@ public class PersonalPostingController {
 
     //approve 된 게시글만 보이게
     @GetMapping("/post/personal/post_list")
-      public String posting(Model model, @AuthenticationPrincipal Member member)
+      public String posting(Long postingId, Model model, @AuthenticationPrincipal Member member)
     {
 
+
         List<Post> post = postservice.approveList();
-//        List<PostTags> tags = postservice.tags(postingId);
+
+//        PostTags tags = postservice.tags(postingId);
+
         Long memberId = member.getId();
+
+//        List<PostTags> posttags = new ArrayList<>();
+//
+//        for (PostTags t : tags)
+//        {
+//            posttags.add(postservice.findByOne(t.getPostingId()));
+//        }
+
+
 
 
 
 
         model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
-//        model.addAttribute("post",tags);
+//        model.addAttribute("tags",tags);
 
 
         return "/post/post_list";
@@ -121,6 +133,10 @@ public class PersonalPostingController {
         //session 값 가져오기
         Long memberId = member.getId();
         postinglike.setMemberId(memberId);
+//
+//        Long cnt = 1l;
+        postservice.likeCnt(postingId,1l);
+
 
 
         System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
@@ -149,6 +165,9 @@ public class PersonalPostingController {
 
 
         PostingLike postinglike = postservice.findlike(postingId, memberId);
+
+//        Long cnt = -1l;
+        postservice.likeCnt(postingId,-1l);
 
         System.out.println("posingId : " + postingId);
         System.out.println("memberId : " + memberId);
@@ -181,6 +200,20 @@ public class PersonalPostingController {
 
     }
 
+    @PostMapping("/post/personal/post_detail/{postingId}")
+    @ResponseBody
+    public String likeCnt(@RequestParam Long postingId)
+    {
+
+        Long cnt = 0L;
+        postservice.likeCnt(postingId,cnt);
+
+
+
+
+        return "";
+
+    }
 
 
 

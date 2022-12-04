@@ -37,6 +37,9 @@ public class Post {
     @Column(name = "approve")
     private String approve = "N";
 
+    @Column(name = "like_count")
+    private Long cnt = 0L;
+
 //    private String origName;
 //
 //    private String savedNm;

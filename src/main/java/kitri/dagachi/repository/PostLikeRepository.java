@@ -1,6 +1,7 @@
 package kitri.dagachi.repository;
 
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.QueryAnnotation;
@@ -53,6 +54,13 @@ public class PostLikeRepository {
     }
 
 
+    public PostTags findByOne(Long postingId) {
+        return (PostTags) em.createQuery("select pt from posting_tags pt where pt.postingId = :postingId")
+                .setParameter("postingId", postingId)
+                .getSingleResult();
+    }
+
+
     @Transactional
     public void del(PostingLike postinglike)
     {
@@ -72,6 +80,16 @@ public class PostLikeRepository {
                 .setParameter("postingId",postingId)
                 .setParameter("memberId",memberId)
                 .getSingleResult();
+
+    }
+
+
+    public Long cnt(Long postingId)
+    {
+       return (Long)em.createQuery("select pl from posting_like pl where pl.postingId =:postingId")
+               .setParameter("postingId",postingId)
+               .getSingleResult();
+
 
     }
 

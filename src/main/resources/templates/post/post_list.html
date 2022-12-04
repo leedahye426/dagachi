@@ -47,9 +47,18 @@
                 <form>
                     <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" name="companyName"></h6>
                     <h7 th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7>
-                    <input type="hidden" th:each="tags : ${postTags}" value="${tag?.postingId}">
-                    <h8  th:text=" ' # ' + ${tags?.tag}" id="postingTag" ></h8>
                 </form>
+
+                <div>
+                    <input type="hidden" th:each="tags : ${PostTags}" value="${tags?.postingId}">
+                    <span name="tags" th:text=" ' # '+${tags?.tag}" id="postingTag" ></span></div>
+                <div>
+
+                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="red"
+                     class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg> <label id="count" th:text="${post?.cnt}"/></div>
             </div>
         </div>
     </div>
