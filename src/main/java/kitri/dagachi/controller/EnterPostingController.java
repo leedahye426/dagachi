@@ -5,39 +5,20 @@ package kitri.dagachi.controller;
 //import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
-//import kitri.dagachi.model.PostFile;
-import kitri.dagachi.model.PostingLike;
-import kitri.dagachi.repository.PostRepository;
-
-//import kitri.dagachi.service.PostFileService;
 import kitri.dagachi.service.postService;
-//import kitri.dagachi.util.MD5Generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-
-//import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class EnterPostingController {
 
     @Autowired
@@ -79,6 +60,8 @@ public class EnterPostingController {
     }
 
 
+
+
     //insert
 
     @PostMapping("/post/enterprise/post_list")
@@ -94,7 +77,7 @@ public class EnterPostingController {
 
         postservice.register(post, tag);
 
-        return "/post/post_list";
+        return "/post/post_approve_list";
     }
 
 
@@ -108,7 +91,7 @@ public class EnterPostingController {
 
 
     //공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/enterprise/{postingId}/post_detail")
+    @GetMapping("/post/enterprise/post_detail/{postingId}")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
@@ -125,7 +108,7 @@ public class EnterPostingController {
 
 
     //삭제버튼 클릭시
-    @GetMapping("/post/enterprise/{postingId}/delete")
+    @GetMapping("/post/enterprise/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId) {
         System.out.println("postingId: " + postingId);
         postservice.delete(postingId);
@@ -155,6 +138,25 @@ public class EnterPostingController {
             return "/post/post_write_list";
         }
 
+
+        //내 채용신청 글 보기
+        @GetMapping("/post/enterprise/post_approve_list")
+    public String myapprove(@AuthenticationPrincipal Member member, Model model)
+        {
+            Long memberId = member.getId();;
+            List<Post> list = postservice.findlist(memberId);
+            List<Post> approvelist = new ArrayList<>();
+
+            for(Post p : list)
+            {
+                approvelist.add(postservice.findById(p.getPostingId()));
+            }
+
+            model.addAttribute("post",approvelist);
+
+            return "/post/post_approve_list";
+
+        }
 
 
 }

@@ -10,8 +10,19 @@
     <div class="card-body" method="post" th:each="post : ${post}">
 <!--        <input type="hideen" id="postingId" th:value="${post?.postingId}">-->
 <!--        <input id="approve" type="hidden" th:value="${post.approve}">-->
-            <h1>채용공고</h1>
-
+            <hr th:text="'채용공고 ( ' + ${post.companyName} +' )'" style="height:50px; width:50%;"></hr>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <span th:if="${post.approve == 'N'}">
+        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인
+        </button>
+    </span>
+        <span th:if="${post.approve == 'Y'}">
+        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소
+        </button>
+    </span>
+    </div>
 
 
 
@@ -20,49 +31,29 @@
 <!--        </button>-->
 
 
-<!--    <span th:if="${post.approve == 'N'}">-->
-<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
-<!--                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인-->
-<!--        </button>-->
-<!--    </span>-->
-<!--     <span th:if="${post.approve == 'Y'}">-->
-<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
-<!--                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소-->
-<!--        </button>-->
-<!--    </span>-->
 
 
 
-        <form>
-            <div class="mb-3">
-                <label class="form-label">회사이름</label>
-                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">공고제목</label>
-                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">공고내용</label>
-                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"
-                          th:text="${post?.postingContent}" disabled></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">등록날짜</label>
-                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
-            </div>
 
-<!--            <div sec:authorize="hasRole('ROLE_ENT')">-->
-<!--                <th:block th:switch="${memberId}">-->
-<!--                     <span th:case="${post.memberId}">-->
-<!--                        <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"-->
-<!--                            th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/${post.postingId}/delete|}'|">-->
-<!--                            삭제-->
-<!--                        </button>-->
-<!--                    </span>-->
-<!--                </th:block>-->
-
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">회사이름</label>-->
+<!--                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>-->
 <!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">공고제목</label>-->
+<!--                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">공고내용</label>-->
+<!--                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"-->
+<!--                          th:text="${post?.postingContent}" disabled></textarea>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">등록날짜</label>-->
+<!--                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>-->
+<!--            </div>-->
+
+
 
         </form>
     </div>

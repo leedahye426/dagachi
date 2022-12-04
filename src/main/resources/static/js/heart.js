@@ -2,8 +2,15 @@
 
 const heart = document.getElementById("heart");
 
+//    const cnt = document.getElementId('count');
+
+
+
 function like(id){
    console.log("함수된다");
+
+
+//    let number = cnt.innerText;
 
  console.log(heart.getAttribute("fill"));
     if(heart.getAttribute("fill")=="red"){
@@ -17,8 +24,11 @@ function like(id){
 
             success:function(data){
             console.log("들어왓니?");
+
                     heart.classList.add("heart");
                     heart.setAttribute('fill', 'gray');
+//                    $(".likeCount").text('${cnt-1}');
+//                    number = parseInt(number)-1;
 
             }
 
@@ -35,15 +45,30 @@ function like(id){
 
                    heart.classList.add("empty_heart");
                    heart.setAttribute('fill','red');
+//                    $(".likeCount").text('${cnt+1}');
+
+
+//                   number = parseInt(number)+1;
 
             }
 
 
          });
 
+//        cnt.innerText= number;
 
     }
 }
+
+//
+//function count(object)
+//{
+//
+//
+//    if(heart.getAttribute("fill")=="red")
+//        number=
+//}
+
 
 
 
