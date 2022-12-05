@@ -1,9 +1,6 @@
 package kitri.dagachi;
 
-import kitri.dagachi.model.Member;
 import kitri.dagachi.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
@@ -11,7 +8,6 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -23,14 +19,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.*;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -43,8 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.Principal;
-import java.util.List;
 
 @Configuration(proxyBeanMethods = false) // 빈등록
 @EnableWebSecurity // 스프링 security 지원을 가능하게 함
@@ -55,6 +45,7 @@ public class SecurityConfig {
     @Autowired
     MemberService memberService;
     AuthenticationManager authenticationManager;
+    FormAuthenticationDetailSource formAuthenticationDetailSource;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -90,8 +81,9 @@ public class SecurityConfig {
                 .loginPage("/members/login") // 사용자 정의 로그인 페이지
                 .usernameParameter("email") // loginForm에서 ID의 name값과 일치
                 .passwordParameter("passwd") // loginForm에서 PASSWORD의 name값과 일치
-//                .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
                 .loginProcessingUrl("/members/login") // 로그인 Form Action url
+//                .authenticationDetailsSource(formAuthenticationDetailSource)
+                .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
 //                .failureForwardUrl("/members/login?error=true") // 로그인 실패 후 페이지 포워딩
                 .successHandler(new AuthenticationSuccessHandler() { // 로그인 성공 핸들러
                     @Override
@@ -108,6 +100,14 @@ public class SecurityConfig {
                             session.removeAttribute((WebAttributes.AUTHENTICATION_EXCEPTION));
                         }
 
+                        String prevPage = (String) request.getSession().getAttribute("prevPage");
+                        String uri = "/"; // defaultURI
+
+                        if(prevPage != null) {
+                            uri = prevPage;
+                            request.getSession().removeAttribute("prevPage");
+                        }
+
                         // Security가 요청을 가로챈 경우 사용자가 원래 요청했던 URI 정보를 저장한 객체
                         RequestCache requestCache = new HttpSessionRequestCache();
                         System.out.println("requestCache : " + requestCache);
@@ -120,13 +120,13 @@ public class SecurityConfig {
 
                         if(savedRequest != null) {
                             System.out.println("리다이렉트");
-                            String uri = savedRequest.getRedirectUrl();
+                            uri = savedRequest.getRedirectUrl();
                             requestCache.removeRequest(request, response);
+//                            response.sendRedirect(uri);
+                        }
+
                             response.sendRedirect(uri);
-                        }
-                        else {
-                            response.sendRedirect("/");
-                        }
+
                     }
                 })
                 .failureHandler(new AuthenticationFailureHandler() { // 로그인 실패 핸들러
@@ -156,6 +156,7 @@ public class SecurityConfig {
                         response.sendRedirect("/members/login?error");
                     }
                 })
+
 //                .permitAll() // 사용자 정의 로그인 페이지 권한 설정
             .and()
                 .logout()
