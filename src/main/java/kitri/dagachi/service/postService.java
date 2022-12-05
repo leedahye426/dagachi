@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -76,33 +77,18 @@ public class postService {
     }
 
     //tag검색
-    public void tags(Post post, String[] tag)
-    {
-        Long postingId = post.getPostingId();
-        for (int i = 0; i < tag.length; i++) {
-            PostTags postTags = new PostTags();
-            postTags.setTag(tag[i]);
-            postTags.setPostingId(postingId);
+    public List<PostTags> tags(Long postingId) {
+        System.out.println("service!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-            postRepository.findtags(postingId);
+//        System.out.println(postRepository.findtags(1453L));
 
-        }
-
-
+        return postRepository.findByTag(postingId);
     }
 
     //like 수 보여주기
     public void likeCnt(Long postingId, Long cnt)
     {
-//        Post like = postRepository.findOne(postingId);
-////        Long n = postlikerepository.cnt(postingId);
-////        like.setCnt(n+cnt);
-
         postRepository.cnt(postingId, cnt);
-
-        System.out.println("=============="+cnt);
-//        System.out.println("=============="+n);
-
 
     }
 

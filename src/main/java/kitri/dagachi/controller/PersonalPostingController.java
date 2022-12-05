@@ -8,6 +8,7 @@ import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.metadata.PostgresTableMetaDataProvider;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Controller
@@ -52,27 +53,27 @@ public class PersonalPostingController {
 
     //approve 된 게시글만 보이게
     @GetMapping("/post/personal/post_list")
-      public String posting(Long postingId, Model model, @AuthenticationPrincipal Member member)
+      public String posting(Long postingId, String[] tag, Model model, @AuthenticationPrincipal Member member)
     {
-
 
         List<Post> post = postservice.approveList();
 
-//        PostTags tags = postservice.tags(postingId);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         Long memberId = member.getId();
 
-//        List<PostTags> posttags = new ArrayList<>();
+
+//        List<PostTags> postTags =
 //
-//        for (PostTags t : tags)
-//        {
-//            posttags.add(postservice.findByOne(t.getPostingId()));
+
+//        System.out.println(postTags.size());
+
+//        List<PostTags> tags =  new ArrayList<>();
+//        for (PostTags pt : postTags){
+//            tags.add(postservice.tags(pt.getTag()));
+
+//            System.out.println(postservice.tags(pt.getTag());
 //        }
-
-
-
-
-
 
         model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
@@ -88,21 +89,29 @@ public class PersonalPostingController {
     //    공고보기 클릭 시 상세페이지 이동
     @GetMapping("/post/personal/post_detail/{postingId}")
 
-    public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model,@AuthenticationPrincipal Member member) {
+    public String postingDetail(@ModelAttribute("postingId") Long postingId, PostTags posttags, Model model,@AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
         Long memberId = member.getId();
 
-        System.out.println(postingId+memberId);
 
         Long cnt = postservice.likecnt(postingId, memberId);
 
-        System.out.println("cnt" + cnt);
+
+
+
+        List<PostTags> tag = postservice.tags(postingId);
+
+        System.out.println(posttags);
+
+        System.out.println(tag);
+
 
         model.addAttribute("cnt", cnt);
         model.addAttribute("post", post);
+        model.addAttribute("PostTags",tag);
 
         return "/post/post_detail";
     }

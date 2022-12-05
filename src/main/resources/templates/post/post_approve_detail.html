@@ -8,21 +8,46 @@
 
 <div class="container py-5">
     <div class="card-body" method="post" th:each="post : ${post}">
-<!--        <input type="hideen" id="postingId" th:value="${post?.postingId}">-->
-<!--        <input id="approve" type="hidden" th:value="${post.approve}">-->
-            <hr th:text="'채용공고 ( ' + ${post.companyName} +' )'" style="height:50px; width:50%;"></hr>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <h1 th:text="'채용공고 ( ' + ${post.companyName} +' )'"></h1>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <span th:if="${post.approve == 'N'}">
-        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 140px;"
                 th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인
         </button>
     </span>
         <span th:if="${post.approve == 'Y'}">
-        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 140px;"
                 th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소
         </button>
     </span>
     </div>
+         </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                 <th> 회사명 :  <span th:text="${post.companyName}"></span></th>
+            </tr>
+            <tr>
+                <th> 공고제목 : <span th:text="${post.postingTitle}"></span></th>
+            </tr>
+            <tr>
+                <th> 공고내용 : </th>
+                 <td><textarea th:text="${post.postingContent}" style="width : 500px; height: 300px;"></textarea></td>
+            </tr>
+
+            <tr>
+                <th> 등록날짜 : <span th:text="${post.uploadDate}"></span></th>
+            </tr>
+
+            </tbody>
+        </table>
+
+
 
 
 
@@ -55,7 +80,7 @@
 
 
 
-        </form>
+
     </div>
 </div>
 
