@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,10 +43,16 @@ public class EnterpriseProjectController {
 
         List<PersonalInfo> personalInfo = new ArrayList<>();
         for(Member m : project_members) {
-            personalInfo.add(memberService.findInfo(m.getId()));
+            Optional<PersonalInfo> p = memberService.findInfo(m.getId());
+            if(p.isPresent()) personalInfo.add(p.get());
+            else {
+                PersonalInfo noProfile = new PersonalInfo();
+                noProfile.setId(m.getId());
+                personalInfo.add(noProfile);
+            }
         }
         System.out.println("______________________________________________________________");
-        for(PersonalInfo p : personalInfo) System.out.println(p.getId());
+
         System.out.println("cnt" + cnt);
         model.addAttribute("cnt",cnt);
         model.addAttribute("project", project);

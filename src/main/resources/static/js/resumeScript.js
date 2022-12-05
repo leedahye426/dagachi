@@ -1,6 +1,6 @@
-const gradList = ["졸업 여부", "졸업", "재학중", "휴학중", "수료", "중퇴", "자퇴", "졸업예정"]
-const highMajorList = ["계열 선택", "문과계열", "이과계열", "전문(실업)계", "예체능계", "특성화/마이스터고", "특수목적고"]
-const univMajorList = ["계열 선택", "인문계열", "사회계열", "교육계열", "공학계열", "자연계열", "의학계열", "예체능계열"]
+const gradList = ["졸업", "재학중", "휴학중", "수료", "중퇴", "자퇴", "졸업예정"]
+const highMajorList = ["문과계열", "이과계열", "전문(실업)계", "예체능계", "특성화/마이스터고", "특수목적고"]
+const univMajorList = ["인문계열", "사회계열", "교육계열", "공학계열", "자연계열", "의학계열", "예체능계열"]
 const reasonList = ["업직종 전환", "근무조건", "경영악화", "계약만료", "출산/육아", "학업", "유학", "개인사정", "직접입력"]
 const univType = ["대학(2,3년제)", "대학(4년제)", "대학원(석사)", "대학원(박사)"]
 
@@ -2817,20 +2817,21 @@ $("#addHigh").on('click', function() {
   <table style="width: 70%; " >
     <tr>
       <td class="title">학교명<span class="essential"> * </span></td>
-      <td><input class="contents" type="text" name="schoolName" id="highName" autocomplete="off"></td>
+      <td><input class="contents contentName" type="text" name="schoolName" id="highName" autocomplete="off"></td>
       <input type="hidden" name="educationType" value="고등학교">
     </tr>
     <tr>
-      <td class="title">재학기간</td>
+      <td class="title">재학기간<span class="essential"> * </span></td>
       <td>
-        <input class="contents date" type="date" id="startDate" value="" name="entranceDate"><span class="mx-2"> - </span>
-        <input class="contents date" type="date" id="endDate" value="" name="graduationDate">
+        <input class="contents date startDate" type="date" id="startDate" value="" name="entranceDate"><span class="mx-2"> - </span>
+        <input class="contents date endDate" type="date" id="endDate" value="" name="graduationDate">
       </td>
     </tr>
     <tr>
       <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
       <td>
-        <select class="form-select grade" style="width: 60%;" name="gradChk" id="gradChk">
+        <select class="form-select grade chk" style="width: 60%;" name="gradChk" id="gradChk">
+        <option hidden >졸업여부</option>
         ${gradeList}
         </select>
     </tr>
@@ -2839,6 +2840,7 @@ $("#addHigh").on('click', function() {
       <input type="hidden" name="majorDetail" value="">
       <td>
         <select class="form-select major" style="width: 60%;" name="majorName" id="majorChk">
+        <option hidden value="">계열선택</option>
         ${majorList}
         </select>
     </tr>
@@ -2880,26 +2882,28 @@ $("#addUniv").on('click', function() {
         </tr>
         <tr>
         <td class="title">학교명<span class="essential"> * </span></td>
-        <td><input class="contents" type="text" name="schoolName" id="univName" autocomplete="off"></td>
+        <td><input class="contents contentName" type="text" name="schoolName" id="univName" autocomplete="off"></td>
         </tr>
         <tr>
-        <td class="title">재학기간</td>
+        <td class="title">재학기간<span class="essential"> * </span></td>
         <td>
-            <input class="contents date" type="date" id="univStartDate" value="" name="entranceDate"><span class="mx-2"> - </span>
-            <input class="contents date" type="date" id="univEndDate" value="" name="graduationDate">
+            <input class="contents date startDate" type="date" id="univStartDate" value="" name="entranceDate"><span class="mx-2"> - </span>
+            <input class="contents date endDate" type="date" id="univEndDate" value="" name="graduationDate">
         </td>
         </tr>
         <tr>
         <td class="title"><label for="univGrad">졸업여부<span class="essential"> * </span></label></td>
         <td>
-            <select class="form-select univGrade" style="width: 60%;" name="gradChk" id="gradChk">
+            <select class="form-select univGrade chk" style="width: 60%;" name="gradChk" id="gradChk">
+            <option hidden >졸업여부</option>
             ${gradeList}
             </select>
         </tr>
         <tr>
-        <td class="title"><label for="univMajor">전공<span class="essential"> * </span></label></td>
+        <td class="title"><label for="univMajor">전공</label></td>
         <td>
             <select class="form-select univMajor" style="width: 60%;" name="majorName" id="univMajorChk">
+            <option hidden value="">계열선택</option>
             ${majorListUniv}
             </select>
             <input class="mt-2" type="text" name="majorDetail" id="detailName">
@@ -2921,8 +2925,8 @@ $("#addCertificate").on('click', function() {
     </div>
     <table style="width: 70%; " >
     <tr>
-      <td class="title">자격증명</td>
-      <td><input class="contents" type="text" name="certificateName" id="certificate_name" autocomplete="off"></td>
+      <td class="title">자격증명<span class="essential"> * </span></td>
+      <td><input class="contents contentName" type="text" name="certificateName" id="certificate_name" autocomplete="off"></td>
     </tr>
     <tr>
       <td class="title">발행처/기관</td>
@@ -2930,9 +2934,9 @@ $("#addCertificate").on('click', function() {
     </tr>
     <tr>
     <tr>
-      <td class="title">취득일</td>
+      <td class="title">취득일<span class="essential"> * </span></td>
       <td>
-        <input class="contents date" type="date" id="issued_date" style="width: 40%;" name="issuedDate">
+        <input class="contents date issuedDate" type="date" id="issued_date" style="width: 40%;" name="issuedDate">
       </td>
     </tr>
   </table>
@@ -2951,8 +2955,8 @@ $("#addAward").on('click', function() {
     </div>
     <table style="width: 70%; " >
     <tr>
-      <td class="title">수상명</td>
-      <td><input class="contents" type="text" name="awardName" id="award_name" autocomplete="off"></td>
+      <td class="title">수상명<span class="essential"> * </span></td>
+      <td><input class="contents contentName" type="text" name="awardName" id="award_name" autocomplete="off"></td>
     </tr>
     <tr>
       <td class="title">수여기관</td>
@@ -2960,9 +2964,9 @@ $("#addAward").on('click', function() {
     </tr>
     <tr>
     <tr>
-      <td class="title">취득일</td>
+      <td class="title">취득일<span class="essential"> * </span></td>
       <td>
-        <input class="contents date" type="date" id="award_date" name="awardDate" style="width: 40%;">
+        <input class="contents date issuedDate" type="date" id="award_date" name="awardDate" style="width: 40%;">
       </td>
     </tr>
   </table>
@@ -2974,7 +2978,7 @@ $("#addAward").on('click', function() {
 let list = ""
 
   for(let i=0; i<reasonList.length; i++) {
-   list += `<option value="${i+1}">${reasonList[i]}</option>`;
+   list += `<option value="${reasonList[i]}">${reasonList[i]}</option>`;
   }
 
 // 경력 사항 추가
@@ -2989,19 +2993,20 @@ $("#addCareer").on('click', function() {
     <table style="width: 70%; " >
     <tr>
       <td class="title">회사명<span class="essential"> * </span></td>
-      <td><input class="contents" type="text" name="enterName" id="enterName" autocomplete="off"></td>
+      <td><input class="contents contentName" type="text" name="enterName" id="enterName" autocomplete="off"></td>
     </tr>
     <tr>
-      <td class="title">재직기간</td>
+      <td class="title">재직기간<span class="essential"> * </span></td>
       <td>
-        <input class="contents date" type="date" id="joiningDate" name="joiningDate" value=""><span class="mx-2"> - </span>
-        <input class="contents date" type="date" id="leavingDate" name="leavingDate" value="">
+        <input class="contents date startDate" type="date" id="joiningDate" name="joiningDate" value=""><span class="mx-2"> - </span>
+        <input class="contents date endDate" type="date" id="leavingDate" name="leavingDate" value="">
       </td>
     </tr>
     <tr>
       <td class="title"><label for="reason">퇴사사유<span class="essential"> * </span></label></td>
       <td>
-        <select class="form-select reason" style="width: 60%;" name="reasonChk" id="reasonChk">
+        <select class="form-select reason chk" style="width: 60%;" name="reasonChk" id="reasonChk">
+        <option hidden>퇴사사유</option>
         ${list}
         </select>
         <input type="hidden" id="reasonHidden" value="">
@@ -3025,6 +3030,10 @@ $("#addCareer").on('click', function() {
   </div>
   `)
 });
+
+$("#startDate").on('click', function() {
+  console.log('click');
+})
 
 // 삭제 및 성별 선택
 $(document).on('click', (e) => {
@@ -3050,12 +3059,22 @@ $(document).on('click', (e) => {
 })
 
 // 프로필 선택
+
+const maxSize = 1048576; // 1MB
+
 function loadFile(input) {
-  
+
+
   console.log('fnc start')
   const file = input.files[0];
-  console.log(URL.createObjectURL(file));
-  console.log(file.name);
+
+  console.log("file.size ; " + file.size);
+  console.log("URL.createObjectURL(file) : " + URL.createObjectURL(file));
+  console.log("file.name ; "+ file.name);
+  if(file.size > maxSize) {
+    alert('파일의 크기는 1MB를 초과할 수 없습니다.');
+    return false;
+  }
 
   $("#profileImg").attr("src", URL.createObjectURL(file));
 }
@@ -3080,10 +3099,74 @@ $(document).on('focus', "#univName", function() {
   })
 })
 
+const startDateArr = document.getElementsByClassName('startDate');
+const endDateArr = document.getElementsByClassName('endDate');
+const issuedDateArr = document.getElementsByClassName('issuedDate');
+const contentName = document.getElementsByClassName('contentName');
+const chk = document.getElementsByClassName('chk');
+
+let maxSiez = 10;
+
+
 function resumeChk() {
 
-  console.log('click');
-  
+  // contentName 유효성 검증
+  for(i=0; i<contentName.length; i++) {
+    if(contentName[i].value == "") {
+      console.log('name 잡았다!');
+      alert((contentName[i].parentNode.parentNode.getElementsByTagName('td')[0].textContent).replace(" *", "").trim()
+      + "은 필수 입력 사항입니다.");
+      return false;
+    }
+  }
+
+  // dateType 유효성 검증
+  for(i=0; i<startDateArr.length; i++) {
+
+    let startDate = new Date(startDateArr[i].value); 
+    let endDate = new Date(endDateArr[i].value);
+
+    if(startDate > endDate) {
+      console.log('잡았다 !')
+      console.log(startDateArr[i].value);
+      console.log(endDateArr[i].value);
+      alert(((startDateArr[i].parentNode.parentNode).getElementsByTagName('td')[0].textContent).replace(" *", "").trim()
+      + "을 올바르게 입력 바랍니다.");
+      return false;
+    }
+    else if(startDate == "Invalid Date" || endDate == "Invalid Date") {
+      console.log('Invalid 잡았다 !')
+      alert(((startDateArr[i].parentNode.parentNode).getElementsByTagName('td')[0].textContent).replace(" *", "").trim()
+      + "은 필수 입력 사항입니다.");
+      return false;
+    }
+  }
+
+  // 취득일 유효성 검증
+  for(i=0; i<issuedDateArr.length; i++) {
+    let issuedDate = new Date(issuedDateArr[i].value); 
+    if(issuedDate == "Invalid Date") {
+      alert(((issuedDateArr[i].parentNode.parentNode).getElementsByTagName('td')[0].textContent).replace(" *", "").trim()
+      + "은 필수 입력 사항입니다.");
+      return false;
+    }
+  }
+
+  // 졸업여부 및 퇴사사유 유효성 검증
+  for(i=0; i<chk.length; i++) {
+    console.log(chk[i].value);
+    if(chk[i].value == "졸업여부" || chk[i].value == "퇴사사유") {
+      alert("선택해 !!!!!!!!!!!!");
+      return false;
+    }
+  }
+
+  // 프로필 이미지 크기 여부
+  // if(fileSize > maxSize) {
+  //   alert("파일 사이즈 초과");
+  //   return false;
+  // }
+
   $("#resumeForm").submit();
 }
 
@@ -3097,3 +3180,8 @@ window.onload = function() {
 }
 
 
+$(document).on("click", e => {
+
+  console.log(file);
+
+});

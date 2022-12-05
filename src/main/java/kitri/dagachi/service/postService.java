@@ -182,7 +182,9 @@ public class postService {
 
     }
 
-
+    public List<Post> findOrderByLike(int limit) {
+        return postRepository.findOrderByLike(limit);
+    }
 }
 
 

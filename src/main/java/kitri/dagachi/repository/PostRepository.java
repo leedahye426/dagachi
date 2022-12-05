@@ -151,6 +151,7 @@ public class PostRepository {
                 .getResultList();
     }
 
+<<<<<<< HEAD
 //    public List<PostTags> findtags(Long postingId)
 //    {
 //         return em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
@@ -164,17 +165,29 @@ public class PostRepository {
 //    }
 
     public List<PostTags> findByTag(Long postingId)
+=======
+    public List<Post> findOrderByLike(int limit) {
+        return em.createQuery("select p from posting_board p order by p.cnt desc")
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public void findtags(Long postingId)
+>>>>>>> 42522e31b3ef95777d98b5879c9ff642dd136d4f
     {
         return  em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
                 .setParameter("postingId", postingId)
                 .getResultList();
     }
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 42522e31b3ef95777d98b5879c9ff642dd136d4f
     public void cnt(Long postingId, Long cnt) {
 
         Post post = findOne(postingId);

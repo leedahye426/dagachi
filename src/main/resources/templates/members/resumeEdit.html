@@ -34,9 +34,10 @@
         <h4 class="mt-3">기본 정보</h4>
 
         <div class="container bg-light d-flex" style="padding-left:0px">
-            <div class="border">
-                <img class="img-fulid" src="dagachi_logo.jpg" id="profileImg" width="130px" height="180px">
-                <input type="hidden" name="fileName" value="">
+            <div class="">
+                <img class="img-fulid" th:src="|/image/${personalInfo.image}|" id="profileImg" width="130px" height="200px"
+                    onerror="this.src='/image/test.png'">
+                <input type="hidden" name="uploadFileName" th:value="${personalInfo.image}">
             </div>
             <div class="mt-2 mx-2" style="width: 100%;">
                 <div>
@@ -87,11 +88,11 @@
                 </tr>
                 -->
                 <tr>
-                    <td class="basicTitle">주소<span class="essential"> * </span></td>
+                    <td class="basicTitle">주소</td>
                     <td><input class="basicContents" type="text" name="addr" id="addr" style="width:100%" th:value="${member.addr}"></td>
                 </tr>
                 <tr>
-                    <td class="basicTitle">상세 주소<span class="essential"> * </span></td>
+                    <td class="basicTitle">상세 주소</td>
                     <td>
                         <input class="basicContents" type="text" name="addrDetail" id="addrDetail" style="width:100%;" th:value="${member.addrDetail}">
                     </td>
@@ -132,24 +133,24 @@
                         <table style="width: 70%; ">
                             <tr>
                                 <td class="title">학교명<span class="essential"> * </span></td>
-                                <td><input class="contents" type="text" name="schoolName" id="highName"
+                                <td><input class="contents contentName" type="text" name="schoolName" id="highName"
                                            autocomplete="off" th:value="${education.schoolName}"></td>
                                 <input type="hidden" name="educationType" value="고등학교">
                             </tr>
                             <tr>
-                                <td class="title">재학기간</td>
+                                <td class="title">재학기간<span class="essential"> * </span></td>
                                 <td>
-                                    <input class="contents date" type="date" id="startDate" name="entranceDate"
+                                    <input class="contents date startDate" type="date" id="startDate" name="entranceDate"
                                            th:value="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')}">
                                     <span class="mx-2"> - </span>
-                                    <input class="contents date" type="date" id="endDate" name="graduationDate"
+                                    <input class="contents date endDate" type="date" id="endDate" name="graduationDate"
                                            th:value="|${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="title"><label for="grad">졸업여부<span class="essential"> * </span></label></td>
                                 <td>
-                                    <select class="form-select gradChk" style="width: 60%;" name="gradChk" id="gradChk" required>
+                                    <select class="form-select gradChk chk" style="width: 60%;" name="gradChk" id="gradChk" required>
                                         <option hidden th:value="${education.gradChk}" th:utext="${education.gradChk}"></option>
                                     </select>
                             </tr>
@@ -198,16 +199,16 @@
                             </tr>
                             <tr>
                                 <td class="title">학교명<span class="essential"> * </span></td>
-                                <td><input class="contents" type="text" name="schoolName" id="univName"
+                                <td><input class="contents contentName" type="text" name="schoolName" id="univName"
                                            autocomplete="off" th:value="${education.schoolName}"></td>
                             </tr>
                             <tr>
-                                <td class="title">재학기간</td>
+                                <td class="title">재학기간<span class="essential"> * </span></td>
                                 <td>
-                                    <input class="contents date" type="date" id="startDate" name="entranceDate"
+                                    <input class="contents date startDate" type="date" id="startDate" name="entranceDate"
                                            th:value="|${#temporals.createDate(education.startDate, 'yyyy-MM-dd HH:mm:ss')}">
                                     <span class="mx-2"> - </span>
-                                    <input class="contents date" type="date" id="endDate" name="graduationDate"
+                                    <input class="contents date endDate" type="date" id="endDate" name="graduationDate"
                                            th:value="|${#temporals.createDate(education.endDate, 'yyyy-MM-dd HH:mm:ss')}">
                                 </td>
                             </tr>
@@ -215,12 +216,12 @@
                                 <td class="title"><label for="univGrad">졸업여부<span class="essential"> * </span></label>
                                 </td>
                                 <td>
-                                    <select class="form-select univGradChk" style="width: 60%;" name="gradChk" id="univGradChk" required>
+                                    <select class="form-select univGradChk chk" style="width: 60%;" name="gradChk" id="univGradChk" required>
                                         <option hidden th:value="${education.gradChk}" th:utext="${education.gradChk}"></option>
                                     </select>
                             </tr>
                             <tr>
-                                <td class="title"><label for="univMajor">전공<span class="essential"> * </span></label>
+                                <td class="title"><label for="univMajor">전공</label>
                                 </td>
                                 <td>
                                     <select class="form-select univMajorChk" style="width: 60%;" name="majorName"
@@ -255,8 +256,8 @@
                         </div>
                         <table style="width: 70%; " >
                         <tr>
-                          <td class="title">자격증명</td>
-                          <td><input class="contents" type="text" name="certificateName" id="certificate_name" autocomplete="off"
+                          <td class="title">자격증명<span class="essential"> * </span></td>
+                          <td><input class="contents contentName" type="text" name="certificateName" id="certificate_name" autocomplete="off"
                             th:value="${certificate.certificateName}"></td>
                         </tr>
                         <tr>
@@ -266,9 +267,9 @@
                         </tr>
                         <tr>
                         <tr>
-                          <td class="title">취득일</td>
+                          <td class="title">취득일<span class="essential"> * </span></td>
                           <td>
-                            <input class="contents date" type="date" id="issued_date" style="width: 40%;" name="issuedDate"
+                            <input class="contents date issuedDate" type="date" id="issued_date" style="width: 40%;" name="issuedDate"
                             th:value="|${#temporals.createDate(certificate.issuedDate, 'yyyy-MM-dd HH:mm:ss')}">
                           </td>
                         </tr>
@@ -300,8 +301,8 @@
                         </div>
                         <table style="width: 70%; " >
                         <tr>
-                          <td class="title">수상명</td>
-                          <td><input class="contents" type="text" name="awardName" id="award_name" autocomplete="off"
+                          <td class="title">수상명<span class="essential"> * </span></td>
+                          <td><input class="contents contentName" type="text" name="awardName" id="award_name" autocomplete="off"
                             th:value="${award.awardName}"></td>
                         </tr>
                         <tr>
@@ -311,9 +312,9 @@
                         </tr>
                         <tr>
                         <tr>
-                          <td class="title">취득일</td>
+                          <td class="title">취득일<span class="essential"> * </span></td>
                           <td>
-                            <input class="contents date" type="date" id="award_date" name="awardDate" style="width: 40%;"
+                            <input class="contents date issuedDate" type="date" id="award_date" name="awardDate" style="width: 40%;"
                             th:value="|${#temporals.createDate(award.awardDate, 'yyyy-MM-dd HH:mm:ss')}">
                           </td>
                         </tr>
@@ -344,23 +345,23 @@
                         <table style="width: 70%; " >
                         <tr>
                           <td class="title">회사명<span class="essential"> * </span></td>
-                          <td><input class="contents" type="text" name="enterName" id="enterName" autocomplete="off"
+                          <td><input class="contents contentName" type="text" name="enterName" id="enterName" autocomplete="off"
                             th:value="${career.enterName}"></td>
                         </tr>
                         <tr>
-                          <td class="title">재직기간</td>
+                          <td class="title">재직기간<span class="essential"> * </span></td>
                           <td>
-                            <input class="contents date" type="date" id="joiningDate" name="joiningDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
+                            <input class="contents date startDate" type="date" id="joiningDate" name="joiningDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
                             <span class="mx-2"> - </span>
-                            <input class="contents date" type="date" id="leavingDate" name="leavingDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
+                            <input class="contents date endDate" type="date" id="leavingDate" name="leavingDate" th:value="|${#temporals.createDate(career.startDate, 'yyyy-MM-dd HH:mm:ss')}|">
                           </td>
                         </tr>
                         <tr>
                           <td class="title"><label for="reason">퇴사사유<span class="essential"> * </span></label></td>
                           <td>
-                            <select class="form-select reasonChk" style="width: 60%;" name="reasonChk" id="reasonChk">
+                            <select class="form-select reasonChk chk" style="width: 60%;" name="reasonChk" id="reasonChk">
+                                <option hidden th:value="${career.reasonChk}" th:utext="${career.reasonChk}"></option>
                             </select>
-                            <input type="hidden" id="reasonHidden" value="">
                         </tr>
                         <tr>
                           <td class="title">직급</label></td>

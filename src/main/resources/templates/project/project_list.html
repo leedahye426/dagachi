@@ -3,7 +3,12 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav"/>
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 <!--content-->
 <header class="py-3 bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg')">
     <div class="text-center my-5">
@@ -38,7 +43,7 @@
 </div>
 
 <div class="container">
-    <div sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ADMIN')">
+    <div sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ADMIN', 'ROLE_ANONYMOUS')">
         <div class="row row-cols-5">
             <div th:each="project : ${projects}"
                  th:onclick="|location.href='@{|/project/enterprise/detail/${project.project_id}|}'|"

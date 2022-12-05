@@ -109,23 +109,28 @@ public class CompetitionController {
         String host = multiReq.getParameter("host");
         String url = multiReq.getParameter("url");
         String content = multiReq.getParameter("content");
+        String writer = member.getName();
+        Long memberId = member.getId();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDate = LocalDateTime.parse(multiReq.getParameter("startDate"),formatter);
         LocalDateTime endDate = LocalDateTime.parse(multiReq.getParameter("endDate"),formatter);
 
-        MultipartFile file = multiReq.getFile("file");
-
-        Competition competition = competitionService.findOne(id);
+        Competition competition = new Competition();
         competition.setTitle(title);
         competition.setHost(host);
         competition.setUrl(url);
         competition.setContent(content);
+        competition.setWriter(writer);
         competition.setStartDate(startDate);
         competition.setEndDate(endDate);
+        competition.setMemberId(memberId
+        );
+        MultipartFile poster = multiReq.getFile("poster");
+        MultipartFile banner = multiReq.getFile("banner");
 
 
-        competitionService.update(competition, file);
+        competitionService.update(competition, poster, banner);
         return "redirect:/competition/competition_list";
 
     }

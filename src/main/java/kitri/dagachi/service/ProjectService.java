@@ -168,4 +168,8 @@ public class ProjectService {
     public void updateApproveNtoY(Long project_id) {
         projectRepository.updateApproveNtoY(project_id);
     }
+
+    public List<Project> findOrderByLike(int limit) {
+        return projectRepository.findOrderByLike(limit);
+    }
 }
