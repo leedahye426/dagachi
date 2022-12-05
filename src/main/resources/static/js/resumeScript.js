@@ -3167,7 +3167,7 @@ function resumeChk() {
   //   return false;
   // }
 
-  // $("#resumeForm").submit();
+  $("#resumeForm").submit();
 }
 
 window.onload = function() {

@@ -1,28 +1,19 @@
 package kitri.dagachi;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Component
 @Getter
 public class FormWebAuthenticationDetails extends WebAuthenticationDetails {
 
-    private String roleType;
-//    private String email;
-//    private String passwd;
+    private final String roleType;
 
     public FormWebAuthenticationDetails(HttpServletRequest request) {
         super(request);
+        System.out.println("부가인증실행");
         roleType = request.getParameter("ROLE");
-//        email = request.getParameter("email");
-//        passwd = request.getParameter("passwd");
-
     }
 
 }

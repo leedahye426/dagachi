@@ -1,7 +1,10 @@
 package kitri.dagachi;
 
 import kitri.dagachi.service.MemberService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -11,12 +14,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.authentication.ProviderManagerBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,17 +43,24 @@ import java.io.PrintWriter;
 @EnableWebSecurity // 스프링 security 지원을 가능하게 함
 @ConditionalOnDefaultWebSecurity
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class SecurityConfig {
 
     @Autowired
     MemberService memberService;
     AuthenticationManager authenticationManager;
-    FormAuthenticationDetailSource formAuthenticationDetailSource;
+    AuthenticationDetailsSource authenticationDetailsSource; // 구현체를 사용하지 않음
+//    AuthProvider authProvider;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(authProvider);
+//    }
 
     @Bean
     public RoleHierarchy roleHierarchy() {
@@ -60,7 +70,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -82,14 +91,16 @@ public class SecurityConfig {
                 .usernameParameter("email") // loginForm에서 ID의 name값과 일치
                 .passwordParameter("passwd") // loginForm에서 PASSWORD의 name값과 일치
                 .loginProcessingUrl("/members/login") // 로그인 Form Action url
-//                .authenticationDetailsSource(formAuthenticationDetailSource)
-                .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
+//                .authenticationDetailsSource(authenticationDetailsSource)
+//                .defaultSuccessUrl("/", true) // 로그인 성공 후 이동 페이지
 //                .failureForwardUrl("/members/login?error=true") // 로그인 실패 후 페이지 포워딩
                 .successHandler(new AuthenticationSuccessHandler() { // 로그인 성공 핸들러
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request,
                                                         HttpServletResponse response,
                                                         Authentication authentication) throws IOException, ServletException {
+
+                        System.out.println("request.getParameter(\"ROLE\") : " + request.getParameter("ROLE"));
 
                         System.out.println("성공핸들러 작동");
 
@@ -122,7 +133,6 @@ public class SecurityConfig {
                             System.out.println("리다이렉트");
                             uri = savedRequest.getRedirectUrl();
                             requestCache.removeRequest(request, response);
-//                            response.sendRedirect(uri);
                         }
 
                             response.sendRedirect(uri);
@@ -156,7 +166,6 @@ public class SecurityConfig {
                         response.sendRedirect("/members/login?error");
                     }
                 })
-
 //                .permitAll() // 사용자 정의 로그인 페이지 권한 설정
             .and()
                 .logout()
