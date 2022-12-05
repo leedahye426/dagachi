@@ -1,13 +1,11 @@
 package kitri.dagachi.service;
 
 //import kitri.dagachi.SecurityConfig;
-import groovy.transform.Internal;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import kitri.dagachi.repository.AuthRepository;
 import kitri.dagachi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

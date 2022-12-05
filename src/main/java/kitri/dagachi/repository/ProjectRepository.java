@@ -148,4 +148,9 @@ public class ProjectRepository {
                 .setParameter("project_id", project_id).executeUpdate();
     }
 
+    public List<Project> findOrderByLike(int limit) {
+        return em.createQuery("select p from project_board p order by p.like_cnt desc")
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }

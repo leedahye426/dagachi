@@ -3,7 +3,11 @@ package kitri.dagachi.controller;
 import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Competition;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.model.Post;
+import kitri.dagachi.model.Project;
 import kitri.dagachi.service.CompetitionService;
+import kitri.dagachi.service.ProjectService;
+import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
     private final CompetitionService competitionService;
+    private  final ProjectService projectService;
+    private  final postService postService;
 
     // 세션 세팅 V1
 //    @GetMapping("/")    // HttpSession이 존재하면 session attribute에서 name이 SessionConstatns.LOGIN_MEMBER인 값을 가져와 loginMember와 바인딩
@@ -66,8 +72,13 @@ public class HomeController {
         List<Competition> competitions = competitionService.findAllCompetition();
 
         Competition firstOne = competitionService.findFirst();
-        
+
+        List<Project> projects = projectService.findOrderByLike(3);
+        List<Post> posts = postService.findOrderByLike(3);
+//        for(Project p : projects) System.out.println(p.getProject_title() + ":" + p.getLike_cnt());
         model.addAttribute("competitions", competitions);
+        model.addAttribute("posts", posts);
+        model.addAttribute("projects", projects);
         model.addAttribute("firstOne", firstOne);
         return "home";
     }

@@ -18,7 +18,7 @@
                 <table>
                     <tr>
                         <th>
-                            <img src="" width="130px" height="180px" onerror="this.src='/images/member-default-image.jpg'">
+                            <img th:src="'/image/' + ${info.image}" width="130px" height="180px" onerror="this.src='/images/member-default-image.jpg'">
                         </th>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="|location.href='@{|/members/resumeChk/${project_member.id}|}'|">이력서 조회</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  th:onclick="|location.href='@{|/members/resumeChk/${project_member.id}|}'|">이력서 조회</button>
             </div>
         </div>
     </div>
@@ -111,7 +111,7 @@
             </tr>
             <tr>
                 <th>포트폴리오</th>
-                <td scope="row"><iframe class="mx-auto " th:src="'/upload/' + ${project.saved_name}" width="100%" height="950" align="center" title="포트폴리오"></iframe></td>
+                <td scope="row"><iframe class="mx-auto " th:src="'/image/' + ${project.saved_name}" width="100%" height="950" align="center" title="포트폴리오"></iframe></td>
             </tr>
         </tbody>
     </table>

@@ -156,7 +156,11 @@ public class PostRepository {
                 .getResultList();
     }
 
-
+    public List<Post> findOrderByLike(int limit) {
+        return em.createQuery("select p from posting_board p order by p.likeCnt desc")
+                .setMaxResults(limit)
+                .getResultList();
+    }
 
 
 
