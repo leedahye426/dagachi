@@ -26,6 +26,10 @@ public class PostingLike {
 //    @JoinTable(name="members", joinColumns = @JoinColumn(name="member_id"))
     private Long memberId;
 
+//    @Column(name="count")
+//    private Long cnt;
+
+
 //    @Column(name = "like_check")
 //    private Long likeCheck;
 

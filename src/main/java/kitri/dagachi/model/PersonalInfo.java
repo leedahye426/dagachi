@@ -16,6 +16,9 @@ public class PersonalInfo {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "image_original")
+    private String originImg;
+
     @Column(name = "member_image")
     private String image;
 

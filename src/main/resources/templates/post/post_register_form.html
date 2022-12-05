@@ -7,6 +7,13 @@
 <head th:replace="fragments/nav :: nav" />
 
 
+
+<div class="bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg'); padding:50px;">
+    <h1 style="text-align: center; color: white;">채용공고 등록</h1>
+</div>
+
+
+
 <div class="container col-5 my-5 width : 100%">
     <form name = "register" action="/post/enterprise/post_list" method="post" enctype="multipart/form-data">
         <table>
@@ -17,10 +24,6 @@
                 <td><input type="text" name="companyName" value=""></td>
                 </th>
             </tr>
-            <!--             <tr>-->
-            <!--                 <th>날짜-->
-            <!--                 <td><input type="date" name="upload_date" value=""></td></th>-->
-            <!--             </tr>-->
             <tr>
                 <th>공고제목
                 <td><input type="text" name="postingTitle" value=""></td>

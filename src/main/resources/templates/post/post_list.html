@@ -36,19 +36,33 @@
         </div>
     </form>
 
-    <div class="container justify-content:space-around " >
-        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/${post.postingId}/post_detail|}'|" >
-            <div class="card-body b" style="width: 14rem; height: 10rem;" >
 
+
+    <div class="container justify-content:space-around " >
+        <input type="hidden" th:each="post : ${post}" value="${post?.postingId}">
+        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" >
+            <div class="card-body b" style="width: 14rem; height: 10rem;  " >
                 <h5 class="card-title fw-bold py-5" name="postingContent" th:text=" ${post?.postingContent}"></h5>
                 <p class="card-text" name="posting"></p>
                 <form>
                     <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" name="companyName"></h6>
                     <h7 th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7>
                 </form>
+
+                <div>
+                    <input type="hidden" th:each="tags : ${PostTags}" value="${tags?.postingId}">
+                    <span name="tags" th:text=" ' # '+${tags?.tag}" id="postingTag" ></span></div>
+                <div>
+
+                    <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="red"
+                     class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg> <label id="count" th:text="${post?.cnt}"/></div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -59,7 +73,7 @@
 
 <div sec:authorize="hasRole('ROLE_ENT')">
     <div class="container justify-content:space-around; " >
-                <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|" >
+                <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/enterprise/post_detail/${post.postingId}|}'|" >
 
                     <div class="card-body b" style="width: 14rem; height: 10rem;" >
                         <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
@@ -78,13 +92,25 @@
     </div>
 </div>
 
-    <!--작성글-->
-<!--    <form method="GET" th:each="post : ${post}" action="/post/enterprise/list">-->
-<!--    </form>-->
 
 
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="container justify-content:space-around; " >
+        <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/admin/post_approve_detail/${post.postingId}|}'|" >
 
-<!--            <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;" th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|">-->
+            <div class="card-body b" style="width: 14rem; height: 10rem;" >
+                <h5 class="card-title fw-bold py-5" name="postingContent" th:text=" ${post?.postingContent} "></h5>
+                <p class="card-text" name="posting"></p>
+                <form>
+                    <h6 class="border-top" th:text=" '회사명 : ' + ${post?.companyName}" name="companyName"></h6>
+                    <h7 th:text=" '공고제목 : ' + ${post?.postingTitle}" id="postingTitle"></h7>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 

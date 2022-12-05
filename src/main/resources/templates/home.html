@@ -50,27 +50,26 @@
     </div>
     <div class="col-4 px-5 my-5 py-2 " sec:authorize="hasRole('ROLE_PER')">
         <div class="list-group row ">
-            <li class="list-group-item list-group-item-light list-group-item-action active">인기 채용공고
-                <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
-                        onClick="location.href='/post/personal/post_list'">더보기
-                </button>
-            </li>
-            <li th:each="project : ${projects}">
-                <a th:href="'/post/personal/detail/' + ${project.postingId}"
-                   class="list-group-item list-group-item-action " th:text="${project.postingTitle}"></a>
-            </li>
+            <ol class="list-group list-group-numbered" start="0">
+                <ul style="list-style:none" class="list-group-item list-group-item-light list-group-item-action active">인기 프로젝트
+                    <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
+                            onClick="location.href='/post/personal/post_list'">더보기
+                    </button>
+                </ul>
+                <li class="list-group-item" th:each="post : ${posts}" th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" th:text="${post.postingTitle}" style="cursor:pointer"></li>
+            </ol>
         </div>
     </div>
-    <div class="col-4 px-5 my-5 py-2 " sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ANONYMOUS')">
+    <div class="col-4 px-5 my-5 py-2 " sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ANONYMOUS', 'ROLE_ADMIN' )">
         <div class="list-group row ">
-            <li class="list-group-item list-group-item-light list-group-item-action active">인기 프로젝트
-                <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
-                        onClick="location.href='/project/enterprise/project_list'">더보기
-                </button>
-            </li>
-            <ul class="list-group" th:each="project : ${projects}">
-                <li class="list-group-item" th:onclick="'/project/enterprise/detail/' + ${project.project_id}" th:text="${project.project_title}"></li>
-            </ul>
+            <ol class="list-group list-group-numbered" start="0">
+                <ul style="list-style:none" class="list-group-item list-group-item-light list-group-item-action active">인기 프로젝트
+                    <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
+                            onClick="location.href='/project/enterprise/project_list'">더보기
+                    </button>
+                </ul>
+                <li class="list-group-item" th:each="project : ${projects}" th:onclick="|location.href='@{|/project/enterprise/detail/${project.project_id}|}'|" th:text="${project.project_title}" style="cursor:pointer"></li>
+            </ol>
         </div>
     </div>
 </div>

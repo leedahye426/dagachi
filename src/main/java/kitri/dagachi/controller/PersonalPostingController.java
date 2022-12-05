@@ -1,45 +1,27 @@
 package kitri.dagachi.controller;
-
-//import kitri.dagachi.service.FileService;
-
-//import jdk.internal.jimage.ImageReader;
-
-import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
+import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
-import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import kitri.dagachi.service.postService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.CookieManager;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static java.awt.Color.gray;
-import static java.awt.Color.red;
+
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class PersonalPostingController {
 
 
@@ -70,16 +52,31 @@ public class PersonalPostingController {
 
     //approve 된 게시글만 보이게
     @GetMapping("/post/personal/post_list")
-      public String posting(Model model, @AuthenticationPrincipal Member member)
+      public String posting(Long postingId, Model model, @AuthenticationPrincipal Member member)
     {
 
+
         List<Post> post = postservice.approveList();
+
+//        PostTags tags = postservice.tags(postingId);
+
         Long memberId = member.getId();
+
+//        List<PostTags> posttags = new ArrayList<>();
+//
+//        for (PostTags t : tags)
+//        {
+//            posttags.add(postservice.findByOne(t.getPostingId()));
+//        }
+
+
+
+
 
 
         model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
-
+//        model.addAttribute("tags",tags);
 
 
         return "/post/post_list";
@@ -89,7 +86,7 @@ public class PersonalPostingController {
 
 
     //    공고보기 클릭 시 상세페이지 이동
-    @GetMapping("/post/personal/{postingId}/post_detail")
+    @GetMapping("/post/personal/post_detail/{postingId}")
 
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model,@AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
@@ -123,13 +120,6 @@ public class PersonalPostingController {
     }
 
 
-
-
-
-
-
-
-
     //좋아요
     @PostMapping("/post/personal/fill_like")
     @ResponseBody
@@ -143,6 +133,10 @@ public class PersonalPostingController {
         //session 값 가져오기
         Long memberId = member.getId();
         postinglike.setMemberId(memberId);
+//
+//        Long cnt = 1l;
+        postservice.likeCnt(postingId,1l);
+
 
 
         System.out.println("postinglike.getPostingId() : " + postinglike.getPostingId());
@@ -171,6 +165,9 @@ public class PersonalPostingController {
 
 
         PostingLike postinglike = postservice.findlike(postingId, memberId);
+
+//        Long cnt = -1l;
+        postservice.likeCnt(postingId,-1l);
 
         System.out.println("posingId : " + postingId);
         System.out.println("memberId : " + memberId);
@@ -201,11 +198,22 @@ public class PersonalPostingController {
 
             return "/post/post_list";
 
-
-
-
     }
 
+    @PostMapping("/post/personal/post_detail/{postingId}")
+    @ResponseBody
+    public String likeCnt(@RequestParam Long postingId)
+    {
+
+        Long cnt = 0L;
+        postservice.likeCnt(postingId,cnt);
+
+
+
+
+        return "";
+
+    }
 
 
 

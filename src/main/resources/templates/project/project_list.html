@@ -38,7 +38,7 @@
 </div>
 
 <div class="container">
-    <div sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ADMIN')">
+    <div sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ADMIN', 'ROLE_ANONYMOUS')">
         <div class="row row-cols-5">
             <div th:each="project : ${projects}"
                  th:onclick="|location.href='@{|/project/enterprise/detail/${project.project_id}|}'|"

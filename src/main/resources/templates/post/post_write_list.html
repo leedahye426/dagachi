@@ -19,7 +19,7 @@
 <form method="GET" th:each="post : ${post}" action="/post/enterprise/list">
 
   <div class="container justify-content:space-around; " >
-    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px;"  th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|" >
+    <div class="card row row-cols-3 mx-5" style="width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;"  th:onclick="|location.href='@{|/post/enterprise/${post.postingId}/post_detail|}'|" >
 
       <div class="card-body b" style="width: 14rem; height: 10rem;" >
         <h5 class="card-title fw-bold py-5" id="postingContent" th:text=" ${post?.postingContent} "></h5>
