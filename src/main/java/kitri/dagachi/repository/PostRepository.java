@@ -157,13 +157,18 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<Post> findOrderByLike(int limit) {
+        return em.createQuery("select p from posting_board p order by p.cnt desc")
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
     public void findtags(Long postingId)
     {
         em.createQuery("select pt.tag from posting_tags pt where pt.postingId =:postingId")  //in구문 where절에서 값이 여러개 일
           .setParameter("postingId",postingId)
           .getResultList();
     }
-
 
     public void cnt(Long postingId, Long cnt) {
 

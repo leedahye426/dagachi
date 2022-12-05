@@ -17,7 +17,7 @@ function projectLike(obj, project_id) {
     else {
       $.ajax({
             type : "post",
-            url : "/project/enterprise/like/emptyToFill",
+            url : "/project/enterprise/like/fillToEmpty",
             data : {project_id, project_id},
             success : function(data) {
                empty();

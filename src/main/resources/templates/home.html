@@ -21,15 +21,18 @@
 <div class="row mx-0 my-0" style="height:425px;">
     <div class="col-6  mx-5 my-5 px-5 py-2 ">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-3" >
-                <div  class="carousel-item active " data-bs-interval="3000">
+            <div class="carousel-inner rounded-3">
+                <div class="carousel-item active " data-bs-interval="3000">
                     <a th:href="${firstOne.url}">
-                        <img th:src="'/upload/' + ${firstOne.bannerSavedName}" class="d-block w-100 " alt="..." style="min-height:300px">
+                        <img th:src="'/image/' + ${firstOne.bannerSavedName}" class="d-block w-100 " alt="..."
+                             style="min-height:300px">
                     </a>
                 </div>
-                <div th:each="c:${competitions}" th:if="${c.id != firstOne.id}" class="carousel-item " data-bs-interval="3000">
+                <div th:each="c:${competitions}" th:if="${c.id != firstOne.id}" class="carousel-item "
+                     data-bs-interval="3000">
                     <a th:href="${c.url}">
-                        <img th:src="'/upload/' + ${c.bannerSavedName}" class="d-block w-100 " alt="..." style="min-height:300px">
+                        <img th:src="'/image/' + ${c.bannerSavedName}" class="d-block w-100 " alt="..."
+                             style="min-height:300px">
                     </a>
                 </div>
             </div>
@@ -45,22 +48,29 @@
             </button>
         </div>
     </div>
-
-    <div class="col-4 px-5 my-5 py-2 ">
+    <div class="col-4 px-5 my-5 py-2 " sec:authorize="hasRole('ROLE_PER')">
         <div class="list-group row ">
-            <li class="list-group-item list-group-item-light list-group-item-action active"> 게시판 미리보기
-                <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
-                        onClick="location.href='/게시판.html'">더보기
-                </button>
-            </li>
-            <a href="#" class="list-group-item list-group-item-action ">Cras justo odio</a>
-            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-            <a href="#" class="list-group-item list-group-item-action ">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action ">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action ">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action ">Morbi leo risus</a>
+            <ol class="list-group list-group-numbered" start="0">
+                <ul style="list-style:none" class="list-group-item list-group-item-light list-group-item-action active">인기 프로젝트
+                    <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
+                            onClick="location.href='/post/personal/post_list'">더보기
+                    </button>
+                </ul>
+                <li class="list-group-item" th:each="post : ${posts}" th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" th:text="${post.postingTitle}" style="cursor:pointer"></li>
+            </ol>
         </div>
-
+    </div>
+    <div class="col-4 px-5 my-5 py-2 " sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ANONYMOUS', 'ROLE_ADMIN' )">
+        <div class="list-group row ">
+            <ol class="list-group list-group-numbered" start="0">
+                <ul style="list-style:none" class="list-group-item list-group-item-light list-group-item-action active">인기 프로젝트
+                    <button type="button" class="btn btn-outline-dark btn-sm " style="float:right;"
+                            onClick="location.href='/project/enterprise/project_list'">더보기
+                    </button>
+                </ul>
+                <li class="list-group-item" th:each="project : ${projects}" th:onclick="|location.href='@{|/project/enterprise/detail/${project.project_id}|}'|" th:text="${project.project_title}" style="cursor:pointer"></li>
+            </ol>
+        </div>
     </div>
 </div>
 <!-- Content section-->

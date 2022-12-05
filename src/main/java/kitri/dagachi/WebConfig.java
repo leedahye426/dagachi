@@ -12,6 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
     private String profileResourcePath = "file:///D:/test/profile/";
     private String portfolioResourcePath = "file:///D:/test/portfolio/";
     private String posterResourcePath = "file:///D:/test/poster/";
+    private String bannerResourcePath = "file:///D:/test/banner/";
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -21,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations(defaultResourcePath)
                 .addResourceLocations(profileResourcePath)
                 .addResourceLocations(portfolioResourcePath)
+                .addResourceLocations(bannerResourcePath)
                 .addResourceLocations(posterResourcePath);
     }
 }

@@ -36,15 +36,15 @@ public class CompetitionService {
 
         String posterOrgName = poster.getOriginalFilename();
         String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
-        String posterSavedName = uuid + posterOrgName;
+        String posterSavedName = uuid + "poster" + posterOrgName;
         String posterSavedPath = fileDir + "poster/" + posterSavedName;
 
         String bannerOrgName = banner.getOriginalFilename();
-        String bannerSavedName = uuid + bannerOrgName;
+        String bannerSavedName = uuid + "banner" + bannerOrgName;
         String bannerSavePath = fileDir + "banner/" + bannerSavedName;
 
         competition.setPosterOrgName(posterOrgName);
-        competition.setPosterSavedPath(posterSavedName);
+        competition.setPosterSavedName(posterSavedName);
         competition.setPosterSavedPath(posterSavedPath);
         competition.setBannerOrgName(bannerOrgName);
         competition.setBannerSavedName(bannerSavedName);
@@ -55,18 +55,26 @@ public class CompetitionService {
         competitionRepository.save(competition);
     }
 
-    public void update(Competition competition, MultipartFile file) throws IOException{
+    public void update(Competition competition, MultipartFile poster, MultipartFile banner) throws IOException{
 
-        String orgName = file.getOriginalFilename();
+        String posterOrgName = poster.getOriginalFilename();
         String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
-        String savedName = uuid + orgName;
-        String savedPath = fileDir + savedName;
+        String posterSavedName = uuid + posterOrgName;
+        String posterSavedPath = fileDir + "poster/" + posterSavedName;
 
-        competition.setPosterOrgName(orgName);
-        competition.setPosterSavedName(savedName);
-        competition.setPosterSavedPath(savedPath);
+        String bannerOrgName = banner.getOriginalFilename();
+        String bannerSavedName = uuid + bannerOrgName;
+        String bannerSavePath = fileDir + "banner/" + bannerSavedName;
 
-        file.transferTo(new File(savedPath));
+        competition.setPosterOrgName(posterOrgName);
+        competition.setPosterSavedName(posterSavedName);
+        competition.setPosterSavedPath(posterSavedPath);
+        competition.setBannerOrgName(bannerOrgName);
+        competition.setBannerSavedName(bannerSavedName);
+        competition.setBannerSavedPath(bannerSavePath);
+
+        poster.transferTo(new File(posterSavedPath));
+        banner.transferTo(new File(bannerSavePath));
     }
 
     public void deleteOne(Competition competition) {
