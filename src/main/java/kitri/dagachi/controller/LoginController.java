@@ -30,11 +30,20 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/members/login")
-    public String login(@AuthenticationPrincipal Member loginMember) {
+    public String login(@AuthenticationPrincipal Member loginMember,
+                        HttpServletRequest request) {
+        System.out.println("로그인페이지입니다");
 
         if(loginMember != null) {
             return "redirect:/";
         }
+        // 요청 시점의 사용자 URI 정보를 Session의 Attribute에 담아서 전달(잘 지워줘야 함)
+        // 로그인이 틀려서 다시 하면 요청 시점의 URI가 로그인 페이지가 되므로 조건문 설정
+        String uri = request.getHeader("Referer");
+        if(!uri.contains("/login")) {
+            request.getSession().setAttribute("prevPage", request.getHeader("Referer"));
+        }
+
 
         return "members/login";
     }
