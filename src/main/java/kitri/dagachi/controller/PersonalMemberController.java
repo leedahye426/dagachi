@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,7 +45,7 @@ public class PersonalMemberController {
 //    }
 
     @GetMapping("/join")
-    public String joinMain(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+    public String joinMain(@AuthenticationPrincipal Member loginMember) {
 
         if(loginMember != null) {
             return "redirect:/";
@@ -53,7 +54,7 @@ public class PersonalMemberController {
     }
 
     @GetMapping("join/personal")
-    public String personalForm(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+    public String personalForm(@AuthenticationPrincipal Member loginMember) {
 
         if(loginMember != null) {
             return "redirect:/";

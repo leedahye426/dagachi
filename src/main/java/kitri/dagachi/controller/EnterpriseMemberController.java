@@ -6,6 +6,7 @@ import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,7 +35,7 @@ public class EnterpriseMemberController {
 //    }
 
     @GetMapping("join/enterprise")
-    public String enterForm(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+    public String enterForm(@AuthenticationPrincipal Member loginMember) {
 
         if(loginMember != null) {
             return "redirect:/";
