@@ -5,9 +5,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav" />
-
-
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 <!-- Content section-->
 <!-- Modal -->
 <div class="modal" tabindex="-1" id="exampleModal">
