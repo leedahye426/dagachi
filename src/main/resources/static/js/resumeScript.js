@@ -3059,12 +3059,22 @@ $(document).on('click', (e) => {
 })
 
 // 프로필 선택
+
+const maxSize = 1048576; // 1MB
+
 function loadFile(input) {
-  
+
+
   console.log('fnc start')
   const file = input.files[0];
-  console.log(URL.createObjectURL(file));
-  console.log(file.name);
+
+  console.log("file.size ; " + file.size);
+  console.log("URL.createObjectURL(file) : " + URL.createObjectURL(file));
+  console.log("file.name ; "+ file.name);
+  if(file.size > maxSize) {
+    alert('파일의 크기는 1MB를 초과할 수 없습니다.');
+    return false;
+  }
 
   $("#profileImg").attr("src", URL.createObjectURL(file));
 }
@@ -3095,8 +3105,7 @@ const issuedDateArr = document.getElementsByClassName('issuedDate');
 const contentName = document.getElementsByClassName('contentName');
 const chk = document.getElementsByClassName('chk');
 
-console.log(startDateArr);
-console.log(endDateArr);
+let maxSiez = 10;
 
 
 function resumeChk() {
@@ -3152,6 +3161,12 @@ function resumeChk() {
     }
   }
 
+  // 프로필 이미지 크기 여부
+  // if(fileSize > maxSize) {
+  //   alert("파일 사이즈 초과");
+  //   return false;
+  // }
+
   // $("#resumeForm").submit();
 }
 
@@ -3167,5 +3182,6 @@ window.onload = function() {
 
 $(document).on("click", e => {
 
-  
+  console.log(file);
+
 });

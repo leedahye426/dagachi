@@ -4,15 +4,24 @@ import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,11 +30,11 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/members/login")
-    public String login() {
+    public String login(@AuthenticationPrincipal Member loginMember) {
 
-//        if(loginMember != null) {
-//            return "redirect:/";
-//        }
+        if(loginMember != null) {
+            return "redirect:/";
+        }
 
         return "members/login";
     }
@@ -33,7 +42,9 @@ public class LoginController {
     @PostMapping("/members/login")
     public String login(@Valid LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request) {
+                        HttpServletRequest request,
+                        HttpServletResponse response,
+                        Authentication authentication) throws IOException, ServletException {
 
 //        if(!memberService.loginMatch(loginForm.getEmail(), loginForm.getPasswd(), loginForm.getCodeType())
 //        || bindingResult.hasErrors()) {
