@@ -3105,9 +3105,6 @@ const issuedDateArr = document.getElementsByClassName('issuedDate');
 const contentName = document.getElementsByClassName('contentName');
 const chk = document.getElementsByClassName('chk');
 
-let maxSiez = 10;
-
-
 function resumeChk() {
 
   // contentName 유효성 검증
@@ -3156,14 +3153,16 @@ function resumeChk() {
   for(i=0; i<chk.length; i++) {
     console.log(chk[i].value);
     if(chk[i].value == "졸업여부" || chk[i].value == "퇴사사유") {
-      alert("선택해 !!!!!!!!!!!!");
+      alert(((chk[i].parentNode.parentNode).getElementsByTagName('td')[0].textContent).replace(" *", "").trim()
+      + "은 필수 입력 사항입니다.");
       return false;
     }
   }
 
   // 프로필 이미지 크기 여부
-  // if(fileSize > maxSize) {
+  // if(file.size > maxSize) {
   //   alert("파일 사이즈 초과");
+    
   //   return false;
   // }
 

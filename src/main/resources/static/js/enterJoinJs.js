@@ -158,7 +158,14 @@ $codeBtn.on('click', function () {
             "email" : $('#email').val()
         },
     })
-    .done(function() { 
+    .done(function(data) {
+        
+        if(data == "duplicateEmail") {
+            msgEmail.textContent = "이미 등록된 회원입니다.";
+            return false;
+        }
+        alert("인증번호 발송 완료")
+
         tid = setInterval('cntTimer()', 1000);
         $("#code").removeAttr('disabled'); // 인증코드 박스 활성화
         $codeBtn.text("인증코드 재발송");

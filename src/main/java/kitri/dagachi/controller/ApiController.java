@@ -1,5 +1,6 @@
 package kitri.dagachi.controller;
 
+import kitri.dagachi.model.Member;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.RedisService;
@@ -19,7 +20,6 @@ public class ApiController {
 
     @Autowired
     private final EmailService emailService;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisService redisService;
     private final MemberService memberService;
 
@@ -27,6 +27,13 @@ public class ApiController {
     @PostMapping("join/emailConfirm")
     @ResponseBody
     public String emailConfirm(@RequestParam("email") String email)  throws Exception {
+
+        Member member = memberService.findOneByEmail(email);
+
+        if(member != null) {
+            return "duplicateEmail";
+        }
+
         System.out.println("전달 받은 이메일 : " + email);
         String code = emailService.sendSimpleMessage(email);
         System.out.println("전송한 code : " + code);
