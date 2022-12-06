@@ -53,14 +53,14 @@ public class PersonalPostingController {
 
     //approve 된 게시글만 보이게
     @GetMapping("/post/personal/post_list")
-      public String posting(Long postingId, String[] tag, Model model, @AuthenticationPrincipal Member member)
+      public String posting(Long postingId, String[] tag, Model model)
     {
 
         List<Post> post = postservice.approveList();
 
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        Long memberId = member.getId();
+//        Long memberId = member.getId();
 
 
 //        List<PostTags> postTags =
@@ -75,7 +75,7 @@ public class PersonalPostingController {
 //            System.out.println(postservice.tags(pt.getTag());
 //        }
 
-        model.addAttribute("memberId", memberId);
+//        model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
 //        model.addAttribute("tags",tags);
 

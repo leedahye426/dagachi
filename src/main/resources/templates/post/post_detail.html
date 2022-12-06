@@ -3,24 +3,29 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav"/>
+
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 
 
-<!--<div class="container">-->
-
-<!--    <div class="card">-->
 
 
-
-
+<div class="container py-5">
 <div class="card-body" th:each="post : ${post}">
     <input type="hidden" id="postingId" th:value="${post?.postingId}">
 
-<!--             <div class="bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg'); ">-->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+                <h1 th:text="'채용공고 ( ' + ${post.companyName} +' )'" style="text-align:center; font-weight:bold;"></h1>
              <div sec:authorize="hasRole('ROLE_PER')">
 
-                 <button type="button" class="btn btn-sm"  th:onclick="|javascript:like(${post?.postingId})|">
-                     <h1 th:text="${post.companyName}"></h1>
+                 <button type="button" class="btn btn-sm" style="position: absolute; right: 420px; top: 180px;" th:onclick="|javascript:like(${post?.postingId})|">
+
                      <svg id="heart" stroke="white" xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="gray"
                           class="bi bi-heart-fill" viewBox="0 0 16 16">
                          <path fill-rule="evenodd"
@@ -28,59 +33,78 @@
                      </svg>
                  </button>
              </div>
-
-
-
-
-<!--        <h1 style="border-left-radius: 5px; border-right-radius: 5px; background-color: gray; color: white; text-align:center;">채용공고-->
-
-
-<!--<h1 th:text="${post.companyName}"></h1>-->
-<!--        </h1>-->
-  <div class="col-5 my-5 width : 100%">
-        <form>
-            <div class="mb-3">
-                <label class="form-label">회사이름</label>
-                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
-            </div>
-            <div>
-<!--                <input type="hidden" th:each="tags : ${PostTags}" value="${tags?.postingId}">-->
-                <span scope="row" th:each="tag : ${PostTags}" th:text="'#' + ${tag.tag}"></span>
-<!--                <span name="PostTags" th:text=" ' # '+${tags?.tag}" id="postingTag" />-->
-            </div>
-            <div class="mb-3">
-                <label class="form-label">공고제목</label>
-                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">공고내용</label>
-                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"
-                          th:text="${post?.postingContent}" disabled></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">등록날짜</label>
-                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>
-            </div>
-
-
-
-
-
-            <div sec:authorize="hasRole('ROLE_ENT')">
-                <th:block th:switch="${memberId}">
+                <div sec:authorize="hasRole('ROLE_ENT')">
+                    <th:block th:switch="${memberId}">
                      <span th:case="${post.memberId}">
-                        <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 300px;"
-                            th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/delete/${post.postingId}|}'|">
+                        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 180px;"
+                                th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/enterprise/delete/${post.postingId}|}'|">
                             삭제
                         </button>
                     </span>
-                </th:block>
+                    </th:block>
 
-            </div>
+                </div>
+        </tr>
+        </thead>
 
-        </form>
-    </div>
+        <tbody>
+        <tr>
+            <th style ="font-size: 15px;"> 공고제목 : </th>
+            <td><span th:text="${post.postingTitle}"></span></td>
+        </tr>
+        <tr>
+            <th style ="font-size: 15px;"> 공고내용 : </th>
+            <td><textarea th:text="${post.postingContent}" style="width : 500px; height: 300px;"></textarea></td>
+        </tr>
+
+        <tr>
+            <th style ="font-size: 15px;"> 등록날짜 : </th>
+            <td><span th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly></span></td>
+        </tr>
+            <!--            //현재날짜변환 형식과 함수-->
+
+        </tbody>
+    </table>
 </div>
+</div>
+
+
+
+
+
+<!--  <div class="col-5 my-5 width : 100%">-->
+<!--        <form>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">회사이름</label>-->
+<!--                <input type="text" name="companyName" th:value="${post?.companyName}" disabled>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--&lt;!&ndash;                <input type="hidden" th:each="tags : ${PostTags}" value="${tags?.postingId}">&ndash;&gt;-->
+<!--                <span scope="row" th:each="tag : ${PostTags}" th:text="'#' + ${tag.tag}"></span>-->
+<!--&lt;!&ndash;                <span name="PostTags" th:text=" ' # '+${tags?.tag}" id="postingTag" />&ndash;&gt;-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">공고제목</label>-->
+<!--                <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">공고내용</label>-->
+<!--                <textarea class="form-control" name="postingContent" style="width : 300px; height: 200px;"-->
+<!--                          th:text="${post?.postingContent}" disabled></textarea>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">등록날짜</label>-->
+<!--                <input type="text" name="uploadDate" th:value="${post?.uploadDate}" disabled>-->
+<!--            </div>-->
+
+
+
+
+
+
+
+
+
 
 
 <!-- Image element - set the background image for the header in the line below-->

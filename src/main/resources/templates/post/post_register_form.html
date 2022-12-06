@@ -4,8 +4,13 @@
 <body>
 <!-- Responsive navbar-->
 
-<head th:replace="fragments/nav :: nav" />
 
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 
 
 <div class="bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg'); padding:50px;">

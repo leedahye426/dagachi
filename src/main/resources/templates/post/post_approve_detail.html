@@ -3,7 +3,15 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav"/>
+
+
+
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 
 
 <div class="container py-5">
@@ -30,18 +38,18 @@
             </thead>
             <tbody>
             <tr>
-                 <th> 회사명 :  <span th:text="${post.companyName}"></span></th>
+                 <th style ="font-size: 15px;"> 회사명 :  <span th:text="${post.companyName}"></span></th>
             </tr>
             <tr>
-                <th> 공고제목 : <span th:text="${post.postingTitle}"></span></th>
+                <th style ="font-size: 15px;"> 공고제목 : <span th:text="${post.postingTitle}"></span></th>
             </tr>
             <tr>
-                <th> 공고내용 : </th>
+                <th style ="font-size: 15px;"> 공고내용 : </th>
                  <td><textarea th:text="${post.postingContent}" style="width : 500px; height: 300px;"></textarea></td>
             </tr>
 
             <tr>
-                <th> 등록날짜 : <span th:text="${post.uploadDate}"></span></th>
+                <th style ="font-size: 15px;"> 등록날짜 : <span th:text="${post.uploadDate}"></span></th>
             </tr>
 
             </tbody>

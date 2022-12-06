@@ -7,20 +7,26 @@
 <!-- Responsive navbar-->
 
 
-<head th:replace="fragments/nav :: nav"/>
+
+
+
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
+
+
 
 <div class="bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg'); padding:50px;">
                 <h1 style="text-align: center; color: white;">채용공고</h1>
 </div>
 
 
-
-
-
-
     <!--개인-->
 
-<div sec:authorize="hasRole('ROLE_PER')">
+<div sec:authorize="hasAnyRole('ROLE_PER', 'ROLE_ANONYMOUS')">
 
     <!--검색기능-->
     <form method="GET" action="/post/personal/post_search">
@@ -40,8 +46,8 @@
 
     <div class="container justify-content:space-around " >
         <input type="hidden" th:each="post : ${post}" value="${post?.postingId}">
-        <div class="card row row-cols-3 mx-5 py-3" style=" top: 50px; width: 18rem; height: 18rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" >
-            <div class="card-body b" style="width: 14rem; height: 10rem;  " >
+        <div class="card row row-cols-3 mx-5 py-2" style=" top: 50px; width: 20rem; height: 20rem; float: left; margin:20px; padding:10px; border-radius: 15px; box-shadow: 10px 10px grey;" th:each="post : ${post}"  th:onclick="|location.href='@{|/post/personal/post_detail/${post.postingId}|}'|" >
+            <div class="card-body b" style="width: 15rem; height: 15rem; " >
                 <h5 class="card-title fw-bold py-5" name="postingContent" th:text=" ${post?.postingContent}"></h5>
                 <p class="card-text" name="posting"></p>
                 <form>
