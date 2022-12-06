@@ -20,11 +20,11 @@
 //@NoArgsConstructor
 //public class AuthProvider implements AuthenticationProvider {
 //
+//    @Autowired
 //    private MemberService memberService;
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 //
-//    public AuthProvider(MemberService memberService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-//        this.memberService = memberService;
+//    public AuthProvider(BCryptPasswordEncoder bCryptPasswordEncoder) {
 //        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 //    }
 //

@@ -1,33 +1,32 @@
 package kitri.dagachi.controller;
 
-import kitri.dagachi.SessionConstants;
 import kitri.dagachi.model.Member;
+import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.regex.Pattern;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @GetMapping("/members/login")
     public String login(@AuthenticationPrincipal Member loginMember,
@@ -99,6 +98,53 @@ public class LoginController {
 
         return "redirect:/";
     };
+
+    @GetMapping("/members/pwdChange")
+    public String pwdChange() {
+        return "/members/pwdChange";
+    }
+
+    @PostMapping("/members/pwdChange")
+    @ResponseBody
+    public String pwdChange(@RequestParam("prevPwd") String prevPwd,
+                            @RequestParam("newPwd") String newPwd,
+                            @RequestParam("newPwdChk") String newPwdChk,
+                            @AuthenticationPrincipal Member authMember) throws IOException {
+
+
+
+        System.out.println("prevPwd : " + prevPwd);
+        System.out.println("newPwd : " + newPwd);
+        System.out.println("newPwdChk : " + newPwdChk);
+
+        String newPwdPattern = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$";
+
+        // 현재 비밀번호 일치 여부
+        if(!bCryptPasswordEncoder.matches(prevPwd, authMember.getPassword())) {
+            return "notPrevPwd";
+        }
+        else if(!Pattern.matches(newPwdPattern, newPwd)) {
+            return "notPwdPattern";
+        }
+        else if(bCryptPasswordEncoder.matches(newPwd, authMember.getPassword())) {
+            return "samePwd";
+        }
+        else if(!bCryptPasswordEncoder.matches(newPwd, authMember.getPassword()) && !newPwd.equals(newPwdChk)) {
+            return "notSameNewPwd";
+        }
+        else if(!bCryptPasswordEncoder.matches(newPwd, authMember.getPassword()) && newPwd.equals(newPwdChk)) {
+
+            String encryptNewPwd = bCryptPasswordEncoder.encode(newPwd);
+            System.out.println("encryptNewPwd : " + encryptNewPwd);
+            memberRepository.updatePasswordByEmail(authMember.getEmail(), encryptNewPwd);
+            System.out.println("prevPwd : " + prevPwd);
+            System.out.println("newPwd : " + newPwd);
+            System.out.println("newPwdChk : " + newPwdChk);
+
+        }
+
+        return "sameNewPwd";
+    }
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {

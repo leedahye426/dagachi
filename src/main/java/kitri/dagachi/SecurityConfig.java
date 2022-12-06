@@ -113,7 +113,7 @@ public class SecurityConfig {
 
                         String prevPage = (String) request.getSession().getAttribute("prevPage");
                         String uri = "/"; // defaultURI
-
+//
                         if(prevPage != null) {
                             uri = prevPage;
                             request.getSession().removeAttribute("prevPage");

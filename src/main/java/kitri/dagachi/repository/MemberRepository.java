@@ -3,7 +3,9 @@ package kitri.dagachi.repository;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.PersonalInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import javax.persistence.EntityManager;
@@ -53,6 +55,16 @@ public class MemberRepository {
 
     public Member findById(Long id) {
         return em.find(Member.class, id);
+    }
+
+    @Transactional
+    @Modifying
+    public void updatePasswordByEmail(String email, String newPassword) {
+        em.createQuery("UPDATE Member m SET m.password = :newPassword WHERE m.email = :email")
+                .setParameter("newPassword", newPassword)
+                .setParameter("email", email)
+                .executeUpdate();
+        em.clear();
     }
 
 //    public Member findById(Long id) {
