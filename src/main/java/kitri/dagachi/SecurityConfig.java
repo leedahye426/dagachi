@@ -81,6 +81,7 @@ public class SecurityConfig {
 
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
                 .antMatchers("/competition/detail/2123").hasRole("PER")
+                .antMatchers("/project/enterprise/project_list").hasRole("ENT")
                 .anyRequest().permitAll()
 //                .antMatchers("/").permitAll()// 특정한 경로를 지정
 //                .anyRequest().authenticated()

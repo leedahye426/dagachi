@@ -85,7 +85,7 @@ public class ProjectService {
 
         return project.getProject_id();
     }
-    public void update(MultipartFile file, Project project, String[] members_email, String[] tags) {
+    public void update(MultipartFile file, Project project, String[] members_email, String[] tags) throws IOException {
         String orgName = file.getOriginalFilename();
         String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmmss_")).toString();
         String savedName = uuid + orgName;
@@ -94,6 +94,8 @@ public class ProjectService {
         project.setOrg_name(orgName);
         project.setSaved_name(savedName);
         project.setSaved_path(savedPath);
+
+        file.transferTo(new File(savedPath));
 
         Long project_id = project.getProject_id();
         projectRepository.deleteProjectMember(project_id);

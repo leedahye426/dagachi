@@ -47,8 +47,8 @@
                         <input type="file" class="form-control" id="poster" name="poster"   required>
                     </div>
                     <div class="mb-3">
-                        <label for="banner" class="form-label">배너</label>
-                        <input type="file" class="form-control" id="banner" name="banner"  data-width="800" data-height="300" required>
+                        <label for="banner" class="form-label">배너(800X300)</label>
+                        <input type="file" class="form-control" id="banner" name="banner"  required onchange="chkSize(this)">
                     </div>
 
                     <button type="submit" class="btn btn-outline-primary">등록</button>
@@ -57,6 +57,7 @@
         </div>
     </div>
 </div>
+<!--<img src="" id="temp_img" style="display:none;" />-->
 <!-- Footer-->
 <div th:replace="fragments/footer :: footer"/>
 <!-- Bootstrap core JS-->

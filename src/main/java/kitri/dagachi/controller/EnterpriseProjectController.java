@@ -26,7 +26,7 @@ public class EnterpriseProjectController {
 
     @GetMapping("/project/enterprise/project_list")
     public String list(Model model) {
-        List<Project> projects = projectService.findAllProjects();
+        List<Project> projects = projectService.findApprovedProject();
         model.addAttribute("projects", projects);
         return "project/project_list";
     }

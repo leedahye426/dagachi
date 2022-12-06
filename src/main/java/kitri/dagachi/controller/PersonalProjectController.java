@@ -121,7 +121,7 @@ public class PersonalProjectController {
         for(String email: members_email) System.out.println(email);
 
         String[] tags = multiReq.getParameterValues("tag");
-        for(String tag : tags) System.out.println(tag);
+//        for(String tag : tags) System.out.println(tag);
 
         projectService.update(file, project, members_email, tags);
         return "redirect:/project/personal/project_list";

@@ -113,8 +113,8 @@ public class ResumeController {
                             @RequestParam("image") MultipartFile file,
                             @RequestParam("uploadFileName") String uploadFileName) throws IOException {
 
-
         String prevImage = null;
+
         // 기본정보 창
         try {
             if (resumeRepository.findById(member.getId()).getId() > 0L) {
@@ -134,6 +134,7 @@ public class ResumeController {
         System.out.println("업데이트 끝");
 
         System.out.println("prevImage : " + prevImage);
+
         PersonalInfo personalInfo = PersonalInfo.builder()
                 .id(member.getId())
                 .image(prevImage)
@@ -142,9 +143,10 @@ public class ResumeController {
 
         String fileName = file.getOriginalFilename();
         System.out.println("fileName : " + fileName);
+        System.out.println("file.getSize() : " + file.getSize());
 
         // 기본정보 창 내 파일여부
-        if(!fileName.equals("")) {
+        if(!fileName.equals("") && file.getSize() < 5000L) {
 
             String uploadDir = "D:/test/profile/";
 
@@ -200,10 +202,6 @@ public class ResumeController {
         System.out.println("form.getAddr() : " + form.getAddr());
         System.out.println("form.getAddrDetail() : " + form.getAddrDetail());
 
-
-
-
-
         resumeRepository.deleteAllEducationById(member.getId());
         if (form.getSchoolName() != null) {
             for (int i = 0; i < (form.getSchoolName()).split(",").length; i++) {
@@ -254,10 +252,10 @@ public class ResumeController {
                 MemberCareers memberCareers = MemberCareers.builder()
                         .id(member.getId())
                         .enterName(form.getEnterName().split(",")[i])
-                        .rank(form.getRank().split(",")[i])
-                        .dept(form.getDept().split(",")[i])
+//                        .rank(form.getRank().split(",")[i])
+//                        .dept(form.getDept().split(",")[i])
                         .reasonChk(form.getReasonChk().split(",")[i])
-                        .duty(form.getDuty().split(",")[i])
+//                        .duty(form.getDuty().split(",")[i])
                         .startDate(form.getJoiningDate().split(",")[i])
                         .endDate(form.getLeavingDate().split(",")[i])
                         .build();
