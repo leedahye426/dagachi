@@ -143,4 +143,13 @@ public class PersonalProjectController {
         return "project/project_list";
     }
 
+    @GetMapping("/project/personal/project_approve_list")
+    public String approveList(@AuthenticationPrincipal Member member, Model model) {
+        List<Project> projects = projectService.findProjectsByMid(member.getId());
+        Long loginId = member.getId();
+        model.addAttribute("projects", projects);
+        model.addAttribute("loginId", loginId);
+        return "project/project_approve_list";
+    }
+
 }

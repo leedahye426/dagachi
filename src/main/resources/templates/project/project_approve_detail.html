@@ -47,19 +47,30 @@
 </div>
 
 <div class="container row-cols-10">
-<!--    <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"-->
-<!--            th:onclick="|if(confirm('승인을 거절하시겠습니까?')) location.href='@{|/project/personal/${project.project_id}/delete|}'|">거절-->
-<!--    </button>-->
-    <span th:if="${project.approve == 'N'}">
-        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
-                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/project/admin/project_approve/${project.project_id}|}'|">승인
-        </button>
-    </span>
-    <span th:if="${project.approve == 'Y'}">
-        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
-                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/project/admin/project_approve_cancel/${project.project_id}|}'|">승인취소
-        </button>
-    </span>
+    <div sec:authorize="hasRole('ROLE_PER')">
+        <th:block th:switch="${loginId}">
+            <span th:case="${project.member_id}">
+                <button type="button" class="btn btn-secondary" style="position: absolute; right: 425px; top: 120px;"
+                        th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/delete/${project.project_id}|}'|">
+                        삭제
+                </button>
+                <button type="button" class="btn btn-primary" style="position: absolute; right: 500px; top: 120px;"
+                        th:onclick="|location.href='@{|/project/personal/update/${project.project_id}|}'|">수정
+                </button>
+                </span>
+        </th:block>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <span th:if="${project.approve == 'N'}">
+            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+                    th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/project/admin/project_approve/${project.project_id}|}'|">승인
+            </button>
+        </span>
+        <span th:if="${project.approve == 'Y'}">
+            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"
+                    th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/project/admin/project_approve_cancel/${project.project_id}|}'|">승인취소
+            </button>
+        </span>
+    </th:block>
     <div class="title align-items-center"><h1 class="text-center mt-5" th:text="${project.project_title}"></h1></div>
     <table class="table">
         <colgroup>

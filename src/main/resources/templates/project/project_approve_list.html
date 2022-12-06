@@ -4,10 +4,10 @@
 <body>
 <!-- Responsive navbar-->
 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-    <head th:replace="fragments/admin_nav :: admin_nav" />
+    <head th:replace="fragments/admin_nav :: admin_nav"/>
 </th:block>
 <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
-    <head th:replace="fragments/nav :: nav" />
+    <head th:replace="fragments/nav :: nav"/>
 </th:block>
 <!--content-->
 <header class="py-3 bg-image-full" style="background-image: url('/images/metal-g05ed72aaf_1920.jpg')">
@@ -19,25 +19,14 @@
     <div class="container-fluid px-4">
         <div class="card mb-4">
             <div class="card-header">
-<!--                <span style="display:inline-block; width:80%;">-->
-<!--                    <form action="/competition/search" method="post" class="align-items-center">-->
-<!--                        <span style="display:inline-block; width:50%;">-->
-<!--                            <input type="text" class="form-control " name="keyword" placeholder="search"-->
-<!--                                   aria-label="Recipient's username" aria-describedby="button-addon2">-->
-<!--                        </span>-->
-<!--                        <span style="display:inline-block;">-->
-<!--                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>-->
-<!--                        </span>-->
-<!--                    </form>-->
-<!--                </span>-->
-
             </div>
             <div class="card-body">
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col style="width:10%">
-                        <col style="width:50%;">
+                        <col style="width:40%;">
                         <col style="width:20%">
+                        <col style="width:10%">
                         <col style="width:10%">
                         <col style="width:10%">
                     </colgroup>
@@ -48,6 +37,7 @@
                         <th>등록날짜</th>
                         <th>팀명</th>
                         <th>승인여부</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,7 +49,38 @@
                         </td>
                         <td th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:text="${project.team_name}"></td>
-                        <td th:text="${project.approve}"></td>
+                        <td th:if="${project.approve == 'Y'}">승인 완료</td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${project.approve == 'Y'}">
+                            <button type="button" class="btn btn-primary" style=""
+                                    th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/project/admin/project_approve_cancel/${project.project_id}|}'|">승인취소
+                            </button>
+                        </td>
+
+                        <td th:if="${project.approve == 'N'}">승인 대기중</td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${project.approve == 'N'}">
+                            <button type="button" class="btn btn-primary" style=""
+                                    th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/project/admin/project_approve/${project.project_id}|}'|">승인
+                            </button>
+                        </td>
+                        <th:block th:switch="${loginId}">
+                            <span th:case="${project.member_id}">
+                                <td>
+                                    <button type="button" class="btn btn-secondary"
+                                            th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/project/personal/delete/${project.project_id}|}'|">삭제
+                                    </button>
+                                </td>
+                            </span>
+                        </th:block>
+<!--                        <td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${project.approve == 'N'}">-->
+<!--                            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
+<!--                                    th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/project/admin/project_approve/${project.project_id}|}'|">승인-->
+<!--                            </button>-->
+<!--                        </td>-->
+<!--                        <td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${project.approve == 'Y'}">-->
+<!--                            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 160px;"-->
+<!--                                    th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/project/admin/project_approve_cancel/${project.project_id}|}'|">승인취소-->
+<!--                            </button>-->
+<!--                        </td>-->
                     </tr>
                     </tbody>
                 </table>

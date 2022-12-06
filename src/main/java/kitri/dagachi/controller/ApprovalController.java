@@ -7,6 +7,7 @@ import kitri.dagachi.model.ProjectTag;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +32,11 @@ public class ApprovalController {
     }
 
     @GetMapping("/project/admin/project_approve_detail/{project_id}")
-    public String detail(Model model, @PathVariable Long project_id) {
+    public String detail(Model model, @PathVariable Long project_id, @AuthenticationPrincipal Member member) {
         Project project = projectService.findProject(project_id);
         List<Member> project_members = memberService.findMembers(project_id);
         List<ProjectTag> project_tags = projectService.findTags(project_id);
+        Long loginId = member.getId();
         List<PersonalInfo> personalInfo = new ArrayList<>();
         for(Member m : project_members) {
             Optional<PersonalInfo> p = memberService.findInfo(m.getId());
@@ -49,6 +51,7 @@ public class ApprovalController {
         model.addAttribute("project_members", project_members);
         model.addAttribute("project_tags", project_tags);
         model.addAttribute("personalInfo", personalInfo);
+        model.addAttribute("loginId", loginId);
 
         return "project/project_approve_detail";
     }
