@@ -71,8 +71,6 @@ public class PersonalMemberController {
 //        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
 
-
-
         // 멤버 생성 V1
 //        Member member = new Member();
 
