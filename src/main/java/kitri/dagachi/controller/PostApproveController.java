@@ -32,43 +32,27 @@ public class PostApproveController {
     @GetMapping("/post/admin/post_list")
     public String posting(Model model)
     {
-        List<Post> post = postservice.posting();
+        List<Post> post = postservice.approveList();
+
         model.addAttribute("post",post);
+
         return "/post/post_list";
     }
 
     //채용공고신청 리스트
     @GetMapping("/post/admin/post_approve_list")
-    public String application(Model model)
+    public String application(Model model, @AuthenticationPrincipal Member member)
     {
 
         List<Post> approve = postservice.posting();
+
+
+//        String companyName = member.getName();
+//
+//        model.addAttribute("companyName",companyName);
         model.addAttribute("post",approve);
         return "/post/post_approve_list";
     }
-
-//    @GetMapping("/post/admin/post_approve/{postingId}")
-//    public String approve(@PathVariable Long postingId,Model model)
-//    {
-//        postservice.updateApprove(postingId);
-////        post.getApprove();
-//      List<Post> approveList = postservice.posting();
-//        model.addAttribute("post", approveList);
-//        return "redirect:/post/admin/approve_list";
-//    }
-//
-//    @GetMapping("/post/admin/post_approve_cancel/{postingId}")
-//    public String approveCancel(@PathVariable Long postingId,Model model)
-//    {
-//        postservice.updateApprove(postingId);
-////        post.getApprove();
-//        List<Post> approveList = postservice.posting();
-//        model.addAttribute("post", approveList);
-//        return "redirect:/post/admin/approve_list";
-//    }
-
-
-
 
 
     //승인 detail
@@ -81,22 +65,6 @@ public class PostApproveController {
 
         return "/post/post_approve_detail";
     }
-
-    //승인버튼
-//    @GetMapping("/post/admin/post_approve/{postingId}")
-//    public String approve(@PathVariable("postingId") Long postingId,Model model) {
-//
-//        Post post = postservice.findOne(postingId);
-//        postservice.updateApprove(post);
-////        post.getApprove();
-//        List<Post> approve = postservice.posting();
-//        model.addAttribute("post", approve);
-//
-//        return "redirect:/post/admin/approve_list";
-//
-//    }
-
-    //승인
 
 
     @GetMapping("/post/admin/post_approve/{postingId}")
@@ -111,8 +79,6 @@ public class PostApproveController {
         postservice.saveApprove(postingId);
         List<Post> post = postservice.posting();
         model.addAttribute("post",post);
-//        System.out.println(post.getApprove());
-//        post.setApprove("N");
 
 
 
@@ -151,7 +117,7 @@ public class PostApproveController {
 
 
 
-        return "redirect:/post/admin/approve_list";
+        return "redirect:/post/admin/post_approve_list";
     }
 //    @PostMapping("/post/admin/post_approve")
 //    @ResponseBody

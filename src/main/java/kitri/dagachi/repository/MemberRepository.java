@@ -79,4 +79,12 @@ public class MemberRepository {
 //        em.clear();
 //    }
 
+
+
+    public List<Member> findByName(Long memberId) {
+        return em.createQuery("select m from Member m where m.id = :memberId")
+                .setParameter("memberId", memberId)
+                .getResultList();
+
+    }
 }

@@ -4,6 +4,7 @@ package kitri.dagachi.service;
 //import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.*;
 //import kitri.dagachi.repository.FileRepository;
+import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.repository.PostLikeRepository;
 import kitri.dagachi.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ public class postService {
     @Autowired
     private final PostRepository postRepository;
     private final PostLikeRepository postlikerepository;
+
+    private final MemberRepository memberRepository;
 
     private final EntityManager em;
 
@@ -133,8 +136,12 @@ public class postService {
     }
 
 
-
-
+//회사명 불러오기
+    public List<Member> findByName(Long memberId)
+    {
+        System.out.println("서비스"+ memberId);
+        return memberRepository.findByName(memberId);
+    }
 
 
     //새로고침 시 하트 유지 하기 위한 cnt

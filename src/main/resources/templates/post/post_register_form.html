@@ -20,14 +20,15 @@
 
 
 <div class="container col-5 my-5 width : 100%">
-    <form name = "register" action="/post/enterprise/post_list" method="post" enctype="multipart/form-data">
+    <form name = "register" action="/post/enterprise/post_approve_list" method="post" enctype="multipart/form-data">
         <table>
             <thead>
 
             <tr>
                 <th>회사명
-                <td><input type="text" name="companyName" value=""></td>
+                <td><div method="get" name="companyName" th:text="${companyName}"/></td>
                 </th>
+
             </tr>
             <tr>
                 <th>공고제목
@@ -39,6 +40,8 @@
                 <td><textarea name="postingContent" style="min-height :300px;  width: 300px" value=""></textarea></td>
                 </th>
             </tr>
+
+
 
 <!--            <tr>-->
 <!--                <th>로고사진-->
@@ -95,6 +98,7 @@
 
 
 </div>
+</div>
 
 
 <!--        </table>-->
@@ -108,6 +112,7 @@
 
 <div th:replace="fragments/footer :: footer"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script th:inline="javascript">
       $('.custom-file-input').on('change',function(){
