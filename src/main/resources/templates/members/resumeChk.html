@@ -27,7 +27,7 @@
 
         <div class="container bg-light d-flex" style="padding-left:0px">
             <div class>
-                <img class="img-fulid" th:src="|/image/${personalInfo.image}|" id="profileImg" width="130px" height="209px"
+                <img class="img-fulid" th:src="|/image/${personalInfo?.image}|" id="profileImg" width="130px" height="209px"
                     onerror="this.src='/image/test.png'">
                 <input type="hidden" name="fileName" value="">
             </div>

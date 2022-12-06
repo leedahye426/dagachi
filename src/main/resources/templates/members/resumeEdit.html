@@ -35,9 +35,9 @@
 
         <div class="container bg-light d-flex" style="padding-left:0px">
             <div class="">
-                <img class="img-fulid" th:src="|/image/${personalInfo.image}|" id="profileImg" width="130px" height="200px"
+                <img class="img-fulid" th:src="|/image/${personalInfo?.image}|" id="profileImg" width="130px" height="200px"
                     onerror="this.src='/image/test.png'">
-                <input type="hidden" name="uploadFileName" th:value="${personalInfo.image}">
+                <input type="hidden" name="uploadFileName" th:value="${personalInfo?.image}">
             </div>
             <div class="mt-2 mx-2" style="width: 100%;">
                 <div>
@@ -106,9 +106,9 @@
             </div>
         </div>
         <div>
-            <label for="member_profile" class="border" style="cursor: pointer">프로필 선택</label>
+            <label for="member_profile" class="border d-flex" style="cursor: pointer">프로필 선택</label>
             <input type="file" id="member_profile" name="image" accept="image/*" onchange="loadFile(this)"
-                   style="visibility: hidden;">
+                   style="visibility: hidden;"><span>1MB 이하 파일만 가능. 130x200 size 권장</span>
         </div>
 
         <h4 class="mt-5">학력사항</h4>
