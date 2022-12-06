@@ -56,7 +56,7 @@
             </tr>
         </tbody>
     </table>
-    <th:block th:switch="${loginMember.id}">
+    <th:block th:switch="${loginMember?.id}">
         <span th:case="${competition.memberId}">
             <button type="button" class="btn btn-secondary"
                     th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/competition/admin/delete/${competition.id}|}'|">

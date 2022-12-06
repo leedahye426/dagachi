@@ -151,10 +151,7 @@ public class PostRepository {
                 .getResultList();
     }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f12e57940ba06610520ff065e4f16728ace70c82
     public List<PostTags> findByTag(Long postingId)
     {
         return  em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
