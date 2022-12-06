@@ -43,7 +43,7 @@
 </div>
 
 <div class="container">
-    <div sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ADMIN', 'ROLE_ANONYMOUS')">
+    <div >
         <div class="row row-cols-5">
             <div th:each="project : ${projects}"
                  th:onclick="|location.href='@{|/project/enterprise/detail/${project.project_id}|}'|"
@@ -53,7 +53,7 @@
                     <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
                     <h6 th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd')}"></h6>
                 </div>
-                <button type="button"
+                <button  type="button" sec:authorize="hasAnyRole('ROLE_ENT', 'ROLE_ANONYMOUS', 'ROLE_ADMIN')"
                         style="display:inline-block; position: absolute; right: 30px; bottom: 30px;background-color:transparent;border:0;outline:0;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" id="projectLike"
                          class="project-like bi bi-heart-fill" viewBox="0 0 16 16">
@@ -64,27 +64,32 @@
                 </button>
 
             </div>
-        </div>
-    </div>
 
-    <div sec:authorize="hasRole('ROLE_PER')">
-        <div class="row row-cols-5">
-            <div th:each="project : ${projects}"
-                 th:onclick="|location.href='@{|/project/personal/detail/${project.project_id}|}'|"
-                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px; background-color:#FAFAFA;box-shadow: 5px 5px grey;">
-
-                <div class="card-body fw-bold mt-3  " style="cursor:pointer">
-                    <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>
-                    <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>
-                    <h6 th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd')}"></h6>
-                </div>
-            </div>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm"
+        <button sec:authorize="hasRole('ROLE_PER')" type="button" class="btn btn-secondary btn-sm"
                 onclick="location.href='/project/personal/project_register_form'"
                 style="position: absolute; right: 100px; bottom: 100px;">신규 등록
         </button>
     </div>
+
+<!--    <div sec:authorize="hasRole('ROLE_PER')">-->
+<!--        <div class="row row-cols-5">-->
+<!--            <div th:each="project : ${projects}"-->
+<!--                 th:onclick="|location.href='@{|/project/personal/detail/${project.project_id}|}'|"-->
+<!--                 class="card col p-1 mx-3 my-3 border" style="width: 30%; height: 210px; background-color:#FAFAFA;box-shadow: 5px 5px grey;">-->
+
+<!--                <div class="card-body fw-bold mt-3  " style="cursor:pointer">-->
+<!--                    <h4 th:text="${project.project_title}" class="card-title"></h4><br><br>-->
+<!--                    <h6 th:text="'팀명 : ' + ${project.team_name}" class="card-text"></h6>-->
+<!--                    <h6 th:text="${#temporals.format(project.upload_date, 'yyyy-MM-dd')}"></h6>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button type="button" class="btn btn-secondary btn-sm"-->
+<!--                onclick="location.href='/project/personal/project_register_form'"-->
+<!--                style="position: absolute; right: 100px; bottom: 100px;">신규 등록-->
+<!--        </button>-->
+<!--    </div>-->
 </div>
 
 
