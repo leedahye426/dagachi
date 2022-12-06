@@ -86,14 +86,17 @@ public class SecurityConfig {
                                         "/post/personal/post_list",
                                         "/competition/competition_list").permitAll()
 
-                .antMatchers("/project/personal/detail/**").hasAnyRole("PER", "ENT")
-
-                .antMatchers("/members/resumeChk", "/members/resumeEdit",
-                                        "/project/personal/**", "/project/admin/project_approve_detail/**",
-                                        "/post/personal/**").hasRole("PER")
+                .antMatchers("/project/personal/detail/**",
+                                        "/project/personal/search").hasAnyRole("PER", "ENT")
 
                 .antMatchers("/project/enterprise/**",
-                                        "/post/enterprise/**").hasRole("ENT")
+                                        "/post/enterprise/**",
+                                        "/post/admin/post_approve_detail/**",
+                                        "/post/admin/delete/**").hasRole("ENT")
+
+                .antMatchers("/members/resumeChk", "/members/resumeEdit",
+                        "/project/personal/**", "/project/admin/project_approve_detail/**",
+                        "/post/personal/**").hasRole("PER")
 
                 .antMatchers("/competition/admin/**",
                                         "/project/admin/**",
