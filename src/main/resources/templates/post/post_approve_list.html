@@ -37,7 +37,6 @@
         </tr>
         </thead>
         <tbody>
-<!--        <div sec:authorize="hasAnyRole('ROLE_ENT','ROLE_ADMIN')">-->
             <tr th:each="post : ${post}">
                 <th:block th:switch="${memberId}">
                     <span th:case="${post.memberId}">
@@ -49,40 +48,20 @@
                         <td th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}"></td>
                         <td th:text="${post?.approve}"></td>
                     </span>
-                </th:block>
-
-        <!--         <td>-->
-        <!--            <span th:if="${post.approve == 'N'}">-->
-        <!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
-        <!--                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인-->
-        <!--        </button>-->
-        <!--        </span>-->
-        <!--           <span th:if="${post.approve == 'Y'}">-->
-        <!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
-        <!--                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소-->
-        <!--        </button>-->
-        <!--        </span>-->
-        <!--         </td>-->
-
         <td>
-
             <button type="button" class="btn btn-secondary"
                     th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/admin/delete/${post.postingId}|}'|">
                 삭제
             </button>
-
-
         </td>
 
-
+    </th:block>
         </tr>
-<!--        </div>-->
         </tbody>
     </table>
-    <!--</form>-->
-
 
 </div>
+
 
 
 <div sec:authorize="hasRole('ROLE_ADMIN')">
@@ -92,21 +71,22 @@
     <td><a th:href="@{|/post/admin/post_approve_detail/${post?.postingId}|}"
            th:text="${post?.postingTitle}"></a></td>
     <td th:text="${post?.postingContent}"></td>
-    <td th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}"></td>
+    <td th:text="${#temporals.format(post?.uploadDate,'yyyy-mm-dd')}"></td>
     <td th:text="${post?.approve}"></td>
 
 
-<!--             <td th:if="${post.approve == 'N'}">-->
-<!--            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
-<!--                    th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인-->
-<!--            </button>-->
-<!--            </td>-->
-<!--               <span th:if="${post.approve == 'Y'}">-->
-<!--            <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
-<!--                    th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소-->
-<!--            </button>-->
-<!--            </span>-->
-<!--             </td>-->
+<!--     <td th:if="${post.approve == 'N'}">-->
+<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
+<!--                th:onclick="|if(confirm('승인 하시겠습니까?')) location.href='@{|/post/admin/post_approve/${post.postingId}|}'|">승인-->
+<!--        </button>-->
+<!--    </td>-->
+
+<!--    <td th:if="${post.approve == 'Y'}">-->
+<!--        <button type="button" class="btn btn-primary" style="position: absolute; right: 300px; top: 330px;"-->
+<!--                th:onclick="|if(confirm('승인을 취소 하시겠습니까?')) location.href='@{|/post/admin/post_approve_cancel/${post.postingId}|}'|">승인취소-->
+<!--        </button>-->
+<!--    </td>-->
+
 
     <td>
 
