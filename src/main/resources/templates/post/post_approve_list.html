@@ -14,7 +14,7 @@
 </div>
 
 
-<div class="card-body b" th:each="post : ${post}" action="/post/admin/approve_list">
+<div class="card-body b" action="/post/admin/approve_list">
 
 <!--<form >-->
       <table class="table table-hover">
@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="post : ${post}">
           <th scope="row" th:text="${post?.postingId}"></th>
           <td th:text="${post?.companyName}"></td>
           <td><a th:href="@{|/post/admin/post_approve_detail/${post?.postingId}|}" th:text="${post?.postingTitle}"></a></td>
