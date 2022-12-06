@@ -151,10 +151,6 @@ public class PostRepository {
                 .getResultList();
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4488696c6e322cc4247d402b1e373842bcccbe15
     public List<PostTags> findByTag(Long postingId)
     {
         return  em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
@@ -168,11 +164,8 @@ public class PostRepository {
                 .setMaxResults(limit)
                 .getResultList();
     }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 4488696c6e322cc4247d402b1e373842bcccbe15
     public void cnt(Long postingId, Long cnt) {
 
         Post post = findOne(postingId);

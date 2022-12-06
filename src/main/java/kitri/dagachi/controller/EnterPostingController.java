@@ -64,26 +64,45 @@ public class EnterPostingController {
 
     //insert
 
-    @PostMapping("/post/enterprise/post_list")
+    @PostMapping("/post/enterprise/post_approve_list")
     public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member) {
 
 
         Long memberId = member.getId();
         post.setMemberId(memberId);
 
+        String companyName = member.getName();
+        post.setCompanyName(companyName);
+
+
         System.out.println(tag[0]);
         System.out.println(tag[1]);
+        System.out.println(member.getName());
 
 
         postservice.register(post, tag);
 
-        return "/post/post_approve_list";
+
+            return "redirect:/post/enterprise/post_approve_list";
     }
 
 
     //공고등록하기 버튼 클릭시
     @GetMapping("/post/enterprise/post_register_form")
-    public String postingRegisterForm() {
+    public String postingRegisterForm(Post post, Model model, @AuthenticationPrincipal Member member)
+    {
+        Long memberId = member.getId();
+
+        System.out.println(memberId);
+
+//        List<Member> members = postservice.findByName(memberId);
+
+        String companyName = member.getName();
+        System.out.println("==============="+ member.getName());
+
+        model.addAttribute("memberId",memberId);
+        model.addAttribute("companyName",companyName);
+
         return "/post/post_register_form";
     }
 
@@ -149,9 +168,13 @@ public class EnterPostingController {
 
             for(Post p : list)
             {
+//                p.setCompanyName(member.getName());
                 approvelist.add(postservice.findById(p.getPostingId()));
             }
+//            String companyName = member.getName();
 
+//            model.addAttribute("companyName",companyName);
+            model.addAttribute("memberId", memberId);
             model.addAttribute("post",approvelist);
 
             return "/post/post_approve_list";

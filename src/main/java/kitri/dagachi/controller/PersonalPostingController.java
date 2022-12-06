@@ -58,26 +58,13 @@ public class PersonalPostingController {
 
         List<Post> post = postservice.approveList();
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 //        Long memberId = member.getId();
 
 
-//        List<PostTags> postTags =
-//
-
-//        System.out.println(postTags.size());
-
-//        List<PostTags> tags =  new ArrayList<>();
-//        for (PostTags pt : postTags){
-//            tags.add(postservice.tags(pt.getTag()));
-
-//            System.out.println(postservice.tags(pt.getTag());
-//        }
-
 //        model.addAttribute("memberId", memberId);
         model.addAttribute("post", post);
-//        model.addAttribute("tags",tags);
+
 
 
         return "/post/post_list";
