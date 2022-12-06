@@ -80,11 +80,26 @@ public class SecurityConfig {
         http.headers().frameOptions().sameOrigin(); // 동일 도메인 내 X-Frame-Options 활성화(PDF viewer)
 
         http.authorizeRequests() // authorizeRequests() : 시큐리티 처리에 HttpServletRequest를 이용
-                .antMatchers("/competition/detail/2123").hasRole("PER")
-                .antMatchers("/project/enterprise/project_list").hasRole("ENT")
-                .anyRequest().permitAll()
-//                .antMatchers("/").permitAll()// 특정한 경로를 지정
+                .antMatchers("/members/login, /members/join/**").anonymous()
+
+                .antMatchers("/project/personal/project_list",
+                                        "/post/personal/post_list",
+                                        "/competition/competition_list").permitAll()
+
+                .antMatchers("/project/personal/detail/**").hasAnyRole("PER", "ENT")
+
+                .antMatchers("/members/resumeChk", "/members/resumeEdit",
+                                        "/project/personal/**", "/project/admin/project_approve_detail/**",
+                                        "/post/personal/**").hasRole("PER")
+
+                .antMatchers("/project/enterprise/**",
+                                        "/post/enterprise/**").hasRole("ENT")
+
+                .antMatchers("/competition/admin/**",
+                                        "/project/admin/**",
+                                        "/post/admin/**").hasRole("ADMIN")
 //                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             .and()
                 .authenticationManager(authenticationManager)
                 .formLogin()

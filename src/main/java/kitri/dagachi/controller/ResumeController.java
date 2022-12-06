@@ -146,7 +146,7 @@ public class ResumeController {
         System.out.println("file.getSize() : " + file.getSize());
 
         // 기본정보 창 내 파일여부
-        if(!fileName.equals("") && file.getSize() < 5000L) {
+        if(!fileName.equals("") && file.getSize() < 1048576L) {
 
             String uploadDir = "D:/test/profile/";
 
