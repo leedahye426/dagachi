@@ -43,6 +43,11 @@
                 <label class="form-label">회사이름</label>
                 <input type="text" name="companyName" th:value="${post?.companyName}" disabled>
             </div>
+            <div>
+<!--                <input type="hidden" th:each="tags : ${PostTags}" value="${tags?.postingId}">-->
+                <span scope="row" th:each="tag : ${PostTags}" th:text="'#' + ${tag.tag}"></span>
+<!--                <span name="PostTags" th:text=" ' # '+${tags?.tag}" id="postingTag" />-->
+            </div>
             <div class="mb-3">
                 <label class="form-label">공고제목</label>
                 <input type="text" name="postingTitle" th:value="${post?.postingTitle}" disabled>

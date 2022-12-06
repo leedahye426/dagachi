@@ -1,24 +1,18 @@
 package kitri.dagachi.repository;
 
-import io.lettuce.core.dynamic.annotation.Param;
 //import kitri.dagachi.dto.PostDto;
 //import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
-import kitri.dagachi.model.Project;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+        import lombok.RequiredArgsConstructor;
+        import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+        import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+        import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -157,6 +151,21 @@ public class PostRepository {
                 .getResultList();
     }
 
+<<<<<<< HEAD
+//    public List<PostTags> findtags(Long postingId)
+//    {
+//         return em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
+//                                    .setParameter("postingId",postingId)
+////                            .setParameter("tag",tag)
+//                                .getResultList();
+//
+//           //in구문 where절에서 값이 여러개 일
+//
+//
+//    }
+
+    public List<PostTags> findByTag(Long postingId)
+=======
     public List<Post> findOrderByLike(int limit) {
         return em.createQuery("select p from posting_board p order by p.cnt desc")
                 .setMaxResults(limit)
@@ -164,12 +173,21 @@ public class PostRepository {
     }
 
     public void findtags(Long postingId)
+>>>>>>> 42522e31b3ef95777d98b5879c9ff642dd136d4f
     {
-        em.createQuery("select pt.tag from posting_tags pt where pt.postingId =:postingId")  //in구문 where절에서 값이 여러개 일
-          .setParameter("postingId",postingId)
-          .getResultList();
+        return  em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
+                .setParameter("postingId", postingId)
+                .getResultList();
     }
 
+<<<<<<< HEAD
+
+
+
+
+
+=======
+>>>>>>> 42522e31b3ef95777d98b5879c9ff642dd136d4f
     public void cnt(Long postingId, Long cnt) {
 
         Post post = findOne(postingId);

@@ -3,8 +3,12 @@
 <head th:replace="fragments/header :: header"/>
 <body>
 <!-- Responsive navbar-->
-<head th:replace="fragments/nav :: nav" />
-
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/admin_nav :: admin_nav" />
+</th:block>
+<th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+    <head th:replace="fragments/nav :: nav" />
+</th:block>
 <!--content-->
 <!--modal-->
 <div class="modal" tabindex="-1" id="exampleModal" th:each="project_member:${project_members}">
