@@ -151,6 +151,7 @@ public class PostRepository {
                 .getResultList();
     }
 
+
     public List<PostTags> findByTag(Long postingId)
     {
         return  em.createQuery("select pt from posting_tags pt where pt.postingId =:postingId")
@@ -164,6 +165,7 @@ public class PostRepository {
                 .setMaxResults(limit)
                 .getResultList();
     }
+
 
     public void cnt(Long postingId, Long cnt) {
 

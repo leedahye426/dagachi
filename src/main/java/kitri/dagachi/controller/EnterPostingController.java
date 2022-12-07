@@ -166,7 +166,7 @@ public class EnterPostingController {
             List<Post> list = postservice.findlist(memberId);
             List<Post> approvelist = new ArrayList<>();
 
-            for(Post p : list)
+            for(Post p : list) //post의 memberId랑 
             {
 //                p.setCompanyName(member.getName());
                 approvelist.add(postservice.findById(p.getPostingId()));
