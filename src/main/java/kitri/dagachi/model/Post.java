@@ -40,19 +40,6 @@ public class Post {
     @Column(name = "like_count")
     private Long cnt = 0L;
 
-//    private String origName;
-//
-//    private String savedNm;
-//
-//    private String savedPath;
 
-
-//    @Builder
-//    public Post(Long PostingId, String origName, String savedNm, String savedPath) {
-//        this.postingId = postingId;
-//        this.origName = origName;
-//        this.savedNm = savedNm;
-//        this.savedPath = savedPath;
-//    }
 }
 

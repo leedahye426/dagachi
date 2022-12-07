@@ -25,11 +25,6 @@ public class PostTags {
     @Column(name = "posting_tag")
     private String tag;
 
-//    @Override
-//    public void addArgumentResolvers(List<handlerMethodArgumentResolver> argumentResolvers)
-//    {
-//        argumentResolvers.add(new pageableHandlerMethodArgumentResolver());
-//    }
 
 
 }

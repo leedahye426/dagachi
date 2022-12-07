@@ -108,10 +108,15 @@ $codeBtn.on('click', function () {
 
         if(data == "duplicateEmail") {
             msgEmail.textContent = "이미 등록된 회원입니다.";
+            $("#code").attr('disabled', true); // 인증코드 입력값 비활성화
+            $codeChk.attr('class', 'btn btn-light border btn-sm disabled'); // 인증 버튼 비활성화
+            $('#timer').remove(); // 타이머 비활성화
+            clearInterval(tid);
             return false;
         }
         tid = setInterval('cntTimer()', 1000);
         alert("인증번호 발송 완료")
+
         // console.log("data : " + data)
         // $returnCode = data;
         $("#code").removeAttr('disabled'); // 인증코드 박스 활성화
