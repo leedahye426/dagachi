@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,6 +25,25 @@ public class MemberRepository {
         return (Member) em.createQuery("select m from Member m where m.email= :email ")
                 .setParameter("email", email)
                 .getSingleResult();
+    }
+
+    public String DuplicateChkByEmail(String email) {
+        try {
+            Member member = (Member) em.createQuery("SELECT m FROM Member m WHERE m.email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+            System.out.println("member.getEmail() : " + member.getEmail());
+            System.out.println("true");
+            if(!member.getEmail().equals("")) {
+                return member.getEmail();
+            }
+        }
+        catch (NoResultException e) {
+            System.out.println("NoResultException 예외 발생");
+            System.out.println("false");
+//            return null;
+        }
+        return "";
     }
 
     public Optional<Member> findByLoginInfo(String email) {
