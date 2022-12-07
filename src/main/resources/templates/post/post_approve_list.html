@@ -47,32 +47,30 @@
                         <td th:text="${post?.postingContent}"></td>
                         <td th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}"></td>
                         <td th:text="${post?.approve}"></td>
-                    </span>
+
         <td>
             <button type="button" class="btn btn-secondary"
                     th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/admin/delete/${post.postingId}|}'|">
                 삭제
             </button>
         </td>
+                        </span>
                 </th:block>
-            </tr>
-        </tbody>
-    </table>
-
-
-</div>
 
 
 
-<!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
-<!--    <tr th:each="post : ${post}">-->
-<!--    <th scope="row" th:text="${post?.postingId}"></th>-->
-<!--    <td><div th:text="${post?.companyName}"></div></td>-->
-<!--    <td><a th:href="@{|/post/admin/post_approve_detail/${post?.postingId}|}"-->
-<!--           th:text="${post?.postingTitle}"></a></td>-->
-<!--    <td th:text="${post?.postingContent}"></td>-->
-<!--    <td th:text="${post?.uploadDate}"></td>-->
-<!--    <td th:text="${post?.approve}"></td>-->
+
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+
+
+    <th scope="row" th:text="${post?.postingId}"></th>
+    <td><div th:text="${post?.companyName}"></div></td>
+    <td><a th:href="@{|/post/admin/post_approve_detail/${post?.postingId}|}"
+           th:text="${post?.postingTitle}"></a></td>
+    <td th:text="${post?.postingContent}"></td>
+    <td th:text="${post?.uploadDate}"></td>
+    <td th:text="${post?.approve}"></td>
 
 
 <!--     <td th:if="${post.approve == 'N'}">-->
@@ -88,22 +86,22 @@
 <!--    </td>-->
 
 
-<!--    <td>-->
+    <td>
 
-<!--        <button type="button" class="btn btn-secondary"-->
-<!--                th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/admin/delete/${post.postingId}|}'|">-->
-<!--            삭제-->
-<!--        </button>-->
-
-
-<!--    </td>-->
+        <button type="button" class="btn btn-secondary"
+                th:onclick="|if(confirm('정말 삭제하시겠습니까?')) location.href='@{|/post/admin/delete/${post.postingId}|}'|">
+            삭제
+        </button>
 
 
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--    </table>-->
+    </td>
 
-<!--</div>-->
+</div>
+    </tr>
+    </tbody>
+    </table>
+
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
