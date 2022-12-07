@@ -14,11 +14,11 @@ function openModal(num) {
         };
     };
 }
-// 원하는 Modal 수만큼 Modal 함수를 호출해서 funcs 함수에 정의합니다.
+// 원하는 Modal 수만큼 Modal 함수를 호출해서 funcs 함수에 정의
 for(var i = 0; i<openModalBtns.length; i++) {
     funcs[i] = openModal(i);
 }
-// 원하는 Modal 수만큼 funcs 함수를 호출합니다.
+// 원하는 Modal 수만큼 funcs 함수를 호출
 for(var i = 0; i < openModalBtns.length;i++) {
     funcs[i]();
 }

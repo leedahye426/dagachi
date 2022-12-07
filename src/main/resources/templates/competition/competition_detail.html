@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <th>지원하기</th>
-                    <td><a href="${competition.url}" th:text="${competition.url}"></a></td>
+                    <td><a th:href="@{${competition.url}}" th:text="${competition.url}"></a></td>
             </tr>
             <tr style="border-bottom:0">
                 <td colspan="2" th:text="${competition.content}"></td>
