@@ -166,6 +166,7 @@ public class PostRepository {
                 .getResultList();
     }
 
+
     public void cnt(Long postingId, Long cnt) {
 
         Post post = findOne(postingId);
