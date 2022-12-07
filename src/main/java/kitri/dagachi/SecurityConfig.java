@@ -214,19 +214,19 @@ public class SecurityConfig {
                         response.setContentType("text/html; charset=euc-kr");
                         PrintWriter out = response.getWriter();
                         out.println("<script>" +
-                                    "alert('로그인 필요한 서비스입니다.');" +
+                                    "alert('로그인이 필요한 서비스입니다.');" +
                                     "location.href='/members/login';" +
                                     "</script>");
                         out.flush();
 
                     }
-                });
-//            .and()
-//                .sessionManagement()
-//                .invalidSessionUrl("/")
-//                .maximumSessions(1)
-//                .maxSessionsPreventsLogin(true)
-//                .expiredUrl("/");
+                })
+            .and()
+                .sessionManagement()
+                .invalidSessionUrl("/")
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+                .expiredUrl("/");
 
         return http.build();
     }

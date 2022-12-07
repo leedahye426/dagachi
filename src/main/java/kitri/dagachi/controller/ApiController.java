@@ -1,6 +1,7 @@
 package kitri.dagachi.controller;
 
 import kitri.dagachi.model.Member;
+import kitri.dagachi.repository.MemberRepository;
 import kitri.dagachi.service.EmailService;
 import kitri.dagachi.service.MemberService;
 import kitri.dagachi.service.RedisService;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.NoResultException;
+
 @Controller
 @RequestMapping("members/")
 @RequiredArgsConstructor
@@ -22,15 +25,17 @@ public class ApiController {
     private final EmailService emailService;
     private final RedisService redisService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     // 회원가입 폼으로부터 이메일 데이터 전달
     @PostMapping("join/emailConfirm")
     @ResponseBody
     public String emailConfirm(@RequestParam("email") String email)  throws Exception {
 
-        Member member = memberService.findOneByEmail(email);
 
-        if(member != null) {
+        String duplicateEmailChk = memberRepository.DuplicateChkByEmail(email);
+
+        if(!duplicateEmailChk.equals("")) {
             return "duplicateEmail";
         }
 
