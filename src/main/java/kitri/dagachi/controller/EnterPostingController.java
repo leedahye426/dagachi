@@ -1,8 +1,5 @@
 package kitri.dagachi.controller;
 
-//import kitri.dagachi.service.FileService;
-//import kitri.dagachi.dto.PostDto;
-//import kitri.dagachi.dto.PostFileDto;
 import kitri.dagachi.model.Member;
 import kitri.dagachi.model.Post;
 import kitri.dagachi.service.postService;
@@ -65,8 +62,12 @@ public class EnterPostingController {
     //insert
 
     @PostMapping("/post/enterprise/post_approve_list")
-    public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member) {
+    public String postingRegister(Post post, String[] tag, @AuthenticationPrincipal Member member)
+    {
 
+        //String[] tag는 태그값이 배열(A,B) 형식이라 주소로 받아옴으로 DB에 컬럼 각각 넣기위한 배열타입 선언
+        //session값 가져오는 방법 하나 더!
+        // (HttpSession session 또는 Private final HttpSession session으로 선언 후 (변수타입 or domain명)session.getAttribute(가져올 변수명))
 
         Long memberId = member.getId();
         post.setMemberId(memberId);
@@ -74,10 +75,6 @@ public class EnterPostingController {
         String companyName = member.getName();
         post.setCompanyName(companyName);
 
-
-        System.out.println(tag[0]);
-        System.out.println(tag[1]);
-        System.out.println(member.getName());
 
 
         postservice.register(post, tag);
@@ -93,15 +90,12 @@ public class EnterPostingController {
     {
         Long memberId = member.getId();
 
-        System.out.println(memberId);
-
-//        List<Member> members = postservice.findByName(memberId);
 
         String companyName = member.getName();
-        System.out.println("==============="+ member.getName());
+
 
         model.addAttribute("memberId",memberId);
-        model.addAttribute("companyName",companyName);
+        model.addAttribute("companyName",companyName); //기업으로 가입시 memberId 매칭하여 기업명 가지고 오기
 
         return "/post/post_register_form";
     }
@@ -113,13 +107,16 @@ public class EnterPostingController {
     @GetMapping("/post/enterprise/post_detail/{postingId}")
     public String postingDetail(@ModelAttribute("postingId") Long postingId, Model model, @AuthenticationPrincipal Member member) {
         Post post = postservice.findOne(postingId);
+
+        //보여줄 값 가져오기
         String companyName = post.getCompanyName();
         String postingTitle = post.getPostingTitle();
         String postingContent = post.getPostingContent();
+
         Long loginId = member.getId();
 
 
-        model.addAttribute("memberId", loginId);
+        model.addAttribute("memberId", loginId); //초록색 안에 있는 값이랑 html 타임리프변수(${})속의 변수 이름이 같아야 한다.
         model.addAttribute("post", post);
 
         return "/post/post_detail";
@@ -129,7 +126,7 @@ public class EnterPostingController {
     //삭제버튼 클릭시
     @GetMapping("/post/enterprise/delete/{postingId}")
     public String postDelete(@PathVariable Long postingId) {
-        System.out.println("postingId: " + postingId);
+
         postservice.delete(postingId);
 
 
@@ -162,14 +159,14 @@ public class EnterPostingController {
         @GetMapping("/post/enterprise/post_approve_list")
     public String myapprove(@AuthenticationPrincipal Member member, Model model)
         {
-            Long memberId = member.getId();;
+            Long memberId = member.getId();
             List<Post> list = postservice.findlist(memberId);
-            List<Post> approvelist = new ArrayList<>();
+            List<Post> approvelist = new ArrayList<>(); //배열 초기화
 
-            for(Post p : list) //post의 memberId랑 
+            for(Post p : list) //post의 값과 list값과 같으면
             {
 //                p.setCompanyName(member.getName());
-                approvelist.add(postservice.findById(p.getPostingId()));
+                approvelist.add(postservice.findById(p.getPostingId())); //게시글 추가
             }
 //            String companyName = member.getName();
 
