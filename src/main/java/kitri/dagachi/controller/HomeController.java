@@ -70,8 +70,8 @@ public class HomeController {
         if (member != null) model.addAttribute("loginMember", member);
 
         List<Competition> competitions = competitionService.findAllCompetition();
-
         Competition firstOne = competitionService.findFirst();
+
 
         List<Project> projects = projectService.findOrderByLike(3);
         List<Post> posts = postService.findOrderByLike(3);
