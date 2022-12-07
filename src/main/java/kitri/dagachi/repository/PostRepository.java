@@ -1,18 +1,16 @@
 package kitri.dagachi.repository;
 
-//import kitri.dagachi.dto.PostDto;
-//import kitri.dagachi.dto.PostFileDto;
+
 import kitri.dagachi.model.Post;
 import kitri.dagachi.model.PostTags;
 import kitri.dagachi.model.PostingLike;
-        import lombok.RequiredArgsConstructor;
-        import org.springframework.stereotype.Repository;
-
-        import javax.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-        import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Repository
@@ -20,10 +18,11 @@ public class PostRepository {
 
     private final EntityManager em;
 
-
     public void save(Post post) {
+
+        //날짜 자동입력
         LocalDateTime uploadDate = LocalDateTime.now();
-        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String formatedNow = uploadDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //이 작업 필수!! String 해줘야지 DB에 에러 없이 들어감. 아니면 타입안맞는다 오류 뜸
         post.setUploadDate(formatedNow);
 
 
@@ -71,7 +70,9 @@ public class PostRepository {
         em.flush();
     }
 
-//    public void approve(Post post)
+
+    //승인의 또 다른 방법
+//    public Post approve(Post post)
 //    {
 //        if(post.getApprove() =="N")
 //        {
@@ -82,7 +83,7 @@ public class PostRepository {
 //            post.setApprove("N");
 //        }
 //
-//
+//        return post;
 //    }
 
     public Post findOne(Long postingId) {
@@ -122,7 +123,7 @@ public class PostRepository {
     public void delete(Long postingId) {
 
         Post post = findOne(postingId);
-        System.out.println("================" + post);
+
 
         em.remove(post);
         em.flush();
@@ -140,7 +141,7 @@ public class PostRepository {
 
     public List<Post> findByTitleContaining(String keyword)
     {
-        return em.createQuery("select p from posting_board p where (p.companyName) Like ('%'||:keyword||'%')",Post.class)
+        return em.createQuery("select p from posting_board p where (p.companyName) Like ('%'||:keyword||'%')",Post.class) //like 변수 형식 어려움! 중요! Model에 있는 값 아니고 keyword 맞음!
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
