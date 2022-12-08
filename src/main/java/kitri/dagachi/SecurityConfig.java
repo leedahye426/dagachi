@@ -87,7 +87,8 @@ public class SecurityConfig {
                                         "/competition/competition_list").permitAll()
 
                 .antMatchers("/project/personal/detail/**",
-                                        "/project/personal/search").hasAnyRole("PER", "ENT")
+                                        "/project/personal/search",
+                                        "/post/personal/post_detail/**").hasAnyRole("PER", "ENT")
 
                 .antMatchers("/project/enterprise/**",
                                         "/post/enterprise/**",
