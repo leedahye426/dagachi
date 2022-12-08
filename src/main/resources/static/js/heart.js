@@ -13,6 +13,8 @@ function like(id){
 //    let number = cnt.innerText;
 
  console.log(heart.getAttribute("fill"));
+
+
     if(heart.getAttribute("fill")=="red"){
         //빨간색 하트
 
@@ -29,6 +31,7 @@ function like(id){
                     heart.setAttribute('fill', 'gray');
 //                    $(".likeCount").text('${cnt-1}');
 //                    number = parseInt(number)-1;
+
 
             }
 

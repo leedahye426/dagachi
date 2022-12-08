@@ -68,7 +68,7 @@ public class PersonalMemberController {
 
         // 현재 시간 구하기(가입 시간, ... ) -> DEFAULT SYSDATE 변경
         LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
+////        LocalDateTime formatedNow = now.format(DateTimeFormatter.ofPattern("YYYY/MM/DD hh:mm:ss"));
 
 
         // 멤버 생성 V1
